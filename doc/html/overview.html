@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>openMSP430 Overview</title></head>
+<body>
+
+  <h1>Introduction</h1>
+
+  The openGFX430 is a synthesizable Graphic controller written in Verilog and tailored
+  for the <a href="http://opencores.org/project,openmsp430">openMSP430</a> core.
+  <br>
+  An implementation example will soon be available in the openMSP430 FPGA section.
+  <br>
+  <h1>Features &amp; TODOs</h1>
+
+  <h2>Features</h2>
+  <ul>
+    <li>Support of the following graphic modes:</li>
+    <ul>
+      <li>16bpp</li>
+      <li>8bpp</li>
+      <li>4bpp</li>
+      <li>2bpp</li>
+      <li>1bpp</li>
+    </ul>
+    <li>Smart address generation unit for fast indirect memory access.</li>
+    <li>GPU allowing hardware FILL, COPY and COPY_TRANSPARENT operations.</li>
+    <li>Supports the <a href="http://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=65&No=892">LT24</a> Terasic daughter card.</li>
+  </ul>
+  <h2>TODOs</h2>
+
+  In no particular priority order:
+
+  <ul>
+    <li>RTL:</li>
+    <ul>
+      <li>Add support popular video interfaces (i.e. probably SPI and VGA in addition to LT24).</li>
+      <li>Character processing unit.</li>
+      <li>Hardware cursor</li>
+    </ul>
+    <li>Others:</li>
+    <ul>
+      <li>Add proper block level verification environment.</li>
+      <li>Documentation.</li>
+    </ul>
+  </ul>
+
+  <h1>Download</h1>
+  <h3>Design</h3>
+  The complete tar archive of the project can be downloaded <a href="http://www.opencores.org/download,opengfx430">here</a> (OpenCores account required).<br>
+<br>
+The following SVN command can be run from a console (or <a href="http://www.syntevo.com/smartsvn/index.html">GUI</a>):
+<br><br>
+<table border="0" cellpadding="0" cellspacing="4">
+<tbody><tr>
+<td width="35"><br>
+</td>
+<td bgcolor="#d0d0d0" width="3"><br>
+</td>
+<td width="15"><br>
+</td>
+<td>
+	<code>svn export http://opencores.org/ocsvn/opengfx430/opengfx430/trunk/ opengfx430</code>
+</td>
+</tr>
+</tbody></table>
+<br>
+<h3>ChangeLog</h3>
+<ul>
+   <li>The <a href="http://opencores.org/websvn,filedetails?repname=opengfx430&amp;path=/opengfx430/trunk/ChangeLog_core.txt">Core's ChangeLog</a> lists the Video Controller updates.</li>
+   <li>Subscribe to the following <a href="http://opencores.org/websvn,rss?repname=opengfx430&amp;path=/opengfx430/&amp;isdir=1">RSS</a> feed to keep yourself informed about ALL updates.
+</li></ul>
+<br>
+
+</body>
+</html>
