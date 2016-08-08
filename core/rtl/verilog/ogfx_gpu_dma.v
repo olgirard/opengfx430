@@ -44,6 +44,7 @@ module  ogfx_gpu_dma (
 
 // OUTPUTs
     gpu_exec_done_o,                              // GPU execution done
+    gpu_dma_busy_o,                               // GPU DMA execution on going
 
     vid_ram_addr_o,                               // Video-RAM address
     vid_ram_din_o,                                // Video-RAM data
@@ -86,6 +87,7 @@ module  ogfx_gpu_dma (
 // OUTPUTs
 //=========
 output                 gpu_exec_done_o;           // GPU execution done
+output                 gpu_dma_busy_o;            // GPU DMA execution on going
 
 output   [`VRAM_MSB:0] vid_ram_addr_o;            // Video-RAM address
 output          [15:0] vid_ram_din_o;             // Video-RAM data
@@ -237,6 +239,7 @@ wire   dma_init        = (dma_state==INIT);
 wire   dma_pixel_done  = (dma_state==SKIP) | ((dma_state==DST_READ)  & pixel_is_transparent) |
                                              ((dma_state==DST_WRITE) & data_ready_nxt      ) ;
 assign gpu_exec_done_o = (dma_state==IDLE) & ~trig_exec_i;
+assign gpu_dma_busy_o  = (dma_state!=IDLE);
 
 
 //=============================================================================
