@@ -1,3 +1,7 @@
+2016-08-08 [r6]  
+
+	* Update register interface to make it 32bit variable friendly.
+
 2016-08-04 [r2-3]  
 
 	* Initial check-in of the RTL.
