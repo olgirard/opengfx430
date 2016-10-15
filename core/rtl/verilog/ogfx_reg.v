@@ -631,7 +631,7 @@ reg        lt24_cmd_refr_o;
 reg [11:0] lt24_cfg_refr_o;
 
 wire      lt24_refresh_wr   = reg_wr[LT24_REFRESH];
-wire      lt24_cmd_refr_clr = lt24_done_evt_i & lt24_status_i[2] & (lt24_cfg_refr_o==8'h00); // Auto-clear in manual refresh mode when done
+wire      lt24_cmd_refr_clr = lt24_done_evt_i & lt24_status_i[2] & (lt24_cfg_refr_o==12'h000); // Auto-clear in manual refresh mode when done
 
 always @ (posedge mclk or posedge puc_rst)
   if (puc_rst)                lt24_cmd_refr_o      <=  1'h0;
@@ -645,7 +645,7 @@ always @ (posedge mclk or posedge puc_rst)
 wire [15:0] lt24_refresh = {lt24_cfg_refr_o, 3'h0, lt24_cmd_refr_o};
 
 //------------------------------------------------
-// LT24_REFRESH Register
+// LT24_REFRESH_SYNC Register
 //------------------------------------------------
 reg        lt24_cfg_refr_sync_en_o;
 reg  [9:0] lt24_cfg_refr_sync_val_o;
