@@ -10,7 +10,7 @@ The openGFX430 is a synthesizable Graphic controller written in Verilog and tail
            <ul>
                 <li><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/overview.md">Overview</a></li>
                 <li><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/core.md">Core</a></li>
-                <li>Registers:</li>
+                <li><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/core.md#2_4_register_overview">Registers:</a></li>
                 <ul>
                   <li><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md">Global Control</a></li>
                   <li><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md">Display Configuration</a></li>
