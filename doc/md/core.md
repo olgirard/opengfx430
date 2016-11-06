@@ -1,4 +1,6 @@
-### Table of content
+# openGFX430 core
+
+#### Table of content
 
 *   [1. Introduction](#1_introduction)
 *   [2. Core](#2_core)
@@ -9,7 +11,7 @@
     *   [2.5 GPU commands](#2_5_gpu_commands)
 
 <a name="1_introduction"></a>
-# 1. Introduction
+## 1. Introduction
 
 The openGFX430 is a 16-bit graphic controller peripheral tailored for the [openMSP430](https://github.com/olgirard/openmsp430) core and designed to directly interface with the [LT24](http://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=892) daughter board from Terasic.  
 
@@ -26,10 +28,10 @@ The GPU is controlled through a command FIFO. Once initiated, the hardware perfo
 It is to be noted that this IP doesn't contain the LUT and Video memory blocks internally (these are technology dependent hard macros which are connected to the IP during chip integration). However the core is fully configurable in regard to the supported RAM sizes.  
 
 <a name="2_core"></a>
-# 2. Core
+## 2. Core
 
 <a name="2_1_design_structure"></a>
-## 2.1 Design structure
+### 2.1 Design structure
 
 The following diagram shows the openGFX430 design structure:  
 
@@ -47,7 +49,7 @@ The following diagram shows the openGFX430 design structure:
 *   **Arbiters**: arbitration between the different ressources accessing the LUT and Video memories.
 
 <a name="2_2_rtl_configuration"></a>
-## 2.2 RTL Configuration
+### 2.2 RTL Configuration
 
 It is possible to configure the openGFX430 core through the **_openGFX430\_defines.v_** file located in the **_rtl_** directory (see [here](https://github.com/olgirard/opengfx430/blob/master/core/rtl/verilog/openGFX430_defines.v)).  
 
@@ -98,7 +100,7 @@ The basic system can be adjusted with the following set of defines in order to m
 ~~~~
 
 <a name="2_3_pinout"></a>
-## 2.3 Pinout
+### 2.3 Pinout
 
 The full pinout of the openGFX430 core is provided in the following table:  
 
@@ -333,7 +335,7 @@ The full pinout of the openGFX430 core is provided in the following table:
 **<sup><font color="#ff0000">3</font></sup>**: A single LUT bank needs 256 entries to support the 8bpp mode (thus 8 bit address bus). 9 bits of addresses are required if an extra LUT bank is added by uncommenting the **WITH\_EXTRA\_LUT\_BANK** macro in the _openGFX430\_defines.v_ file.  
 
 <a name="2_4_register_overview"></a>
-## 2.4 Register overview
+### 2.4 Register overview
 
 The following table provide the register overview of the openGFX430:  
 
@@ -363,9 +365,10 @@ The following table provide the register overview of the openGFX430:
     <tr><td align="left">&nbsp;LT24_CMD_DFILL    &nbsp;</td><td align="center">   0x2A   </td><td align="left">&nbsp;LT24 command data fill</td></tr>
     <tr><td align="left">&nbsp;LT24_STATUS       &nbsp;</td><td align="center">   0x2C   </td><td align="left">&nbsp;LT24 status</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,lut%20memory">LUT Memory Access Gate</a></i></b></td></tr>
-    <tr><td align="left">&nbsp;LUT_RAM_ADDR      &nbsp;</td><td align="center">   0x30   </td><td align="left">&nbsp;LUT-RAM address</td></tr>
-    <tr><td align="left">&nbsp;LUT_RAM_DATA      &nbsp;</td><td align="center">   0x32   </td><td align="left">&nbsp;LUT-RAM data</td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,lut%20memory">Color LUT Configuration & Memory Access Gate</a></i></b></td></tr>
+    <tr><td align="left">&nbsp;LUT_CFG           &nbsp;</td><td align="center">   0x30   </td><td align="left">&nbsp;LUT Configuration</td></tr>
+    <tr><td align="left">&nbsp;LUT_RAM_ADDR      &nbsp;</td><td align="center">   0x32   </td><td align="left">&nbsp;LUT-RAM address</td></tr>
+    <tr><td align="left">&nbsp;LUT_RAM_DATA      &nbsp;</td><td align="center">   0x34   </td><td align="left">&nbsp;LUT-RAM data</td></tr>
 
     <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,frame%20pointers">Frame pointers and selection</a></i></b></td></tr>
     <tr><td align="left">&nbsp;FRAME_SELECT      &nbsp;</td><td align="center">   0x3E   </td><td align="left">&nbsp;Frame pointer selections</td></tr>
@@ -400,7 +403,7 @@ The following table provide the register overview of the openGFX430:
 </table>
 
 <a name="2_5_gpu_commands"></a>
-## 2.5 GPU commands
+### 2.5 GPU commands
 
 The following commands are supported by the GPU:  
 

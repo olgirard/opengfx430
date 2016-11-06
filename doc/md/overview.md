@@ -1,6 +1,6 @@
+# openGFX430 Overview
 
-
-# Introduction
+## 1. Introduction
 
 The openGFX430 is a synthesizable Graphic controller written in Verilog and tailored for the [openMSP430](https://github.com/olgirard/openmsp430) core.
 
@@ -8,9 +8,9 @@ The openGFX430 is a synthesizable Graphic controller written in Verilog and tail
 
 An example implementation based on the [DE0-Nano-SoC](http://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=941) and [LT24 daughter board](http://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=892) from Terasic can be found in the openMSP430 FPGA section ([see here](https://github.com/olgirard/openmsp430/tree/master/fpga/altera_de0_nano_soc)).
 
-# Features & TODOs
+## 2. Features & TODOs
 
-## Features
+### Features
 
 *   Support of the following graphic modes:
     *   16bpp
@@ -22,7 +22,7 @@ An example implementation based on the [DE0-Nano-SoC](http://www.terasic.com.tw/
 *   GPU allowing hardware FILL, COPY and COPY_TRANSPARENT operations.
 *   Supports the [LT24](http://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=65&No=892) Terasic daughter card.
 
-## TODOs
+### TODOs
 
 In no particular priority order:
 
@@ -34,9 +34,9 @@ In no particular priority order:
     *   Add proper block level verification environment.
     *   Documentation.
 
-# Download
+## 3. Download
 
-## Design
+### Design
 
 The complete zip archive of the project can be downloaded [here](https://github.com/olgirard/opengfx430/archive/master.zip).
 
@@ -44,7 +44,7 @@ Or execute the following GIT command from a console:
 
  `git clone https://github.com/olgirard/opengfx430.git`
 
-## ChangeLog
+### ChangeLog
 
 *   The [Core's ChangeLog](http://opencores.org/websvn,filedetails?repname=opengfx430&path=/opengfx430/trunk/ChangeLog_core.txt) lists the Video Controller updates.
 *   Subscribe to the following [RSS](https://github.com/olgirard/opengfx430/releases.atom) feed to keep yourself informed about ALL updates.

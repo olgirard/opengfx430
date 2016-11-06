@@ -1,4 +1,6 @@
-### Table of content
+# Global control registers
+
+#### Table of content
 
 *   [1. Introduction](#1_introduction)
 *   [2. Registers](#2_registers)
@@ -8,15 +10,15 @@
 
 
 <a name="1_introduction"></a>
-# 1. Introduction
+## 1. Introduction
 
 This section describes the global control, status and interrupt flag registers.  
 
 <a name="2_registers"></a>
-# 2. Registers
+## 2. Registers
 
 <a name="2_1_GFX_CTRL"></a>
-## 2.1 GFX_CTRL
+### 2.1 GFX_CTRL
 
 <table border="1" style="table-layout:fixed; width:100%; font-size:.8em">
   <tbody>
@@ -104,7 +106,7 @@ This section describes the global control, status and interrupt flag registers.
 </table>
 
 <a name="2_2_GFX_STATUS"></a>
-## 2.2 GFX_STATUS
+### 2.2 GFX_STATUS
 
 <table border="1" style="table-layout:fixed; width:100%; font-size:.8em">
   <tbody>
@@ -166,7 +168,7 @@ This section describes the global control, status and interrupt flag registers.
 </table>
 
 <a name="2_3_GFX_IRQ"></a>
-## 2.3 GFX_IRQ
+### 2.3 GFX_IRQ
 
 <table border="1" style="table-layout:fixed; width:100%; font-size:.8em">
   <tbody>
