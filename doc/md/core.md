@@ -104,7 +104,7 @@ The basic system can be adjusted with the following set of defines in order to m
 
 The full pinout of the openGFX430 core is provided in the following table:  
 
-<table border="1">
+<table border="0">
   <tbody>
     <tr>
         <td align="center" bgcolor="#B0B0B0"><b>Port Name</b></td>
@@ -339,47 +339,47 @@ The full pinout of the openGFX430 core is provided in the following table:
 
 The following table provide the register overview of the openGFX430:  
 
-<table border="1">
+<table border="0">
   <tbody>
     <tr><td align="center" bgcolor="#B0B0B0"><b>Register Name </b></td><td align="center" bgcolor="#B0B0B0"><b>Address offset</b></td><td align="center" bgcolor="#B0B0B0"><b>Description</b></td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,global%20control">Global control / status / irq</a></i></b></td></tr>
-    <tr><td align="left">&nbsp;<a href="http://opencores.org/project,opengfx430,global%20control#2.1%20GFX_CTRL">  GFX_CTRL</a>          </td><td align="center">   0x00   </td><td align="left">&nbsp;Global control register</td></tr>
-    <tr><td align="left">&nbsp;<a href="http://opencores.org/project,opengfx430,global%20control#2.2%20GFX_STATUS">GFX_STATUS</a>        </td><td align="center">   0x08   </td><td align="left">&nbsp;Global status register</td></tr>
-    <tr><td align="left">&nbsp;<a href="http://opencores.org/project,opengfx430,global%20control#2.3%20GFX_IRQ">   GFX_IRQ</a>           </td><td align="center">   0x0A   </td><td align="left">&nbsp;Global IRQ flag register</td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md">Global control / status / irq</a></i></b></td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md#2_1_GFX_CTRL">            GFX_CTRL</a>          &nbsp;</td><td align="center">   0x00   </td><td align="left" rowspan=1>&nbsp;Global control register</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md#2_2_GFX_STATUS">          GFX_STATUS</a>        &nbsp;</td><td align="center">   0x08   </td><td align="left" rowspan=1>&nbsp;Global status register</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md#2_3_GFX_IRQ">             GFX_IRQ</a>           &nbsp;</td><td align="center">   0x0A   </td><td align="left" rowspan=1>&nbsp;Global IRQ flag register</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,display%20configuration">Display configuration</a></i></b></td></tr>
-    <tr><td align="left">&nbsp;<a href="http://opencores.org/project,opengfx430,display%20configuration#2.1%20DISPLAY_WIDTH">DISPLAY_WIDTH</a>     &nbsp;</td><td align="center">   0x10   </td><td align="left">&nbsp;Display pixel width</td></tr>
-    <tr><td align="left">&nbsp;<a href="http://opencores.org/project,opengfx430,display%20configuration#2.2%20DISPLAY_HEIGHT">DISPLAY_HEIGHT</a>    &nbsp;</td><td align="center">   0x12   </td><td align="left">&nbsp;Display pixel height</td></tr>
-    <tr><td align="left">&nbsp;<a href="http://opencores.org/project,opengfx430,display%20configuration#2.3%20DISPLAY_SIZE_LO_HI">DISPLAY_SIZE_LO</a>   &nbsp;</td><td align="center">   0x14   </td><td align="left" rowspan=2>&nbsp;Display size (i.e. number of pixels)</td></tr>
-    <tr><td align="left">&nbsp;<a href="http://opencores.org/project,opengfx430,display%20configuration#2.3%20DISPLAY_SIZE_LO_HI">DISPLAY_SIZE_HI</a>   &nbsp;</td><td align="center">   0x16   </td></tr>
-    <tr><td align="left">&nbsp;<a href="http://opencores.org/project,opengfx430,display%20configuration#2.4%20DISPLAY_CFG">DISPLAY_CFG</a>       &nbsp;</td><td align="center">   0x18   </td><td align="left">&nbsp;Display refresh read configuration</td></tr>
-    <tr><td align="left">&nbsp;<a href="http://opencores.org/project,opengfx430,display%20configuration#2.5%20DISPLAY_REFR_CNT">DISPLAY_REFR_CNT</a>  &nbsp;</td><td align="center">   0x1A   </td><td align="left">&nbsp;Display refresh counter</td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md">Display configuration</a></i></b></td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_1_DISPLAY_WIDTH">       DISPLAY_WIDTH</a>     &nbsp;</td><td align="center">   0x10   </td><td align="left" rowspan=1>&nbsp;Display pixel width</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_2_DISPLAY_HEIGHT">      DISPLAY_HEIGHT</a>    &nbsp;</td><td align="center">   0x12   </td><td align="left" rowspan=1>&nbsp;Display pixel height</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_3_DISPLAY_SIZE_LO_HI">  DISPLAY_SIZE_LO</a>   &nbsp;</td><td align="center">   0x14   </td><td align="left" rowspan=2>&nbsp;Display size (i.e. number of pixels)</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_3_DISPLAY_SIZE_LO_HI">  DISPLAY_SIZE_HI</a>   &nbsp;</td><td align="center">   0x16   </td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_4_DISPLAY_CFG">         DISPLAY_CFG</a>       &nbsp;</td><td align="center">   0x18   </td><td align="left" rowspan=1>&nbsp;Display refresh read configuration</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_5_DISPLAY_REFR_CNT">    DISPLAY_REFR_CNT</a>  &nbsp;</td><td align="center">   0x1A   </td><td align="left" rowspan=1>&nbsp;Display refresh counter</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,lt24%20configuration">LT24 configuration</a></i></b></td></tr>
-    <tr><td align="left">&nbsp;LT24_CFG          &nbsp;</td><td align="center">   0x20   </td><td align="left">&nbsp;LT24 screen control</td></tr>
-    <tr><td align="left">&nbsp;LT24_REFRESH      &nbsp;</td><td align="center">   0x22   </td><td align="left">&nbsp;LT24 refresh timing configuration</td></tr>
-    <tr><td align="left">&nbsp;LT24_REFRESH_SYNC &nbsp;</td><td align="center">   0x24   </td><td align="left">&nbsp;LT24 refresh synchronization configuration</td></tr>
-    <tr><td align="left">&nbsp;LT24_CMD          &nbsp;</td><td align="center">   0x26   </td><td align="left">&nbsp;LT24 command</td></tr>
-    <tr><td align="left">&nbsp;LT24_CMD_PARAM    &nbsp;</td><td align="center">   0x28   </td><td align="left">&nbsp;LT24 command parameter</td></tr>
-    <tr><td align="left">&nbsp;LT24_CMD_DFILL    &nbsp;</td><td align="center">   0x2A   </td><td align="left">&nbsp;LT24 command data fill</td></tr>
-    <tr><td align="left">&nbsp;LT24_STATUS       &nbsp;</td><td align="center">   0x2C   </td><td align="left">&nbsp;LT24 status</td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md">LT24 configuration</a></i></b></td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_1_LT24_CFG">               LT24_CFG</a>          &nbsp;</td><td align="center">   0x20   </td><td align="left" rowspan=1>&nbsp;LT24 screen control</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_2_LT24_REFRESH">           LT24_REFRESH</a>      &nbsp;</td><td align="center">   0x22   </td><td align="left" rowspan=1>&nbsp;LT24 refresh timing configuration</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_3_LT24_REFRESH_SYNC">      LT24_REFRESH_SYNC</a> &nbsp;</td><td align="center">   0x24   </td><td align="left" rowspan=1>&nbsp;LT24 refresh synchronization configuration</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_4_LT24_CMD">               LT24_CMD</a>          &nbsp;</td><td align="center">   0x26   </td><td align="left" rowspan=1>&nbsp;LT24 command</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_5_LT24_CMD_PARAM">         LT24_CMD_PARAM</a>    &nbsp;</td><td align="center">   0x28   </td><td align="left" rowspan=1>&nbsp;LT24 command parameter</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_6_LT24_CMD_DFILL">         LT24_CMD_DFILL</a>    &nbsp;</td><td align="center">   0x2A   </td><td align="left" rowspan=1>&nbsp;LT24 command data fill</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_7_LT24_STATUS">            LT24_STATUS</a>       &nbsp;</td><td align="center">   0x2C   </td><td align="left" rowspan=1>&nbsp;LT24 status</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,lut%20memory">Color LUT Configuration & Memory Access Gate</a></i></b></td></tr>
-    <tr><td align="left">&nbsp;LUT_CFG           &nbsp;</td><td align="center">   0x30   </td><td align="left">&nbsp;LUT Configuration</td></tr>
-    <tr><td align="left">&nbsp;LUT_RAM_ADDR      &nbsp;</td><td align="center">   0x32   </td><td align="left">&nbsp;LUT-RAM address</td></tr>
-    <tr><td align="left">&nbsp;LUT_RAM_DATA      &nbsp;</td><td align="center">   0x34   </td><td align="left">&nbsp;LUT-RAM data</td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/color_lut.md">Color LUT Configuration & Memory Access Gate</a></i></b></td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/color_lut.md#4_1_LUT_CFG">                  LUT_CFG</a>           &nbsp;</td><td align="center">   0x30   </td><td align="left" rowspan=1>&nbsp;LUT Configuration</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/color_lut.md#4_2_LUT_RAM_ADDR">             LUT_RAM_ADDR</a>      &nbsp;</td><td align="center">   0x32   </td><td align="left" rowspan=1>&nbsp;LUT-RAM address</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/color_lut.md#4_3_LUT_RAM_DATA">             LUT_RAM_DATA</a>      &nbsp;</td><td align="center">   0x34   </td><td align="left" rowspan=1>&nbsp;LUT-RAM data</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,frame%20pointers">Frame pointers and selection</a></i></b></td></tr>
-    <tr><td align="left">&nbsp;FRAME_SELECT      &nbsp;</td><td align="center">   0x3E   </td><td align="left">&nbsp;Frame pointer selections</td></tr>
-    <tr><td align="left">&nbsp;FRAME0_PTR_LO     &nbsp;</td><td align="center">   0x40   </td><td align="left" rowspan=2>&nbsp;Frame address pointer 0</td></tr>
-    <tr><td align="left">&nbsp;FRAME0_PTR_HI     &nbsp;</td><td align="center">   0x42   </td></tr>
-    <tr><td align="left">&nbsp;FRAME1_PTR_LO     &nbsp;</td><td align="center">   0x44   </td><td align="left" rowspan=2>&nbsp;Frame address pointer 1</td></tr>
-    <tr><td align="left">&nbsp;FRAME1_PTR_HI     &nbsp;</td><td align="center">   0x46   </td></tr>
-    <tr><td align="left">&nbsp;FRAME2_PTR_LO     &nbsp;</td><td align="center">   0x48   </td><td align="left" rowspan=2>&nbsp;Frame address pointer 2</td></tr>
-    <tr><td align="left">&nbsp;FRAME2_PTR_HI     &nbsp;</td><td align="center">   0x4A   </td></tr>
-    <tr><td align="left">&nbsp;FRAME3_PTR_LO     &nbsp;</td><td align="center">   0x4C   </td><td align="left" rowspan=2>&nbsp;Frame address pointer 3</td></tr>
-    <tr><td align="left">&nbsp;FRAME3_PTR_HI     &nbsp;</td><td align="center">   0x4E   </td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md">Frame pointers and selection</a></i></b></td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_1_FRAME_SELECT">        FRAME_SELECT</a>      &nbsp;</td><td align="center">   0x3E   </td><td align="left" rowspan=1>&nbsp;Frame pointer selections</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME0_PTR_LO</a>     &nbsp;</td><td align="center">   0x40   </td><td align="left" rowspan=2>&nbsp;Frame address pointer 0</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME0_PTR_HI</a>     &nbsp;</td><td align="center">   0x42   </td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME1_PTR_LO</a>     &nbsp;</td><td align="center">   0x44   </td><td align="left" rowspan=2>&nbsp;Frame address pointer 1</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME1_PTR_HI</a>     &nbsp;</td><td align="center">   0x46   </td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME2_PTR_LO</a>     &nbsp;</td><td align="center">   0x48   </td><td align="left" rowspan=2>&nbsp;Frame address pointer 2</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME2_PTR_HI</a>     &nbsp;</td><td align="center">   0x4A   </td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME3_PTR_LO</a>     &nbsp;</td><td align="center">   0x4C   </td><td align="left" rowspan=2>&nbsp;Frame address pointer 3</td></tr>
+    <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME3_PTR_HI</a>     &nbsp;</td><td align="center">   0x4E   </td></tr>
 
     <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,video%20memory">First Video Memory Access Gate</a></i></b></td></tr>
     <tr><td align="left">&nbsp;VID_RAM0_CFG      &nbsp;</td><td align="center">   0x50   </td><td align="left">&nbsp;Video-RAM address generator configuration&nbsp;&nbsp;</td></tr>
@@ -407,7 +407,7 @@ The following table provide the register overview of the openGFX430:
 
 The following commands are supported by the GPU:  
 
-<table border="1">
+<table border="0">
   <tbody>
     <tr><td align="center" bgcolor="#B0B0B0"><b>GPU Command name </b></td><td align="center" bgcolor="#B0B0B0"><b>Description</b></td><td align="center" bgcolor="#B0B0B0"><b>Opcode(s)</b></td></tr>
 
