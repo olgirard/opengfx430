@@ -1,3 +1,4 @@
+<a name="top"></a>
 # Display configuration registers
 
 #### Table of content

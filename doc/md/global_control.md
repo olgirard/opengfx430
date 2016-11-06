@@ -1,3 +1,4 @@
+<a name="top"></a>
 # Global control registers
 
 #### Table of content

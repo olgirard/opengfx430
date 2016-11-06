@@ -1,3 +1,4 @@
+<a name="top"></a>
 # Color Look-Up-Table
 
 #### Table of content
@@ -26,6 +27,7 @@ Depending on the graphic mode, 2, 4, 16 or 256 look-up-table entries are used:
 
 
 The openGFX430 includes a hard-coded color look-up-table but can also interface with a LUT memory if the RTL is configured accordingly, thus allowing software customization of the LUTs: 
+
 ~~~~
 //-----------------------------------------------------  
 // LUT Configuration  
@@ -190,6 +192,7 @@ In order to simplify and speed-up software procedures, the LUT_RAM_ADDR register
 - after each READ access if the LUT_CFG.SW_LUT_RMW_MODE is cleared.
 
 As a consequence, a write procedure to update the LUT memory would look as following:
+
 ~~~~
 LUT_RAM_ADDR = 0x0090;       // Initialize Address to 0x90 (144)
 LUT_RAM_DATA = 0xFEED;       // Write at address 0x90
@@ -200,6 +203,7 @@ LUT_RAM_DATA = 0xCAFE;       // Write at address 0x93
 ~~~~
 
 Likewise, the procedure to read the content of the LUT memory would look as following:
+
 ~~~~
 LUT_RAM_ADDR = 0x0090;       // Initialize Address to 0x90 (144)
 my_data[0]   = LUT_RAM_DATA; // Read data from address 0x90

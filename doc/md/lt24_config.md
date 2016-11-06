@@ -1,3 +1,4 @@
+<a name="top"></a>
 # LT24 screen configuration register
 
 #### Table of content

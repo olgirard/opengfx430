@@ -1,3 +1,4 @@
+<a name="top"></a>
 # Frame Pointers configuration register
 
 #### Table of content
@@ -11,13 +12,8 @@
 <a name="1_introduction"></a>
 ## 1. Introduction
 
-This section describes the LT24 screen configuration registers.  
-These allow to configure the [LT24 daughter board](http://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=892) from Terasic and in particular manually send commands to the LCD controller, the ILI9341.  
+This section describes the frame pointers and corresponding configuration registers.
 
-The LT24 LCD features 240(H) x 320(V) pixel resolution and the ILI9341 LCD driver is used to drive the LCD display.
-The 8080-system 16-bit parallel bus interface of the ILI9341 allows to refresh the screen with a 16bpp resolution (65K-Color, RGB 5-6-5 bits per pixel).  
-
-Further information about the particular commands that can be sent to the controller can be found in the *"8\. Command"* section of the [ILI9341 datasheet](https://github.com/olgirard/openmsp430/blob/master/fpga/altera_de0_nano_soc/doc/Terasic/LT24/ILI9341.pdf).  
 
 <a name="2_registers"></a>
 ## 2. Registers
