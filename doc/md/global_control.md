@@ -232,7 +232,7 @@ This section describes the global control, status and interrupt flag registers.
     <tr><td valign="top">&#8226;&emsp;<b>IF_GFIFO_D</b></td><td>GPU FIFO done interrupt flag bit<br>
                                                        &emsp;&emsp;<code>0 = GPU FIFO's last word was not read</code><br>
                                                        &emsp;&emsp;<code>1 = Last GPU FIFO word was read (write '1' to clear)</code></td></tr>
-    <tr><td valign="top">&#8226;&emsp;<b>IF_RCDONE</b></td><td>Screen refresh counter done interrupt flag bit (see <a href="http://opencores.org/project,opengfx430,display%20configuration#2.5%20DISPLAY_REFR_CNT">here</a>)<br>
+    <tr><td valign="top">&#8226;&emsp;<b>IF_RCDONE</b></td><td>Screen refresh counter done interrupt flag bit (see <a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_5_DISPLAY_REFR_CNT">DISPLAY_REFR_CNT</a> register)<br>
                                                        &emsp;&emsp;<code>0 = screen refresh counter is either 0 or still running</code><br>
                                                        &emsp;&emsp;<code>1 = screen refresh counter reached 0 (write '1' to clear)</code></td></tr>
     <tr><td valign="top">&#8226;&emsp;<b>IF_RSTART</b></td><td>Screen refresh start interrupt flag bit<br>

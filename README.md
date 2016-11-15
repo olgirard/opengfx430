@@ -18,6 +18,12 @@ The openGFX430 is a synthesizable Graphic controller written in Verilog and tail
                   <li><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#top">LT24 Configuration</a></li>
                   <li><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/color_lut.md#top">Color LUT</a></li>
                   <li><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#top">Frame Pointers</a></li>
+                  <li>Video Memory Access<br>!!! Coming Soon !!!</li>
+                  <li>GPU Interface<br>!!! Coming Soon !!!</li>
+                </ul>
+                <li>GPU:</li>
+                <ul>
+                  <li>DMA Engine<br>!!! Coming Soon !!!</li>
                 </ul>
             </ul>
         </td>

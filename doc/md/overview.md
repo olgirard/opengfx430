@@ -39,13 +39,20 @@ In no particular priority order:
 
 ### Design
 
-The complete zip archive of the project can be downloaded [here](https://github.com/olgirard/opengfx430/archive/master.zip).
+* The project's official releases are available on [OpenCores](http://opencores.org/project,opengfx430).
 
-Or execute the following GIT command from a console:
+The complete tar archive of the project is downloadable [here](http://www.opencores.org/download,opengfx430) (OpenCores account required) and the SVN repository can be exported with the following command:
+
+`svn export http://opencores.org/ocsvn/opengfx430/opengfx430/trunk/ opengfx430`
+
+* The project's working environment is hosted here on [GitHub](https://github.com/olgirard/opengfx430).
+
+The complete zip archive of the project is downloadable [here](https://github.com/olgirard/opengfx430/archive/master.zip) and the GIT repository can be clonned with the following command:
 
  `git clone https://github.com/olgirard/opengfx430.git`
+
 
 ### ChangeLog
 
 *   The [Core's ChangeLog](http://opencores.org/websvn,filedetails?repname=opengfx430&path=/opengfx430/trunk/ChangeLog_core.txt) lists the Video Controller updates.
-*   Subscribe to the following [RSS](https://github.com/olgirard/opengfx430/releases.atom) feed to keep yourself informed about ALL updates.
+*   Subscribe to the following [RSS](http://opencores.org/websvn,rss?repname=opengfx430&path=/opengfx430/&isdir=1) feed to keep yourself informed about ALL updates.

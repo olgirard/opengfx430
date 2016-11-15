@@ -1,3 +1,7 @@
+2016-10-28 [r11]  
+
+	* Improved hardware CLUT with support for all CGA 2bpp palettes
+
 2016-08-17 [r8]  
 
 	* Add display refresh counter register.

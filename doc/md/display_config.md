@@ -15,7 +15,7 @@
 ## 1. Introduction
 
 This section describes the display configuration registers.  
-These registers allow to configure the width, height and size of the screen as well as the refresh address generation.  
+These registers allow to configure the width, height and size of the screen as well as the order pixels are read during a screen refresh.  
 
 <a name="2_registers"></a>
 ## 2. Registers
@@ -270,7 +270,8 @@ The D_*_SWAP configuration registers allow to control in which order the frame b
 
 The following picture illustrates how the frame buffer is read according to the different configurations, and how the picture will look like on the screen, depending on how the screen is refreshed.
 
-![Frame buffer read refresh config](http://opencores.org/usercontent,img,1475790247 "Frame buffer read refresh config")  
+![Frame buffer read refresh config](https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/display_cfg.png "Frame buffer read refresh config")  
+_(open in a new tab to zoom in)_
 
 <a name="2_5_DISPLAY_REFR_CNT"></a>
 ### 2.5 DISPLAY_REFR_CNT
@@ -320,7 +321,7 @@ The following picture illustrates how the frame buffer is read according to the 
     <tr><td valign="top">&#8226;&emsp;<b>D_REFR_CNT  </b></td><td style="width:100%;">The display refresh counter can be initialized to 
                                                                   any value by software and is automaticaly decremented after each
                                                                   screen refresh until it reaches 0x0000.<br>
-                                                                  The <a href="http://opencores.org/project,opengfx430,global%20control#2.3%20GFX_IRQ">IF_RCDONE</a> interrupt flag is set when the counter reaches zero. </td></tr>
+                                                                  The <a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md#2_3_GFX_IRQ">GFX_IRQ.IF_RCDONE</a> interrupt flag is set when the counter reaches zero. </td></tr>
 </tbody>
 </table>
 

@@ -45,7 +45,7 @@ The following diagram shows the openGFX430 design structure:
 
 *   **Backend**: this block reads the video memory during the screen refresh. For resolutions smaller than 16bpp, it also fetches the corresponding pixels colors from the LUT memory.  
 
-*   **Screen interface**: the screen interface (or display controller) continuously reads the pixel values from the backend and sends it to the screen according to the interface protocol.  
+*   **Screen interface**: the screen interface (or display controller) is responsible for the screen refresh and reads the pixel values from the backend to forward them to the screen according to the interface protocol.  
 
 *   **Arbiters**: arbitration between the different ressources accessing the LUT and Video memories.
 
@@ -331,9 +331,9 @@ The full pinout of the openGFX430 core is provided in the following table:
   </tbody>
 </table>
 
-**<sup><font color="#ff0000">1</font></sup>**: This parameter is declared in the _openGFX430\_defines.v_ file and defines the video memory address width.  
-**<sup><font color="#ff0000">2</font></sup>**: LUT memory interface is available if the **WITH\_PROGRAMMABLE\_LUT** macro is uncommented in the _openGFX430\_defines.v_ file.  
-**<sup><font color="#ff0000">3</font></sup>**: A single LUT bank needs 256 entries to support the 8bpp mode (thus 8 bit address bus). 9 bits of addresses are required if an extra LUT bank is added by uncommenting the **WITH\_EXTRA\_LUT\_BANK** macro in the _openGFX430\_defines.v_ file.  
+**<sup><font color="#ff0000">1</font></sup>**: This parameter is declared in the [_openGFX430\_defines.v_](https://github.com/olgirard/opengfx430/blob/master/core/rtl/verilog/openGFX430_defines.v) file and defines the video memory address width.  
+**<sup><font color="#ff0000">2</font></sup>**: LUT memory interface is available if the **WITH\_PROGRAMMABLE\_LUT** macro is uncommented in the [_openGFX430\_defines.v_](https://github.com/olgirard/opengfx430/blob/master/core/rtl/verilog/openGFX430_defines.v) file.  
+**<sup><font color="#ff0000">3</font></sup>**: A single LUT bank needs 256 entries to support the 8bpp mode (thus 8 bit address bus). 9 bits of addresses are required if an extra LUT bank is added by uncommenting the **WITH\_EXTRA\_LUT\_BANK** macro in the [_openGFX430\_defines.v_](https://github.com/olgirard/opengfx430/blob/master/core/rtl/verilog/openGFX430_defines.v) file.  
 
 <a name="2_4_register_overview"></a>
 ### 2.4 Register overview
@@ -344,12 +344,12 @@ The following table provide the register overview of the openGFX430:
   <tbody>
     <tr><td align="center" bgcolor="#B0B0B0"><b>Register Name </b></td><td align="center" bgcolor="#B0B0B0"><b>Address offset</b></td><td align="center" bgcolor="#B0B0B0"><b>Description</b></td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md">Global control / status / irq</a></i></b></td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md#top">Global control / status / irq</a></i></b></td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md#2_1_GFX_CTRL">            GFX_CTRL</a>          &nbsp;</td><td align="center">   0x00   </td><td align="left" rowspan=1>&nbsp;Global control register</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md#2_2_GFX_STATUS">          GFX_STATUS</a>        &nbsp;</td><td align="center">   0x08   </td><td align="left" rowspan=1>&nbsp;Global status register</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md#2_3_GFX_IRQ">             GFX_IRQ</a>           &nbsp;</td><td align="center">   0x0A   </td><td align="left" rowspan=1>&nbsp;Global IRQ flag register</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md">Display configuration</a></i></b></td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#top">Display configuration</a></i></b></td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_1_DISPLAY_WIDTH">       DISPLAY_WIDTH</a>     &nbsp;</td><td align="center">   0x10   </td><td align="left" rowspan=1>&nbsp;Display pixel width</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_2_DISPLAY_HEIGHT">      DISPLAY_HEIGHT</a>    &nbsp;</td><td align="center">   0x12   </td><td align="left" rowspan=1>&nbsp;Display pixel height</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_3_DISPLAY_SIZE_LO_HI">  DISPLAY_SIZE_LO</a>   &nbsp;</td><td align="center">   0x14   </td><td align="left" rowspan=2>&nbsp;Display size (i.e. number of pixels)</td></tr>
@@ -357,7 +357,7 @@ The following table provide the register overview of the openGFX430:
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_4_DISPLAY_CFG">         DISPLAY_CFG</a>       &nbsp;</td><td align="center">   0x18   </td><td align="left" rowspan=1>&nbsp;Display refresh read configuration</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_5_DISPLAY_REFR_CNT">    DISPLAY_REFR_CNT</a>  &nbsp;</td><td align="center">   0x1A   </td><td align="left" rowspan=1>&nbsp;Display refresh counter</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md">LT24 configuration</a></i></b></td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#top">LT24 configuration</a></i></b></td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_1_LT24_CFG">               LT24_CFG</a>          &nbsp;</td><td align="center">   0x20   </td><td align="left" rowspan=1>&nbsp;LT24 screen control</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_2_LT24_REFRESH">           LT24_REFRESH</a>      &nbsp;</td><td align="center">   0x22   </td><td align="left" rowspan=1>&nbsp;LT24 refresh timing configuration</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_3_LT24_REFRESH_SYNC">      LT24_REFRESH_SYNC</a> &nbsp;</td><td align="center">   0x24   </td><td align="left" rowspan=1>&nbsp;LT24 refresh synchronization configuration</td></tr>
@@ -366,12 +366,12 @@ The following table provide the register overview of the openGFX430:
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_6_LT24_CMD_DFILL">         LT24_CMD_DFILL</a>    &nbsp;</td><td align="center">   0x2A   </td><td align="left" rowspan=1>&nbsp;LT24 command data fill</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/lt24_config.md#2_7_LT24_STATUS">            LT24_STATUS</a>       &nbsp;</td><td align="center">   0x2C   </td><td align="left" rowspan=1>&nbsp;LT24 status</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/color_lut.md">Color LUT Configuration & Memory Access Gate</a></i></b></td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/color_lut.md#top">Color LUT Configuration & Memory Access Gate</a></i></b></td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/color_lut.md#4_1_LUT_CFG">                  LUT_CFG</a>           &nbsp;</td><td align="center">   0x30   </td><td align="left" rowspan=1>&nbsp;LUT Configuration</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/color_lut.md#4_2_LUT_RAM_ADDR">             LUT_RAM_ADDR</a>      &nbsp;</td><td align="center">   0x32   </td><td align="left" rowspan=1>&nbsp;LUT-RAM address</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/color_lut.md#4_3_LUT_RAM_DATA">             LUT_RAM_DATA</a>      &nbsp;</td><td align="center">   0x34   </td><td align="left" rowspan=1>&nbsp;LUT-RAM data</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md">Frame pointers and selection</a></i></b></td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#top">Frame pointers and selection</a></i></b></td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_1_FRAME_SELECT">        FRAME_SELECT</a>      &nbsp;</td><td align="center">   0x3E   </td><td align="left" rowspan=1>&nbsp;Frame pointer selections</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME0_PTR_LO</a>     &nbsp;</td><td align="center">   0x40   </td><td align="left" rowspan=2>&nbsp;Frame address pointer 0</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME0_PTR_HI</a>     &nbsp;</td><td align="center">   0x42   </td></tr>
@@ -382,21 +382,21 @@ The following table provide the register overview of the openGFX430:
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME3_PTR_LO</a>     &nbsp;</td><td align="center">   0x4C   </td><td align="left" rowspan=2>&nbsp;Frame address pointer 3</td></tr>
     <tr><td align="left">&nbsp;<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/frame_pointers.md#2_2_FRAMEx_PTR">          FRAME3_PTR_HI</a>     &nbsp;</td><td align="center">   0x4E   </td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,video%20memory">First Video Memory Access Gate</a></i></b></td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i>First Video Memory Access Gate</i></b></td></tr>
     <tr><td align="left">&nbsp;VID_RAM0_CFG      &nbsp;</td><td align="center">   0x50   </td><td align="left">&nbsp;Video-RAM address generator configuration&nbsp;&nbsp;</td></tr>
     <tr><td align="left">&nbsp;VID_RAM0_WIDTH    &nbsp;</td><td align="center">   0x52   </td><td align="left">&nbsp;Window mode width configuration</td></tr>
     <tr><td align="left">&nbsp;VID_RAM0_ADDR_LO  &nbsp;</td><td align="center">   0x54   </td><td align="left" rowspan=2>&nbsp;Video-RAM address</td></tr>
     <tr><td align="left">&nbsp;VID_RAM0_ADDR_HI  &nbsp;</td><td align="center">   0x56   </td></tr>
     <tr><td align="left">&nbsp;VID_RAM0_DATA     &nbsp;</td><td align="center">   0x58   </td><td align="left">&nbsp;Video-RAM data</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,video%20memory">Second Video Memory Access Gate</a></i></b></td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i>Second Video Memory Access Gate</i></b></td></tr>
     <tr><td align="left">&nbsp;VID_RAM1_CFG      &nbsp;</td><td align="center">   0x60   </td><td align="left">&nbsp;Video-RAM address generator configuration</td></tr>
     <tr><td align="left">&nbsp;VID_RAM1_WIDTH    &nbsp;</td><td align="center">   0x62   </td><td align="left">&nbsp;Window mode width configuration</td></tr>
     <tr><td align="left">&nbsp;VID_RAM1_ADDR_LO  &nbsp;</td><td align="center">   0x64   </td><td align="left" rowspan=2>&nbsp;Video-RAM address</td></tr>
     <tr><td align="left">&nbsp;VID_RAM1_ADDR_HI  &nbsp;</td><td align="center">   0x66   </td></tr>
     <tr><td align="left">&nbsp;VID_RAM1_DATA     &nbsp;</td><td align="center">   0x68   </td><td align="left">&nbsp;Video-RAM data</td></tr>
 
-    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i><a href="http://opencores.org/project,opengfx430,gpu">Graphic Processing Unit</a></i></b></td></tr>
+    <tr><td colspan=3 align="center" bgcolor="#E0E0E0"><b><i>Graphic Processing Unit</i></b></td></tr>
     <tr><td align="left">&nbsp;GPU_CMD_LO        &nbsp;</td><td align="center">   0x70   </td><td align="left" rowspan=2>&nbsp;GPU command FIFO</td></tr>
     <tr><td align="left">&nbsp;GPU_CMD_HI        &nbsp;</td><td align="center">   0x72   </td></tr>
     <tr><td align="left">&nbsp;GPU_STAT          &nbsp;</td><td align="center">   0x74   </td><td align="left">&nbsp;GPU status</td></tr>

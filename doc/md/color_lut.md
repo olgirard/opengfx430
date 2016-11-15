@@ -54,8 +54,8 @@ In this mode, the hardware LUT implements the [8-bit truecolor](https://en.wikip
 |--------------|------------------|-------------------|-----------------|
 |  Data[7:0]   |  Data[7,6,5,5,5] | Data[4,3,2,2,2,2] | Data[1,0,0,0,0] |
 
-![8-bit truecolor](https://upload.wikimedia.org/wikipedia/commons/9/93/256colour.png)
-
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/256colour.png" alt="8-bit truecolor"  style="width:70%;">
+ 
 
 * **4 bit-per-pixel:**
 
@@ -63,25 +63,26 @@ The hardware LUT implements the regular 16 colors [CGA](https://en.wikipedia.org
 
 <table>
   <tbody>
-    <tr><td><b>Pixel value</b></td><td><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
-    <tr><td>0000</td><td bgcolor="#000000"><font color="#FFFFFF">Black        </font></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
-    <tr><td>0001</td><td bgcolor="#0000AA"><font color="#FFFFFF">Blue         </font></td><td>0x0015</td><td>00000</td><td>000000</td><td>10101</td></tr>
-    <tr><td>0010</td><td bgcolor="#00AA00"><font color="#FFFFFF">Green        </font></td><td>0x0560</td><td>00000</td><td>101011</td><td>00000</td></tr>
-    <tr><td>0011</td><td bgcolor="#00AAAA"><font color="#FFFFFF">Cyan         </font></td><td>0x0575</td><td>00000</td><td>101011</td><td>10101</td></tr>
-    <tr><td>0100</td><td bgcolor="#AA0000"><font color="#FFFFFF">Red          </font></td><td>0xA800</td><td>10101</td><td>000000</td><td>00000</td></tr>
-    <tr><td>0101</td><td bgcolor="#AA00AA"><font color="#FFFFFF">Magenta      </font></td><td>0xA815</td><td>10101</td><td>000000</td><td>10101</td></tr>
-    <tr><td>0110</td><td bgcolor="#AA5500"><font color="#000000">Brown        </font></td><td>0xAAA0</td><td>10101</td><td>010101</td><td>00000</td></tr>
-    <tr><td>0111</td><td bgcolor="#AAAAAA"><font color="#000000">Light Gray   </font></td><td>0xAD75</td><td>10101</td><td>101011</td><td>10101</td></tr>
-    <tr><td>1000</td><td bgcolor="#555555"><font color="#FFFFFF">Gray         </font></td><td>0x5AAB</td><td>01011</td><td>010101</td><td>01011</td></tr>
-    <tr><td>1001</td><td bgcolor="#5555FF"><font color="#FFFFFF">Light Blue   </font></td><td>0x5ABF</td><td>01011</td><td>010101</td><td>11111</td></tr>
-    <tr><td>1010</td><td bgcolor="#55FF55"><font color="#000000">Light Green  </font></td><td>0x5FEB</td><td>01011</td><td>111111</td><td>01011</td></tr>
-    <tr><td>1011</td><td bgcolor="#55FFFF"><font color="#000000">Light Cyan   </font></td><td>0x5FFF</td><td>01011</td><td>111111</td><td>11111</td></tr>
-    <tr><td>1100</td><td bgcolor="#FF5555"><font color="#000000">Light Red    </font></td><td>0xFAAB</td><td>11111</td><td>010101</td><td>01011</td></tr>
-    <tr><td>1101</td><td bgcolor="#FF55FF"><font color="#000000">Light Magenta</font></td><td>0xFABF</td><td>11111</td><td>010101</td><td>11111</td></tr>
-    <tr><td>1110</td><td bgcolor="#FFFF55"><font color="#000000">Yellow       </font></td><td>0xFFEB</td><td>11111</td><td>111111</td><td>01011</td></tr>
-    <tr><td>1111</td><td bgcolor="#FFFFFF"><font color="#000000">White        </font></td><td>0xFFFF</td><td>11111</td><td>111111</td><td>11111</td></tr>
+    <tr><td><b>Pixel value</b></td><td colspan="2"><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
+    <tr><td>0000</td><td>Black        </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_0_black.png"         alt="Black        " style="width:40%;"></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
+    <tr><td>0001</td><td>Blue         </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_1_blue.png"          alt="Blue         " style="width:40%;"></td><td>0x0015</td><td>00000</td><td>000000</td><td>10101</td></tr>
+    <tr><td>0010</td><td>Green        </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_2_green.png"         alt="Green        " style="width:40%;"></td><td>0x0560</td><td>00000</td><td>101011</td><td>00000</td></tr>
+    <tr><td>0011</td><td>Cyan         </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_3_cyan.png"          alt="Cyan         " style="width:40%;"></td><td>0x0575</td><td>00000</td><td>101011</td><td>10101</td></tr>
+    <tr><td>0100</td><td>Red          </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_4_red.png"           alt="Red          " style="width:40%;"></td><td>0xA800</td><td>10101</td><td>000000</td><td>00000</td></tr>
+    <tr><td>0101</td><td>Magenta      </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_5_magenta.png"       alt="Magenta      " style="width:40%;"></td><td>0xA815</td><td>10101</td><td>000000</td><td>10101</td></tr>
+    <tr><td>0110</td><td>Brown        </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_6_brown.png"         alt="Brown        " style="width:40%;"></td><td>0xAAA0</td><td>10101</td><td>010101</td><td>00000</td></tr>
+    <tr><td>0111</td><td>Light Gray   </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_7_light_gray.png"    alt="Light Gray   " style="width:40%;"></td><td>0xAD75</td><td>10101</td><td>101011</td><td>10101</td></tr>
+    <tr><td>1000</td><td>Gray         </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_8_gray.png"          alt="Gray         " style="width:40%;"></td><td>0x5AAB</td><td>01011</td><td>010101</td><td>01011</td></tr>
+    <tr><td>1001</td><td>Light Blue   </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_9_light_blue.png"    alt="Light Blue   " style="width:40%;"></td><td>0x5ABF</td><td>01011</td><td>010101</td><td>11111</td></tr>
+    <tr><td>1010</td><td>Light Green  </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_A_light_green.png"   alt="Light Green  " style="width:40%;"></td><td>0x5FEB</td><td>01011</td><td>111111</td><td>01011</td></tr>
+    <tr><td>1011</td><td>Light Cyan   </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_B_light_cyan.png"    alt="Light Cyan   " style="width:40%;"></td><td>0x5FFF</td><td>01011</td><td>111111</td><td>11111</td></tr>
+    <tr><td>1100</td><td>Light Red    </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_C_light_red.png"     alt="Light Red    " style="width:40%;"></td><td>0xFAAB</td><td>11111</td><td>010101</td><td>01011</td></tr>
+    <tr><td>1101</td><td>Light Magenta</td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_D_light_magenta.png" alt="Light Magenta" style="width:40%;"></td><td>0xFABF</td><td>11111</td><td>010101</td><td>11111</td></tr>
+    <tr><td>1110</td><td>Yellow       </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_E_yellow.png"        alt="Yellow       " style="width:40%;"></td><td>0xFFEB</td><td>11111</td><td>111111</td><td>01011</td></tr>
+    <tr><td>1111</td><td>White        </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_F_white.png"         alt="White        " style="width:40%;"></td><td>0xFFFF</td><td>11111</td><td>111111</td><td>11111</td></tr>
   </tbody>
 </table>
+
 
 * **2 bit-per-pixel:**
 
@@ -93,11 +94,11 @@ It is to be noted that the default color (Black) can be modified regardless of t
 
 <table>
   <tbody>
-    <tr><td><b>Pixel value</b></td><td><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
-    <tr><td>00</td><td bgcolor="#000000"><font color="#FFFFFF">Black <i>(default)</i></font></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
-    <tr><td>01</td><td bgcolor="#55FF55"><font color="#000000">Light Green  </font></td><td>0x5FEB</td><td>01011</td><td>111111</td><td>01011</td></tr>
-    <tr><td>10</td><td bgcolor="#FF5555"><font color="#000000">Light Red    </font></td><td>0xFAAB</td><td>11111</td><td>010101</td><td>01011</td></tr>
-    <tr><td>11</td><td bgcolor="#FFFF55"><font color="#000000">Yellow       </font></td><td>0xFFEB</td><td>11111</td><td>111111</td><td>01011</td></tr>
+    <tr><td><b>Pixel value</b></td><td colspan="2"><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
+    <tr><td>00</td><td>Black <i>(dflt)</i></td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_0_black.png"         alt="Black        " style="width:40%;"></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
+    <tr><td>01</td><td>Light Green        </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_A_light_green.png"   alt="Light Green  " style="width:40%;"></td><td>0x5FEB</td><td>01011</td><td>111111</td><td>01011</td></tr>
+    <tr><td>10</td><td>Light Red          </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_C_light_red.png"     alt="Light Red    " style="width:40%;"></td><td>0xFAAB</td><td>11111</td><td>010101</td><td>01011</td></tr>
+    <tr><td>11</td><td>Yellow             </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_E_yellow.png"        alt="Yellow       " style="width:40%;"></td><td>0xFFEB</td><td>11111</td><td>111111</td><td>01011</td></tr>
   </tbody>
 </table>
 
@@ -105,11 +106,11 @@ It is to be noted that the default color (Black) can be modified regardless of t
 
 <table>
   <tbody>
-    <tr><td><b>Pixel value</b></td><td><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
-    <tr><td>00</td><td bgcolor="#000000"><font color="#FFFFFF">Black <i>(default)</i></font></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
-    <tr><td>01</td><td bgcolor="#00AA00"><font color="#FFFFFF">Green        </font></td><td>0x0560</td><td>00000</td><td>101011</td><td>00000</td></tr>
-    <tr><td>10</td><td bgcolor="#AA0000"><font color="#FFFFFF">Red          </font></td><td>0xA800</td><td>10101</td><td>000000</td><td>00000</td></tr>
-    <tr><td>11</td><td bgcolor="#AA5500"><font color="#000000">Brown        </font></td><td>0xAAA0</td><td>10101</td><td>010101</td><td>00000</td></tr>
+    <tr><td><b>Pixel value</b></td><td colspan="2"><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
+    <tr><td>00</td><td>Black <i>(dflt)</i></td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_0_black.png"         alt="Black        " style="width:40%;"></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
+    <tr><td>01</td><td>Green              </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_2_green.png"         alt="Green        " style="width:40%;"></td><td>0x0560</td><td>00000</td><td>101011</td><td>00000</td></tr>
+    <tr><td>10</td><td>Red                </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_4_red.png"           alt="Red          " style="width:40%;"></td><td>0xA800</td><td>10101</td><td>000000</td><td>00000</td></tr>
+    <tr><td>11</td><td>Brown              </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_6_brown.png"         alt="Brown        " style="width:40%;"></td><td>0xAAA0</td><td>10101</td><td>010101</td><td>00000</td></tr>
   </tbody>
 </table>
 
@@ -117,11 +118,11 @@ It is to be noted that the default color (Black) can be modified regardless of t
 
 <table>
   <tbody>
-    <tr><td><b>Pixel value</b></td><td><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
-    <tr><td>00</td><td bgcolor="#000000"><font color="#FFFFFF">Black <i>(default)</i></font></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
-    <tr><td>01</td><td bgcolor="#55FFFF"><font color="#000000">Light Cyan   </font></td><td>0x5FFF</td><td>01011</td><td>111111</td><td>11111</td></tr>
-    <tr><td>10</td><td bgcolor="#FF55FF"><font color="#000000">Light Magenta</font></td><td>0xFABF</td><td>11111</td><td>010101</td><td>11111</td></tr>
-    <tr><td>11</td><td bgcolor="#FFFFFF"><font color="#000000">White        </font></td><td>0xFFFF</td><td>11111</td><td>111111</td><td>11111</td></tr>
+    <tr><td><b>Pixel value</b></td><td colspan="2"><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
+    <tr><td>00</td><td>Black <i>(dflt)</i></td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_0_black.png"         alt="Black        " style="width:40%;"></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
+    <tr><td>01</td><td>Light Cyan         </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_B_light_cyan.png"    alt="Light Cyan   " style="width:40%;"></td><td>0x5FFF</td><td>01011</td><td>111111</td><td>11111</td></tr>
+    <tr><td>10</td><td>Light Magenta      </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_D_light_magenta.png" alt="Light Magenta" style="width:40%;"></td><td>0xFABF</td><td>11111</td><td>010101</td><td>11111</td></tr>
+    <tr><td>11</td><td>White              </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_F_white.png"         alt="White        " style="width:40%;"></td><td>0xFFFF</td><td>11111</td><td>111111</td><td>11111</td></tr>
   </tbody>
 </table>
 
@@ -129,11 +130,11 @@ It is to be noted that the default color (Black) can be modified regardless of t
 
 <table>
   <tbody>
-    <tr><td><b>Pixel value</b></td><td><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
-    <tr><td>00</td><td bgcolor="#000000"><font color="#FFFFFF">Black <i>(default)</i></font></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
-    <tr><td>01</td><td bgcolor="#00AAAA"><font color="#FFFFFF">Cyan         </font></td><td>0x0575</td><td>00000</td><td>101011</td><td>10101</td></tr>
-    <tr><td>10</td><td bgcolor="#AA00AA"><font color="#FFFFFF">Magenta      </font></td><td>0xA815</td><td>10101</td><td>000000</td><td>10101</td></tr>
-    <tr><td>11</td><td bgcolor="#AAAAAA"><font color="#000000">Light Gray   </font></td><td>0xAD75</td><td>10101</td><td>101011</td><td>10101</td></tr>
+    <tr><td><b>Pixel value</b></td><td colspan="2"><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
+    <tr><td>00</td><td>Black <i>(dflt)</i></td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_0_black.png"         alt="Black        " style="width:40%;"></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
+    <tr><td>01</td><td>Cyan               </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_3_cyan.png"          alt="Cyan         " style="width:40%;"></td><td>0x0575</td><td>00000</td><td>101011</td><td>10101</td></tr>
+    <tr><td>10</td><td>Magenta            </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_5_magenta.png"       alt="Magenta      " style="width:40%;"></td><td>0xA815</td><td>10101</td><td>000000</td><td>10101</td></tr>
+    <tr><td>11</td><td>Light Gray         </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_7_light_gray.png"    alt="Light Gray   " style="width:40%;"></td><td>0xAD75</td><td>10101</td><td>101011</td><td>10101</td></tr>
   </tbody>
 </table>
 
@@ -141,11 +142,11 @@ It is to be noted that the default color (Black) can be modified regardless of t
 
 <table>
   <tbody>
-    <tr><td><b>Pixel value</b></td><td><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
-    <tr><td>00</td><td bgcolor="#000000"><font color="#FFFFFF">Black <i>(default)</i></font></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
-    <tr><td>01</td><td bgcolor="#55FFFF"><font color="#000000">Light Cyan   </font></td><td>0x5FFF</td><td>01011</td><td>111111</td><td>11111</td></tr>
-    <tr><td>10</td><td bgcolor="#FF5555"><font color="#000000">Light Red    </font></td><td>0xFAAB</td><td>11111</td><td>010101</td><td>01011</td></tr>
-    <tr><td>11</td><td bgcolor="#FFFFFF"><font color="#000000">White        </font></td><td>0xFFFF</td><td>11111</td><td>111111</td><td>11111</td></tr>
+    <tr><td><b>Pixel value</b></td><td colspan="2"><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
+    <tr><td>00</td><td>Black <i>(dflt)</i></td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_0_black.png"         alt="Black        " style="width:40%;"></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
+    <tr><td>01</td><td>Light Cyan         </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_B_light_cyan.png"    alt="Light Cyan   " style="width:40%;"></td><td>0x5FFF</td><td>01011</td><td>111111</td><td>11111</td></tr>
+    <tr><td>10</td><td>Light Red          </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_C_light_red.png"     alt="Light Red    " style="width:40%;"></td><td>0xFAAB</td><td>11111</td><td>010101</td><td>01011</td></tr>
+    <tr><td>11</td><td>White              </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_F_white.png"         alt="White        " style="width:40%;"></td><td>0xFFFF</td><td>11111</td><td>111111</td><td>11111</td></tr>
   </tbody>
 </table>
 
@@ -153,11 +154,11 @@ It is to be noted that the default color (Black) can be modified regardless of t
 
 <table>
   <tbody>
-    <tr><td><b>Pixel value</b></td><td><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
-    <tr><td>00</td><td bgcolor="#000000"><font color="#FFFFFF">Black <i>(default)</i></font></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
-    <tr><td>01</td><td bgcolor="#00AAAA"><font color="#FFFFFF">Cyan         </font></td><td>0x0575</td><td>00000</td><td>101011</td><td>10101</td></tr>
-    <tr><td>10</td><td bgcolor="#AA0000"><font color="#FFFFFF">Red          </font></td><td>0xA800</td><td>10101</td><td>000000</td><td>00000</td></tr>
-    <tr><td>11</td><td bgcolor="#AAAAAA"><font color="#000000">Light Gray   </font></td><td>0xAD75</td><td>10101</td><td>101011</td><td>10101</td></tr>
+    <tr><td><b>Pixel value</b></td><td colspan="2"><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
+    <tr><td>00</td><td>Black <i>(dflt)</i></td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_0_black.png"         alt="Black        " style="width:40%;"></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
+    <tr><td>01</td><td>Cyan               </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_3_cyan.png"          alt="Cyan         " style="width:40%;"></td><td>0x0575</td><td>00000</td><td>101011</td><td>10101</td></tr>
+    <tr><td>10</td><td>Red                </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_4_red.png"           alt="Red          " style="width:40%;"></td><td>0xA800</td><td>10101</td><td>000000</td><td>00000</td></tr>
+    <tr><td>11</td><td>Light Gray         </td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_7_light_gray.png"    alt="Light Gray   " style="width:40%;"></td><td>0xAD75</td><td>10101</td><td>101011</td><td>10101</td></tr>
   </tbody>
 </table>
 
@@ -170,9 +171,9 @@ However, it is possible to modify them with any of the 16 standard CGA color usi
 
 <table>
   <tbody>
-    <tr><td><b>Pixel value</b></td><td><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
-    <tr><td>0</td><td bgcolor="#000000"><font color="#FFFFFF">Black <i>(default)</i></font></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
-    <tr><td>1</td><td bgcolor="#FFFFFF"><font color="#000000">White <i>(default)</i></font></td><td>0xFFFF</td><td>11111</td><td>111111</td><td>11111</td></tr>
+    <tr><td><b>Pixel value</b></td><td colspan="2"><b>Color</b></td><td><b>RGB[15:0]</b></td><td><b>R[4:0]</b></td><td><b>G[5:0]</b></td><td><b>B[4:0]</b></td></tr>
+    <tr><td>0</td><td>Black <i>(dflt)</i></td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_0_black.png"         alt="Black        " style="width:40%;"></td><td>0x0000</td><td>00000</td><td>000000</td><td>00000</td></tr>
+    <tr><td>1</td><td>White <i>(dflt)</i></td><td align="center"><img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/lut_F_white.png"         alt="White        " style="width:40%;"></td><td>0xFFFF</td><td>11111</td><td>111111</td><td>11111</td></tr>
   </tbody>
 </table>
 
@@ -270,27 +271,27 @@ my_data[3]   = LUT_RAM_DATA; // Read data from address 0x93
 <tbody>
     <tr><td valign="top">&#8226;&emsp;<b>HW_LUT_FGCOLOR     </b></td><td>Select foreground color for 1-BPP mode.<br>Default color is White (15).<br>
                                                        &emsp;&emsp;<code>n  = select from 16 standard CGA colors</code><br>
-                                                       &emsp;&emsp;<code>&emsp;&emsp;&emsp;&emsp;
-&rarr;<span style="background-color: #000000">&emsp;&emsp;</span><span style="background-color: #0000AA">&emsp;&emsp;</span><span style="background-color: #00AA00">&emsp;&emsp;</span><span style="background-color: #00AAAA">&emsp;&emsp;</span><span style="background-color: #AA0000">&emsp;&emsp;</span><span style="background-color: #AA00AA">&emsp;&emsp;</span><span style="background-color: #AA5500">&emsp;&emsp;</span><span style="background-color: #AAAAAA">&emsp;&emsp;</span><span style="background-color: #555555">&emsp;&emsp;</span><span style="background-color: #5555FF">&emsp;&emsp;</span><span style="background-color: #55FF55">&emsp;&emsp;</span><span style="background-color: #55FFFF">&emsp;&emsp;</span><span style="background-color: #FF5555">&emsp;&emsp;</span><span style="background-color: #FF55FF">&emsp;&emsp;</span><span style="background-color: #FFFF55">&emsp;&emsp;</span><span style="background-color: #FFFFFF">&emsp;&emsp;</span>&larr;</code><br>
+                                                       &emsp;&emsp;<img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/cga_16_colors.png" alt="16 CGA Colors" style="width:75%;"><br>
+                                                       </td></tr>
 
     <tr><td valign="top">&#8226;&emsp;<b>HW_LUT_BGCOLOR     </b></td><td>Select background color for 1-BPP and 2-BPP modes.<br>Default color is Black (0).<br>
                                                        &emsp;&emsp;<code>n  = select from 16 standard CGA colors</code><br>
-                                                       &emsp;&emsp;<code>&emsp;&emsp;&emsp;&emsp;
-&rarr;<span style="background-color: #000000">&emsp;&emsp;</span><span style="background-color: #0000AA">&emsp;&emsp;</span><span style="background-color: #00AA00">&emsp;&emsp;</span><span style="background-color: #00AAAA">&emsp;&emsp;</span><span style="background-color: #AA0000">&emsp;&emsp;</span><span style="background-color: #AA00AA">&emsp;&emsp;</span><span style="background-color: #AA5500">&emsp;&emsp;</span><span style="background-color: #AAAAAA">&emsp;&emsp;</span><span style="background-color: #555555">&emsp;&emsp;</span><span style="background-color: #5555FF">&emsp;&emsp;</span><span style="background-color: #55FF55">&emsp;&emsp;</span><span style="background-color: #55FFFF">&emsp;&emsp;</span><span style="background-color: #FF5555">&emsp;&emsp;</span><span style="background-color: #FF55FF">&emsp;&emsp;</span><span style="background-color: #FFFF55">&emsp;&emsp;</span><span style="background-color: #FFFFFF">&emsp;&emsp;</span>&larr;</code><br>
+                                                       &emsp;&emsp;<img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/cga_16_colors.png" alt="16 CGA Colors" style="width:75%;"><br>
+                                                       </td></tr>
 
     <tr><td valign="top">&#8226;&emsp;<b>HW_LUT_PALETTE_SEL </b></td><td>Hardware palette selection for 2-BPP graphic mode.<br>
-                                                       &emsp;&emsp;<code>0  = Palette #0, high-intensity
-&rarr;<span style="background-color: #000000">&emsp;</span><span style="background-color: #55FF55">&emsp;</span><span style="background-color: #FF5555">&emsp;</span><span style="background-color: #FFFF55">&emsp;</span>&larr;</code><br>
-                                                       &emsp;&emsp;<code>1  = Palette #0, low-intensity
-&rarr;<span style="background-color: #000000">&emsp;</span><span style="background-color: #00AA00">&emsp;</span><span style="background-color: #AA0000">&emsp;</span><span style="background-color: #AA5500">&emsp;</span>&larr;</code><br>
-                                                       &emsp;&emsp;<code>2  = Palette #1, high-intensity
-&rarr;<span style="background-color: #000000">&emsp;</span><span style="background-color: #55FFFF">&emsp;</span><span style="background-color: #FF55FF">&emsp;</span><span style="background-color: #FFFFFF">&emsp;</span>&larr;</code><br>
-                                                       &emsp;&emsp;<code>3  = Palette #1, low-intensity
-&rarr;<span style="background-color: #000000">&emsp;</span><span style="background-color: #00AAAA">&emsp;</span><span style="background-color: #AA00AA">&emsp;</span><span style="background-color: #AAAAAA">&emsp;</span>&larr;</code><br>
-                                                       &emsp;&emsp;<code>4  = Palette #2, high-intensity
-&rarr;<span style="background-color: #000000">&emsp;</span><span style="background-color: #55FFFF">&emsp;</span><span style="background-color: #FF5555">&emsp;</span><span style="background-color: #FFFFFF">&emsp;</span>&larr;</code><br>
-                                                       &emsp;&emsp;<code>others = Palette #2, low-intensity
-&rarr;<span style="background-color: #000000">&emsp;</span><span style="background-color: #00AAAA">&emsp;</span><span style="background-color: #AA0000">&emsp;</span><span style="background-color: #AAAAAA">&emsp;</span>&larr;</code><br>
+                                                       &emsp;&emsp;<code>0  = Palette #0, high-intensity</code>
+<img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/cga_4_colors_pal0_hi.png" alt="4 CGA Colors - palette #0 - high" style="width:15%;"><br>
+                                                       &emsp;&emsp;<code>1  = Palette #0, low-intensity</code>
+<img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/cga_4_colors_pal0_lo.png" alt="4 CGA Colors - palette #0 - low"  style="width:15%;"><br>
+                                                       &emsp;&emsp;<code>2  = Palette #1, high-intensity</code>
+<img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/cga_4_colors_pal1_hi.png" alt="4 CGA Colors - palette #1 - high" style="width:15%;"><br>
+                                                       &emsp;&emsp;<code>3  = Palette #1, low-intensity</code>
+<img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/cga_4_colors_pal1_lo.png" alt="4 CGA Colors - palette #1 - low"  style="width:15%;"><br>
+                                                       &emsp;&emsp;<code>4  = Palette #2, high-intensity</code>
+<img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/cga_4_colors_pal2_hi.png" alt="4 CGA Colors - palette #2 - high" style="width:15%;"><br>
+                                                       &emsp;&emsp;<code>others = Palette #2, low-intensity</code>
+<img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/cga_4_colors_pal2_lo.png" alt="4 CGA Colors - palette #2 - low"  style="width:15%;"><br>
                                                        </td></tr>
     <tr><td valign="top">&#8226;&emsp;<b>SW_LUT_BANK_SEL    </b></td><td>Software LUT bank selection.<br>
                                                        &emsp;&emsp;<code>0  = Select BANK 0</code><br>
@@ -405,6 +406,7 @@ my_data[3]   = LUT_RAM_DATA; // Read data from address 0x93
     </tr>
   </tbody>
 </table>
+
 
 <table border="0">
 <tbody>

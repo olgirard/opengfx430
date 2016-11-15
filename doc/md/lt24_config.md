@@ -82,7 +82,7 @@ Further information about the particular commands that can be sent to the contro
                                                        &emsp;&emsp;<code><b><i>n</i></b>  = WRX period is <b>2*(n+1)*T<sub>system-clock</sub></b>.</code><br>
                                                        &emsp;&emsp;<code>7  = WRX period is <b>16*T<sub>system-clock</sub></b>.</code><br><br>
                                                        Note that the time required to refresh the complete screen is calculated with the following formula:<br>
-                                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<b>t<sub>refresh</sub></b> = 2*(n+1)*T<sub>system-clock</sub>*<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/global_control.md#2_1_GFX_CTRL">D_SIZE</a></td></tr>
+                                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<b>t<sub>refresh</sub></b> = 2*(<b><i>n</i></b>+1)*T<sub>system-clock</sub>*<a href="https://github.com/olgirard/opengfx430/blob/master/doc/md/display_config.md#2_3_DISPLAY_SIZE_LO_HI">D_SIZE</a></td></tr>
     <tr><td valign="top">&#8226;&emsp;<b>LT24_RESET    </b></td><td>Reset the LT24 module.<br>
                                                        &emsp;&emsp;<code>0  = Reset released</code><br>
                                                        &emsp;&emsp;<code>1  = Reset asserted</code></td></tr>
@@ -143,8 +143,10 @@ Further information about the particular commands that can be sent to the contro
                                                        &emsp;&emsp;<code>0x000  = Manual refresh mode</code><br>
                                                        &emsp;&emsp;<code>&nbsp;&nbsp;<b><i>n</i></b>&nbsp;&nbsp;  = Automatic refresh mode:</code><br>
                                                        &emsp;&emsp;<code>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<b>T<sub>refresh</sub></b> = (<b>n</b>*2<sup>12</sup>+1)*T<sub>system-clock</sub></code><br><br>
+                                                       For example, with a 50MHz system clock (i.e. T<sub>system-clock</sub>=20ns) and <b><i>n</i></b> being set to 203, the screen is refreshed every 16.6ms (i.e. 60.1 Frame-Per-Seconds).
+                                                       <br><br>
                                                        Note that it is not possible to have a refresh period (<b>T<sub>refresh</sub></b>) smaller than the time it takes to refresh a single frame (<b>t<sub>refresh</sub></b>).<br>
-                                                       In that case, <b>T<sub>refresh</sub></b> = <b>t<sub>refresh</sub></b>.
+                                                       In such a scenario, <b>T<sub>refresh</sub></b> is clamped and becomes equal to <b>t<sub>refresh</sub></b>.
                                                        </td></tr>
     <tr><td valign="top">&#8226;&emsp;<b>LT24_CFG_START </b></td><td>Enable/Disable screen refresh<br>
                                                        &emsp;&emsp;<code>0  = Stop screen refresh.</code><br>
@@ -216,6 +218,8 @@ Further information about the particular commands that can be sent to the contro
 
 <a name="2_4_LT24_CMD"></a>
 ### 2.4 LT24_CMD
+
+Both <b><i>LT24_CMD</i></b> and <b><i>LT24_CMD_PARAM</i></b> registers are used to send custom commands to the ILI9341 controller (see list of commands in the section 8 of the <a href="https://github.com/olgirard/openmsp430/blob/master/fpga/altera_de0_nano_soc/doc/Terasic/LT24/ILI9341.pdf">spec</a>).
 
 <table border="1" style="table-layout:fixed; width:100%; font-size:.8em">
   <tbody>
