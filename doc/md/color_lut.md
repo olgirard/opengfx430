@@ -54,8 +54,7 @@ In this mode, the hardware LUT implements the [8-bit truecolor](https://en.wikip
 |--------------|------------------|-------------------|-----------------|
 |  Data[7:0]   |  Data[7,6,5,5,5] | Data[4,3,2,2,2,2] | Data[1,0,0,0,0] |
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/256colour.png" alt="8-bit truecolor"  style="width:70%;">
- 
+<img src="https://raw.githubusercontent.com/olgirard/opengfx430/master/doc/images/truecolor_8bit.png" alt="8-bit truecolor"  style="width:70%;">
 
 * **4 bit-per-pixel:**
 
