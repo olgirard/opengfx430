@@ -321,7 +321,7 @@ reg      refresh_data_request_reg;
 always @(posedge mclk or posedge puc_rst)
   if (puc_rst) refresh_data_request_reg <= 1'b0;
   else         refresh_data_request_reg <= refresh_data_request_clr ? 1'b0 :
-                                         refresh_data_request_set ? 1'b1 : refresh_data_request_reg;
+                                           refresh_data_request_set ? 1'b1 : refresh_data_request_reg;
 
 assign   refresh_data_request_o  = refresh_data_request_reg & ~refresh_data_ready_i;
 
@@ -379,7 +379,7 @@ always @(lt24_state_nxt or cmd_generic_cmd_val_i or cmd_generic_param_val_i or l
     STATE_IDLE               : lt24_d_nxt = 16'h0000;
 
     STATE_CMD_LO,
-    STATE_CMD_HI	     : lt24_d_nxt = {8'h00, cmd_generic_cmd_val_i};
+    STATE_CMD_HI	           : lt24_d_nxt = {8'h00, cmd_generic_cmd_val_i};
     STATE_CMD_PARAM_LO,
     STATE_CMD_PARAM_HI	     : lt24_d_nxt = cmd_generic_param_val_i;
     STATE_CMD_PARAM_WAIT     : lt24_d_nxt = lt24_d_o;
@@ -413,11 +413,11 @@ reg lt24_d_en_o;
 always @(posedge mclk or posedge puc_rst)
   if (puc_rst) lt24_d_en_o <= 1'h0;       // Don't drive output during reset
   else         lt24_d_en_o <= ~((lt24_state_nxt == STATE_SCANLINE_DUMMY_LO) |
-				(lt24_state_nxt == STATE_SCANLINE_DUMMY_HI) |
-				(lt24_state_nxt == STATE_SCANLINE_GTS1_LO ) |
-				(lt24_state_nxt == STATE_SCANLINE_GTS1_HI ) |
-				(lt24_state_nxt == STATE_SCANLINE_GTS2_LO ) |
-				(lt24_state_nxt == STATE_SCANLINE_GTS2_HI ));
+				                        (lt24_state_nxt == STATE_SCANLINE_DUMMY_HI) |
+				                        (lt24_state_nxt == STATE_SCANLINE_GTS1_LO ) |
+				                        (lt24_state_nxt == STATE_SCANLINE_GTS1_HI ) |
+				                        (lt24_state_nxt == STATE_SCANLINE_GTS2_LO ) |
+				                        (lt24_state_nxt == STATE_SCANLINE_GTS2_HI ));
 
 //============================================================================
 // 7) LT24 GTS VALUE (i.e. CURRENT SCAN LINE)

@@ -25,7 +25,7 @@
 // *File Name: ogfx_reg.v
 //
 // *Module Description:
-//                      Registers for oMSP programming.
+//                      Registers for oGFX programming.
 //
 // *Author(s):
 //              - Olivier Girard,    olgirard@gmail.com
@@ -48,20 +48,6 @@ module  ogfx_reg (
     gpu_data_o,                                // GPU data
     gpu_data_avail_o,                          // GPU data available
     gpu_enable_o,                              // GPU enable
-
-    lt24_reset_n_o,                            // LT24 Reset (Active Low)
-    lt24_on_o,                                 // LT24 on/off
-    lt24_cfg_clk_o,                            // LT24 Interface clock configuration
-    lt24_cfg_refr_o,                           // LT24 Interface refresh configuration
-    lt24_cfg_refr_sync_en_o,                   // LT24 Interface refresh sync enable configuration
-    lt24_cfg_refr_sync_val_o,                  // LT24 Interface refresh sync value configuration
-    lt24_cmd_refr_o,                           // LT24 Interface refresh command
-    lt24_cmd_val_o,                            // LT24 Generic command value
-    lt24_cmd_has_param_o,                      // LT24 Generic command has parameters
-    lt24_cmd_param_o,                          // LT24 Generic command parameter value
-    lt24_cmd_param_rdy_o,                      // LT24 Generic command trigger
-    lt24_cmd_dfill_o,                          // LT24 Data fill value
-    lt24_cmd_dfill_wr_o,                       // LT24 Data fill trigger
 
     display_width_o,                           // Display width
     display_height_o,                          // Display height
@@ -99,9 +85,6 @@ module  ogfx_reg (
     gpu_cmd_error_evt_i,                       // GPU command error event
     gpu_dma_busy_i,                            // GPU DMA execution on going
     gpu_get_data_i,                            // GPU get next data
-    lt24_status_i,                             // LT24 FSM Status
-    lt24_start_evt_i,                          // LT24 FSM is starting
-    lt24_done_evt_i,                           // LT24 FSM is done
     mclk,                                      // Main system clock
     per_addr_i,                                // Peripheral address
     per_din_i,                                 // Peripheral data input
@@ -128,20 +111,6 @@ output               irq_gfx_o;                // Graphic Controller interrupt
 output        [15:0] gpu_data_o;               // GPU data
 output               gpu_data_avail_o;         // GPU data available
 output               gpu_enable_o;             // GPU enable
-
-output               lt24_reset_n_o;           // LT24 Reset (Active Low)
-output               lt24_on_o;                // LT24 on/off
-output         [2:0] lt24_cfg_clk_o;           // LT24 Interface clock configuration
-output        [11:0] lt24_cfg_refr_o;          // LT24 Interface refresh configuration
-output               lt24_cfg_refr_sync_en_o;  // LT24 Interface refresh sync configuration
-output         [9:0] lt24_cfg_refr_sync_val_o; // LT24 Interface refresh sync value configuration
-output               lt24_cmd_refr_o;          // LT24 Interface refresh command
-output         [7:0] lt24_cmd_val_o;           // LT24 Generic command value
-output               lt24_cmd_has_param_o;     // LT24 Generic command has parameters
-output        [15:0] lt24_cmd_param_o;         // LT24 Generic command parameter value
-output               lt24_cmd_param_rdy_o;     // LT24 Generic command trigger
-output        [15:0] lt24_cmd_dfill_o;         // LT24 Data fill value
-output               lt24_cmd_dfill_wr_o;      // LT24 Data fill trigger
 
 output [`LPIX_MSB:0] display_width_o;          // Display width
 output [`LPIX_MSB:0] display_height_o;         // Display height
@@ -180,9 +149,6 @@ input                gpu_cmd_done_evt_i;       // GPU command done event
 input                gpu_cmd_error_evt_i;      // GPU command error event
 input                gpu_dma_busy_i;           // GPU DMA execution on going
 input                gpu_get_data_i;           // GPU get next data
-input          [4:0] lt24_status_i;            // LT24 FSM Status
-input                lt24_start_evt_i;         // LT24 FSM is starting
-input                lt24_done_evt_i;          // LT24 FSM is done
 input                mclk;                     // Main system clock
 input         [13:0] per_addr_i;               // Peripheral address
 input         [15:0] per_din_i;                // Peripheral data input
@@ -214,43 +180,35 @@ parameter [DEC_WD-1:0] GFX_CTRL            = 'h00,  // General control/status/ir
                        DISPLAY_CFG         = 'h18,
                        DISPLAY_REFR_CNT    = 'h1A,
 
-                       LT24_CFG            = 'h20,  // LT24 configuration and Generic command sending
-                       LT24_REFRESH        = 'h22,
-                       LT24_REFRESH_SYNC   = 'h24,
-                       LT24_CMD            = 'h26,
-                       LT24_CMD_PARAM      = 'h28,
-                       LT24_CMD_DFILL      = 'h2A,
-                       LT24_STATUS         = 'h2C,
+                       LUT_CFG             = 'h20,  // LUT Configuration & Memory Access Gate
+                       LUT_RAM_ADDR        = 'h22,
+                       LUT_RAM_DATA        = 'h24,
 
-                       LUT_CFG             = 'h30,  // LUT Configuration & Memory Access Gate
-                       LUT_RAM_ADDR        = 'h32,
-                       LUT_RAM_DATA        = 'h34,
+                       FRAME_SELECT        = 'h2E,  // Frame pointers and selection
+                       FRAME0_PTR_LO       = 'h30,
+                       FRAME0_PTR_HI       = 'h32,
+                       FRAME1_PTR_LO       = 'h34,
+                       FRAME1_PTR_HI       = 'h36,
+                       FRAME2_PTR_LO       = 'h38,
+                       FRAME2_PTR_HI       = 'h3A,
+                       FRAME3_PTR_LO       = 'h3C,
+                       FRAME3_PTR_HI       = 'h3E,
 
-                       FRAME_SELECT        = 'h3E,  // Frame pointers and selection
-                       FRAME0_PTR_LO       = 'h40,
-                       FRAME0_PTR_HI       = 'h42,
-                       FRAME1_PTR_LO       = 'h44,
-                       FRAME1_PTR_HI       = 'h46,
-                       FRAME2_PTR_LO       = 'h48,
-                       FRAME2_PTR_HI       = 'h4A,
-                       FRAME3_PTR_LO       = 'h4C,
-                       FRAME3_PTR_HI       = 'h4E,
+                       VID_RAM0_CFG        = 'h40,  // First Video Memory Access Gate
+                       VID_RAM0_WIDTH      = 'h42,
+                       VID_RAM0_ADDR_LO    = 'h44,
+                       VID_RAM0_ADDR_HI    = 'h46,
+                       VID_RAM0_DATA       = 'h48,
 
-                       VID_RAM0_CFG        = 'h50,  // First Video Memory Access Gate
-                       VID_RAM0_WIDTH      = 'h52,
-                       VID_RAM0_ADDR_LO    = 'h54,
-                       VID_RAM0_ADDR_HI    = 'h56,
-                       VID_RAM0_DATA       = 'h58,
+                       VID_RAM1_CFG        = 'h50,  // Second Video Memory Access Gate
+                       VID_RAM1_WIDTH      = 'h52,
+                       VID_RAM1_ADDR_LO    = 'h54,
+                       VID_RAM1_ADDR_HI    = 'h56,
+                       VID_RAM1_DATA       = 'h58,
 
-                       VID_RAM1_CFG        = 'h60,  // Second Video Memory Access Gate
-                       VID_RAM1_WIDTH      = 'h62,
-                       VID_RAM1_ADDR_LO    = 'h64,
-                       VID_RAM1_ADDR_HI    = 'h66,
-                       VID_RAM1_DATA       = 'h68,
-
-                       GPU_CMD_LO          = 'h70,  // Graphic Processing Unit
-                       GPU_CMD_HI          = 'h72,
-                       GPU_STAT            = 'h74;
+                       GPU_CMD_LO          = 'h60,  // Graphic Processing Unit
+                       GPU_CMD_HI          = 'h62,
+                       GPU_STAT            = 'h64;
 
 
 // Register one-hot decoder utilities
@@ -268,14 +226,6 @@ parameter [DEC_SZ-1:0] GFX_CTRL_D          = (BASE_REG << GFX_CTRL          ),
                        DISPLAY_SIZE_HI_D   = (BASE_REG << DISPLAY_SIZE_HI   ),
                        DISPLAY_CFG_D       = (BASE_REG << DISPLAY_CFG       ),
                        DISPLAY_REFR_CNT_D  = (BASE_REG << DISPLAY_REFR_CNT  ),
-
-                       LT24_CFG_D          = (BASE_REG << LT24_CFG          ),
-                       LT24_REFRESH_D      = (BASE_REG << LT24_REFRESH      ),
-                       LT24_REFRESH_SYNC_D = (BASE_REG << LT24_REFRESH_SYNC ),
-                       LT24_CMD_D          = (BASE_REG << LT24_CMD          ),
-                       LT24_CMD_PARAM_D    = (BASE_REG << LT24_CMD_PARAM    ),
-                       LT24_CMD_DFILL_D    = (BASE_REG << LT24_CMD_DFILL    ),
-                       LT24_STATUS_D       = (BASE_REG << LT24_STATUS       ),
 
                        LUT_CFG_D           = (BASE_REG << LUT_CFG           ),
                        LUT_RAM_ADDR_D      = (BASE_REG << LUT_RAM_ADDR      ),
@@ -329,14 +279,6 @@ wire  [DEC_SZ-1:0] reg_dec   =  (GFX_CTRL_D          &  {DEC_SZ{(reg_addr == GFX
                                 (DISPLAY_SIZE_HI_D   &  {DEC_SZ{(reg_addr == DISPLAY_SIZE_HI   )}})  |
                                 (DISPLAY_CFG_D       &  {DEC_SZ{(reg_addr == DISPLAY_CFG       )}})  |
                                 (DISPLAY_REFR_CNT_D  &  {DEC_SZ{(reg_addr == DISPLAY_REFR_CNT  )}})  |
-
-                                (LT24_CFG_D          &  {DEC_SZ{(reg_addr == LT24_CFG          )}})  |
-                                (LT24_REFRESH_D      &  {DEC_SZ{(reg_addr == LT24_REFRESH      )}})  |
-                                (LT24_REFRESH_SYNC_D &  {DEC_SZ{(reg_addr == LT24_REFRESH_SYNC )}})  |
-                                (LT24_CMD_D          &  {DEC_SZ{(reg_addr == LT24_CMD          )}})  |
-                                (LT24_CMD_PARAM_D    &  {DEC_SZ{(reg_addr == LT24_CMD_PARAM    )}})  |
-                                (LT24_CMD_DFILL_D    &  {DEC_SZ{(reg_addr == LT24_CMD_DFILL    )}})  |
-                                (LT24_STATUS_D       &  {DEC_SZ{(reg_addr == LT24_STATUS       )}})  |
 
                                 (LUT_CFG_D           &  {DEC_SZ{(reg_addr == LUT_CFG           )}})  |
                                 (LUT_RAM_ADDR_D      &  {DEC_SZ{(reg_addr == LUT_RAM_ADDR      )}})  |
@@ -437,13 +379,12 @@ wire        gfx_mode_16_bpp          = ~(gfx_mode_8_bpp | gfx_mode_4_bpp | gfx_m
 wire  [15:0] gfx_status;
 wire         gpu_busy;
 
-assign       gfx_status[0]    = lt24_status_i[2]; // Screen Refresh is busy
-assign       gfx_status[3:1]  = 3'b000;
+assign       gfx_status[3:0]  = 4'b0000;
 assign       gfx_status[4]    = gpu_data_avail_o;
 assign       gfx_status[5]    = 1'b0;
 assign       gfx_status[6]    = gpu_busy;
 assign       gfx_status[7]    = 1'b0;
-assign       gfx_status[15:8] = 15'h0000;
+assign       gfx_status[15:8] = 8'h00;
 
 //------------------------------------------------
 // GFX_IRQ Register
@@ -451,12 +392,6 @@ assign       gfx_status[15:8] = 15'h0000;
 wire [15:0] gfx_irq;
 
 // Clear IRQ when 1 is written. Set IRQ when FSM is done
-wire        gfx_irq_refr_done_clr     = per_din_i[0] & reg_wr[GFX_IRQ];
-wire        gfx_irq_refr_done_set     = lt24_done_evt_i;
-
-wire        gfx_irq_refr_start_clr    = per_din_i[1] & reg_wr[GFX_IRQ];
-wire        gfx_irq_refr_start_set    = lt24_start_evt_i;
-
 wire        gfx_irq_refr_cnt_done_clr = per_din_i[2] & reg_wr[GFX_IRQ];
 wire        gfx_irq_refr_cnt_done_set = refr_cnt_done_evt;
 
@@ -472,8 +407,6 @@ wire        gfx_irq_gpu_cmd_done_set  = gpu_cmd_done_evt_i;
 wire        gfx_irq_gpu_cmd_error_clr = per_din_i[7] & reg_wr[GFX_IRQ];
 wire        gfx_irq_gpu_cmd_error_set = gpu_cmd_error_evt_i;
 
-reg         gfx_irq_refr_done;
-reg         gfx_irq_refr_start;
 reg         gfx_irq_refr_cnt_done;
 reg         gfx_irq_gpu_fifo_done;
 reg         gfx_irq_gpu_fifo_ovfl;
@@ -482,8 +415,6 @@ reg         gfx_irq_gpu_cmd_error;
 always @ (posedge mclk or posedge puc_rst)
   if (puc_rst)
     begin
-       gfx_irq_refr_done     <=  1'b0;
-       gfx_irq_refr_start    <=  1'b0;
        gfx_irq_refr_cnt_done <=  1'b0;
        gfx_irq_gpu_fifo_done <=  1'b0;
        gfx_irq_gpu_fifo_ovfl <=  1'b0;
@@ -492,8 +423,6 @@ always @ (posedge mclk or posedge puc_rst)
     end
   else
     begin
-       gfx_irq_refr_done     <=  (gfx_irq_refr_done_set     | (~gfx_irq_refr_done_clr     & gfx_irq_refr_done    )); // IRQ set has priority over clear
-       gfx_irq_refr_start    <=  (gfx_irq_refr_start_set    | (~gfx_irq_refr_start_clr    & gfx_irq_refr_start   )); // IRQ set has priority over clear
        gfx_irq_refr_cnt_done <=  (gfx_irq_refr_cnt_done_set | (~gfx_irq_refr_cnt_done_clr & gfx_irq_refr_cnt_done)); // IRQ set has priority over clear
        gfx_irq_gpu_fifo_done <=  (gfx_irq_gpu_fifo_done_set | (~gfx_irq_gpu_fifo_done_clr & gfx_irq_gpu_fifo_done)); // IRQ set has priority over clear
        gfx_irq_gpu_fifo_ovfl <=  (gfx_irq_gpu_fifo_ovfl_set | (~gfx_irq_gpu_fifo_ovfl_clr & gfx_irq_gpu_fifo_ovfl)); // IRQ set has priority over clear
@@ -503,11 +432,9 @@ always @ (posedge mclk or posedge puc_rst)
 
 assign  gfx_irq   = {8'h00,
                      gfx_irq_gpu_cmd_error, gfx_irq_gpu_cmd_done, gfx_irq_gpu_fifo_ovfl, gfx_irq_gpu_fifo_done,
-                     2'h0, gfx_irq_refr_start, gfx_irq_refr_done};
+                     4'h0};
 
-assign  irq_gfx_o = (gfx_irq_refr_done     & gfx_irq_refr_done_en)     |
-                    (gfx_irq_refr_start    & gfx_irq_refr_start_en)    |
-                    (gfx_irq_refr_cnt_done & gfx_irq_refr_cnt_done_en) |
+assign  irq_gfx_o = (gfx_irq_refr_cnt_done & gfx_irq_refr_cnt_done_en) |
                     (gfx_irq_gpu_cmd_error & gfx_irq_gpu_cmd_error_en) |
                     (gfx_irq_gpu_cmd_done  & gfx_irq_gpu_cmd_done_en)  |
                     (gfx_irq_gpu_fifo_ovfl & gfx_irq_gpu_fifo_ovfl_en) |
@@ -613,7 +540,8 @@ wire [15:0] display_cfg = {13'h0000,
 reg  [15:0] display_refr_cnt;
 
 wire        display_refr_cnt_wr  = reg_wr[DISPLAY_REFR_CNT];
-wire        display_refr_cnt_dec = gfx_irq_refr_done_set & (display_refr_cnt != 16'h0000);
+//wire        display_refr_cnt_dec = gfx_irq_refr_done_set & (display_refr_cnt != 16'h0000);
+wire        display_refr_cnt_dec = 1'b0 & (display_refr_cnt != 16'h0000);
 
 always @ (posedge mclk or posedge puc_rst)
   if (puc_rst)                   display_refr_cnt <=  16'h0000;
@@ -621,114 +549,6 @@ always @ (posedge mclk or posedge puc_rst)
   else if (display_refr_cnt_dec) display_refr_cnt <=  display_refr_cnt + 16'hFFFF; // -1
 
 assign      refr_cnt_done_evt = (display_refr_cnt==16'h0001) & display_refr_cnt_dec;
-
-//------------------------------------------------
-// LT24_CFG Register
-//------------------------------------------------
-reg  [15:0] lt24_cfg;
-
-wire        lt24_cfg_wr = reg_wr[LT24_CFG];
-
-always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)          lt24_cfg <=  16'h0000;
-  else if (lt24_cfg_wr) lt24_cfg <=  per_din_i;
-
-// Bitfield assignments
-assign     lt24_cfg_clk_o  =  lt24_cfg[6:4];
-assign     lt24_reset_n_o  = ~lt24_cfg[1];
-assign     lt24_on_o       =  lt24_cfg[0];
-
-//------------------------------------------------
-// LT24_REFRESH Register
-//------------------------------------------------
-reg        lt24_cmd_refr_o;
-reg [11:0] lt24_cfg_refr_o;
-
-wire      lt24_refresh_wr   = reg_wr[LT24_REFRESH];
-wire      lt24_cmd_refr_clr = lt24_done_evt_i & lt24_status_i[2] & (lt24_cfg_refr_o==12'h000); // Auto-clear in manual refresh mode when done
-
-always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                lt24_cmd_refr_o      <=  1'h0;
-  else if (lt24_refresh_wr)   lt24_cmd_refr_o      <=  per_din_i[0];
-  else if (lt24_cmd_refr_clr) lt24_cmd_refr_o      <=  1'h0;
-
-always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                lt24_cfg_refr_o      <=  12'h000;
-  else if (lt24_refresh_wr)   lt24_cfg_refr_o      <=  per_din_i[15:4];
-
-wire [15:0] lt24_refresh = {lt24_cfg_refr_o, 3'h0, lt24_cmd_refr_o};
-
-//------------------------------------------------
-// LT24_REFRESH_SYNC Register
-//------------------------------------------------
-reg        lt24_cfg_refr_sync_en_o;
-reg  [9:0] lt24_cfg_refr_sync_val_o;
-
-wire       lt24_refresh_sync_wr   = reg_wr[LT24_REFRESH_SYNC];
-
-always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                   lt24_cfg_refr_sync_en_o  <=  1'h0;
-  else if (lt24_refresh_sync_wr) lt24_cfg_refr_sync_en_o  <=  per_din_i[15];
-
-always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                   lt24_cfg_refr_sync_val_o <=  10'h000;
-  else if (lt24_refresh_sync_wr) lt24_cfg_refr_sync_val_o <=  per_din_i[9:0];
-
-wire [15:0] lt24_refresh_sync = {lt24_cfg_refr_sync_en_o, 5'h00, lt24_cfg_refr_sync_val_o};
-
-
-//------------------------------------------------
-// LT24_CMD Register
-//------------------------------------------------
-reg  [15:0] lt24_cmd;
-
-wire        lt24_cmd_wr = reg_wr[LT24_CMD];
-
-always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)          lt24_cmd <=  16'h0000;
-  else if (lt24_cmd_wr) lt24_cmd <=  per_din_i;
-
-assign     lt24_cmd_val_o       = lt24_cmd[7:0];
-assign     lt24_cmd_has_param_o = lt24_cmd[8];
-
-//------------------------------------------------
-// LT24_CMD_PARAM Register
-//------------------------------------------------
-reg  [15:0] lt24_cmd_param_o;
-
-wire        lt24_cmd_param_wr = reg_wr[LT24_CMD_PARAM];
-
-always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                lt24_cmd_param_o <=  16'h0000;
-  else if (lt24_cmd_param_wr) lt24_cmd_param_o <=  per_din_i;
-
-reg lt24_cmd_param_rdy_o;
-always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst) lt24_cmd_param_rdy_o <=  1'b0;
-  else         lt24_cmd_param_rdy_o <=  lt24_cmd_param_wr;
-
-//------------------------------------------------
-// LT24_CMD_DFILL Register
-//------------------------------------------------
-reg  [15:0] lt24_cmd_dfill_o;
-
-assign      lt24_cmd_dfill_wr_o = reg_wr[LT24_CMD_DFILL];
-
-always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                  lt24_cmd_dfill_o <=  16'h0000;
-  else if (lt24_cmd_dfill_wr_o) lt24_cmd_dfill_o <=  per_din_i;
-
-//------------------------------------------------
-// LT24_STATUS Register
-//------------------------------------------------
-wire  [15:0] lt24_status;
-
-assign       lt24_status[0]    = lt24_status_i[0]; // FSM_BUSY
-assign       lt24_status[1]    = lt24_status_i[1]; // WAIT_PARAM
-assign       lt24_status[2]    = lt24_status_i[2]; // REFRESH_BUSY
-assign       lt24_status[3]    = lt24_status_i[3]; // WAIT_FOR_SCANLINE
-assign       lt24_status[4]    = lt24_status_i[4]; // DATA_FILL_BUSY
-assign       lt24_status[15:5] = 11'h000;
 
 //------------------------------------------------
 // LUT_CFG Register
@@ -1306,14 +1126,6 @@ wire [15:0] display_size_hi_read   = display_size_hi_rd   & {16{reg_rd[DISPLAY_S
 wire [15:0] display_cfg_read       = display_cfg          & {16{reg_rd[DISPLAY_CFG       ]}};
 wire [15:0] display_refr_cnt_read  = display_refr_cnt     & {16{reg_rd[DISPLAY_REFR_CNT  ]}};
 
-wire [15:0] lt24_cfg_read          = lt24_cfg             & {16{reg_rd[LT24_CFG          ]}};
-wire [15:0] lt24_refresh_read      = lt24_refresh         & {16{reg_rd[LT24_REFRESH      ]}};
-wire [15:0] lt24_refresh_sync_read = lt24_refresh_sync    & {16{reg_rd[LT24_REFRESH_SYNC ]}};
-wire [15:0] lt24_cmd_read          = lt24_cmd             & {16{reg_rd[LT24_CMD          ]}};
-wire [15:0] lt24_cmd_param_read    = lt24_cmd_param_o     & {16{reg_rd[LT24_CMD_PARAM    ]}};
-wire [15:0] lt24_cmd_dfill_read    = lt24_cmd_dfill_o     & {16{reg_rd[LT24_CMD_DFILL    ]}};
-wire [15:0] lt24_status_read       = lt24_status          & {16{reg_rd[LT24_STATUS       ]}};
-
 wire [15:0] lut_cfg_read           = lut_cfg_rd           & {16{reg_rd[LUT_CFG           ]}};
 wire [15:0] lut_ram_addr_read      = lut_ram_addr_rd      & {16{reg_rd[LUT_RAM_ADDR      ]}};
 wire [15:0] lut_ram_data_read      = lut_ram_data         & {16{reg_rd[LUT_RAM_DATA      ]}};
@@ -1373,14 +1185,6 @@ wire [15:0] per_dout_o             = gfx_ctrl_read          |
                                   `endif
                                      display_cfg_read       |
                                      display_refr_cnt_read  |
-
-                                     lt24_cfg_read          |
-                                     lt24_refresh_read      |
-                                     lt24_refresh_sync_read |
-                                     lt24_cmd_read          |
-                                     lt24_cmd_param_read    |
-                                     lt24_cmd_dfill_read    |
-                                     lt24_status_read       |
 
                                      lut_cfg_read           |
                                      lut_ram_addr_read      |
