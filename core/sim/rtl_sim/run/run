@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Enable/Disable waveform dumping
+OGFX_NODUMP=0
+export OGFX_NODUMP
+
+# Choose simulator:
+#                   - iverilog  : Icarus Verilog  (default)
+#                   - cver      : CVer
+#                   - verilog   : Verilog-XL
+#                   - ncverilog : NC-Verilog
+#                   - vcs       : VCS
+#                   - vsim      : Modelsim
+#                   - isim      : Xilinx simulator
+OGFX_SIMULATOR=iverilog
+export OGFX_SIMULATOR
+
+rm -rf cov_work
+
+../bin/gfx430sim sandbox

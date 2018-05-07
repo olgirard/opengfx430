@@ -1,0 +1,21 @@
+
+verilog work ../../../bench/verilog/tb_openGFX430.v
+verilog work ../../../bench/verilog/ram.v
+verilog work ../../../bench/verilog/lt24Model.v
+verilog work ../../../bench/verilog/io_cell.v
+
+verilog work ../../../rtl/verilog/openGFX430_defines.v
+verilog work ../../../rtl/verilog/openGFX430.v
+verilog work ../../../rtl/verilog/ogfx_reg.v
+verilog work ../../../rtl/verilog/ogfx_reg_fifo.v
+verilog work ../../../rtl/verilog/ogfx_reg_vram_if.v
+verilog work ../../../rtl/verilog/ogfx_reg_vram_addr.v
+verilog work ../../../rtl/verilog/ogfx_if_lt24.v
+verilog work ../../../rtl/verilog/ogfx_backend.v
+verilog work ../../../rtl/verilog/ogfx_backend_frame_fifo.v
+verilog work ../../../rtl/verilog/ogfx_backend_lut_fifo.v
+verilog work ../../../rtl/verilog/ogfx_gpu.v
+verilog work ../../../rtl/verilog/ogfx_gpu_reg.v
+verilog work ../../../rtl/verilog/ogfx_gpu_dma.v
+verilog work ../../../rtl/verilog/ogfx_gpu_dma_addr.v
+verilog work ../../../rtl/verilog/ogfx_ram_arbiter.v

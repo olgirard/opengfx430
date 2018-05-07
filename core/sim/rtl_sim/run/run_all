@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Enable/Disable waveform dumping
+OGFX_NODUMP=0
+export OGFX_NODUMP
+
+# Choose simulator:
+#                   - iverilog  : Icarus Verilog  (default)
+#                   - cver      : CVer
+#                   - verilog   : Verilog-XL
+#                   - ncverilog : NC-Verilog
+#                   - vcs       : VCS
+#                   - vsim      : Modelsim
+#                   - isim      : Xilinx simulator
+OGFX_SIMULATOR=iverilog
+export OGFX_SIMULATOR
+
+
+# Argument specifies number of regression loops
+if [ $# -ne 1 ]; then
+    LAST_REGRESSION=0
+else
+    LAST_REGRESSION=$(($1-1))
+fi
+
+# Cleanup from previous regression
+LOG_DIR=./log
+rm -rf $LOG_DIR/*
+
+# Perform the regression runs
+for (( ii=0; ii<=$LAST_REGRESSION; ii++ ))
+  do
+
+    # Cleanup & log directory setup
+    rm -rf ./cov_work
+    LOG_DIR=./log/$ii
+    mkdir -p $LOG_DIR
+
+    # <TBD>
+    ../bin/gfx430sim sandbox                  | tee $LOG_DIR/sandbox.log
+
+
+    # Report regression results
+    ../bin/parse_results $LOG_DIR             | tee $LOG_DIR/../summary.$ii.log
+
+done
+
+
+if [ $LAST_REGRESSION != 0 ]; then
+    ../bin/parse_summaries                    | tee $LOG_DIR/../regressions_summary.log
+fi
