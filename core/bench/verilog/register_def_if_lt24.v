@@ -64,7 +64,7 @@
 
 // LT24_REFRESH Register
 `define  F_LT24_REFR_START             `R_LT24_REFRESH      ,  0 , 16'h0001
-`define  F_LT24_REFR                   `R_LT24_REFRESH      ,  4 , 16'hFFF0
+`define  F_LT24_REFR                   `R_LT24_REFRESH      ,  1 , 16'hFFFE
 
 // LT24_REFRESH_SYNC Register
 `define  F_LT24_REFR_SYNC              `R_LT24_REFRESH_SYNC ,  0 , 16'h03FF
@@ -100,21 +100,29 @@
 `define  V_LT24_CLK_DIV8               16'h0007
 
 `define  V_LT24_REFR_MANUAL            16'h0000
-`define  V_LT24_REFR_21_FPS            (((48000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_24_FPS            (((40000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_31_FPS            (((32000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_42_FPS            (((24000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_62_FPS            (((16000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_125_FPS           ((( 8000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_250_FPS           ((( 4000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_500_FPS           ((( 2000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_1000_FPS          ((( 1000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_48MS              (((48000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_40MS              (((40000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_32MS              (((32000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_24MS              (((24000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_16MS              (((16000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_8MS               ((( 8000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_4MS               ((( 4000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_2MS               ((( 2000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_1MS               ((( 1000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
+
+`define  V_LT24_REFR_21_FPS            (((48000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_24_FPS            (((40000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_31_FPS            (((32000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_42_FPS            (((24000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_62_FPS            (((16000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_125_FPS           ((( 8000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_250_FPS           ((( 4000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_500_FPS           ((( 2000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_1000_FPS          ((( 1000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_1250_FPS          (((  800000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_2000_FPS          (((  500000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_5000_FPS          (((  200000/`CLK_PERIOD)>>9) & 16'h7FFF)
+
+`define  V_LT24_REFR_48MS              (((48000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_40MS              (((40000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_32MS              (((32000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_24MS              (((24000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_16MS              (((16000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_8MS               ((( 8000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_4MS               ((( 4000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_2MS               ((( 2000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_1MS               ((( 1000000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_800US             (((  800000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_500US             (((  500000/`CLK_PERIOD)>>9) & 16'h7FFF)
+`define  V_LT24_REFR_200US             (((  200000/`CLK_PERIOD)>>9) & 16'h7FFF)

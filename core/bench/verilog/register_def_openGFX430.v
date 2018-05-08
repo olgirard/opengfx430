@@ -50,14 +50,6 @@
 `define  R_DISPLAY_CFG                 16'h0218
 `define  R_DISPLAY_REFR_CNT            16'h021A
 
-`define  R_LT24_CFG                    16'h0220
-`define  R_LT24_REFRESH                16'h0222
-`define  R_LT24_REFRESH_SYNC           16'h0224
-`define  R_LT24_CMD                    16'h0226
-`define  R_LT24_CMD_PARAM              16'h0228
-`define  R_LT24_CMD_DFILL              16'h022A
-`define  R_LT24_STATUS                 16'h022C
-
 `define  R_LUT_CFG                     16'h0230
 `define  R_LUT_RAM_ADDR                16'h0232
 `define  R_LUT_RAM_DATA                16'h0234
@@ -87,8 +79,6 @@
 //----------------------------------------------------------
 
 // GFX_CTRL Register
-`define  F_GFX_IRQ_EN_REFR_DONE        `R_GFX_CTRL          ,  0 , 16'h0001
-`define  F_GFX_IRQ_EN_REFR_START       `R_GFX_CTRL          ,  1 , 16'h0002
 `define  F_GFX_IRQ_EN_REFR_CNT_DONE    `R_GFX_CTRL          ,  2 , 16'h0004
 `define  F_GFX_IRQ_EN_GPU_FIFO_DONE    `R_GFX_CTRL          ,  4 , 16'h0010
 `define  F_GFX_IRQ_EN_GPU_FIFO_OVFL    `R_GFX_CTRL          ,  5 , 16'h0020
@@ -103,8 +93,6 @@
 `define  F_STATUS_GPU_BUSY             `R_GFX_STATUS        ,  6 , 16'h0040
 
 // GFX_IRQ Register
-`define  F_GFX_IRQ_REFRESH_DONE        `R_GFX_IRQ           ,  0 , 16'h0001
-`define  F_GFX_IRQ_REFRESH_START       `R_GFX_IRQ           ,  1 , 16'h0002
 `define  F_GFX_IRQ_REFRESH_CNT_DONE    `R_GFX_IRQ           ,  2 , 16'h0004
 `define  F_GFX_IRQ_GPU_FIFO_DONE       `R_GFX_IRQ           ,  4 , 16'h0010
 `define  F_GFX_IRQ_GPU_FIFO_OVFL       `R_GFX_IRQ           ,  5 , 16'h0020
@@ -115,30 +103,6 @@
 `define  F_DISPLAY_CL_SWAP             `R_DISPLAY_CFG       ,  0 , 16'h0001
 `define  F_DISPLAY_Y_SWAP              `R_DISPLAY_CFG       ,  1 , 16'h0002
 `define  F_DISPLAY_X_SWAP              `R_DISPLAY_CFG       ,  2 , 16'h0004
-
-// LT24_CFG Register
-`define  F_LT24_ON                     `R_LT24_CFG          ,  0 , 16'h0001
-`define  F_LT24_RESET                  `R_LT24_CFG          ,  1 , 16'h0002
-`define  F_LT24_CLK                    `R_LT24_CFG          ,  4 , 16'h0070
-
-// LT24_REFRESH Register
-`define  F_LT24_REFR_START             `R_LT24_REFRESH      ,  0 , 16'h0001
-`define  F_LT24_REFR                   `R_LT24_REFRESH      ,  4 , 16'hFFF0
-
-// LT24_REFRESH_SYNC Register
-`define  F_LT24_REFR_SYNC              `R_LT24_REFRESH_SYNC ,  0 , 16'h03FF
-`define  F_LT24_REFR_SYNC_EN           `R_LT24_REFRESH_SYNC , 15 , 16'h8000
-
-// LT24_CMD Register
-`define  F_LT24_CMD_MSK                `R_LT24_CMD          ,  0 , 16'h00FF
-`define  F_LT24_CMD_HAS_PARAM          `R_LT24_CMD          ,  8 , 16'h0100
-
-// LT24_STATUS Register
-`define  F_LT24_STATUS_FSM_BUSY        `R_LT24_STATUS       ,  0 , 16'h0001
-`define  F_LT24_STATUS_WAIT_PARAM      `R_LT24_STATUS       ,  1 , 16'h0002
-`define  F_LT24_STATUS_REFRESH_BUSY    `R_LT24_STATUS       ,  2 , 16'h0004
-`define  F_LT24_STATUS_REFRESH_WAIT    `R_LT24_STATUS       ,  3 , 16'h0008
-`define  F_LT24_STATUS_DFILL_BUSY      `R_LT24_STATUS       ,  4 , 16'h0010
 
 // LUT_CFG Register
 `define  F_SW_LUT_ENABLE               `R_LUT_CFG           ,  0 , 16'h0001
@@ -186,36 +150,6 @@
 `define  V_GFX_4_BPP                   16'h0002
 `define  V_GFX_2_BPP                   16'h0001
 `define  V_GFX_1_BPP                   16'h0000
-
-`define  V_LT24_CLK_DIV1               16'h0000
-`define  V_LT24_CLK_DIV2               16'h0001
-`define  V_LT24_CLK_DIV3               16'h0002
-`define  V_LT24_CLK_DIV4               16'h0003
-`define  V_LT24_CLK_DIV5               16'h0004
-`define  V_LT24_CLK_DIV6               16'h0005
-`define  V_LT24_CLK_DIV7               16'h0006
-`define  V_LT24_CLK_DIV8               16'h0007
-
-`define  V_LT24_REFR_MANUAL            16'h0000
-`define  V_LT24_REFR_21_FPS            (((48000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_24_FPS            (((40000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_31_FPS            (((32000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_42_FPS            (((24000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_62_FPS            (((16000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_125_FPS           ((( 8000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_250_FPS           ((( 4000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_500_FPS           ((( 2000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_1000_FPS          ((( 1000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_48MS              (((48000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_40MS              (((40000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_32MS              (((32000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_24MS              (((24000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_16MS              (((16000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_8MS               ((( 8000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_4MS               ((( 4000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_2MS               ((( 2000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-`define  V_LT24_REFR_1MS               ((( 1000000/`DCO_CLK_PERIOD)>>12) & 16'h0FFF)
-
 
 `define  V_HW_LUT_PALETTE_0_HI         16'h0000
 `define  V_HW_LUT_PALETTE_0_LO         16'h0001

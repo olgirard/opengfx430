@@ -52,36 +52,36 @@ initial
       stimulus_done =  0;
 
       width         = 50;
-      height        = 240;
+      height        = 40;
       size          = width * height;
 
       // Init video memory
       for (tb_idx=0; tb_idx < (1<<`VRAM_AWIDTH); tb_idx=tb_idx+1)
         vid_ram_0.mem[tb_idx] = tb_idx;
 
-      field_write  (`F_LT24_RESET      , 'h1              );
-      field_write  (`F_LT24_ON         , 'h1              );
-      field_write  (`F_LT24_CLK        , `V_LT24_CLK_DIV2 );
-      field_write  (`F_LT24_RESET      , 'h0              );
+      field_write  (`F_LT24_RESET      , 'h1                );
+      field_write  (`F_LT24_ON         , 'h1                );
+      field_write  (`F_LT24_CLK        , `V_LT24_CLK_DIV2   );
+      field_write  (`F_LT24_RESET      , 'h0                );
 
-      reg_write_16b(`R_DISPLAY_WIDTH   , width            );
-      reg_write_16b(`R_DISPLAY_HEIGHT  , height           );
-      reg_write_16b(`R_DISPLAY_SIZE_LO , size[15:0]       );
-      reg_write_16b(`R_DISPLAY_SIZE_HI , size[31:16]      );
+      reg_write_16b(`R_DISPLAY_WIDTH   , width              );
+      reg_write_16b(`R_DISPLAY_HEIGHT  , height             );
+      reg_write_16b(`R_DISPLAY_SIZE_LO , size[15:0]         );
+      reg_write_16b(`R_DISPLAY_SIZE_HI , size[31:16]        );
 
-      field_write  (`F_DISPLAY_CL_SWAP , 'h0              );
-      field_write  (`F_DISPLAY_Y_SWAP  , 'h0              );
-      field_write  (`F_DISPLAY_X_SWAP  , 'h0              );
+      field_write  (`F_DISPLAY_CL_SWAP , 'h0                );
+      field_write  (`F_DISPLAY_Y_SWAP  , 'h0                );
+      field_write  (`F_DISPLAY_X_SWAP  , 'h0                );
 
-      field_write  (`F_GFX_MODE        , `V_GFX_16_BPP    );
+      field_write  (`F_GFX_MODE        , `V_GFX_16_BPP      );
 
-      field_write  (`F_LT24_REFR       , `V_LT24_REFR_1MS );
-      field_write  (`F_LT24_REFR_START , 'h1              );
+      field_write  (`F_LT24_REFR       , `V_LT24_REFR_500US );
+      field_write  (`F_LT24_REFR_START , 'h1                );
 
       //field_write  (`F_GFX_GPU_EN      , 'h1              );
 
       repeat(5)  @(posedge mclk);
-      #(10ms);
+      #(2ms);
       repeat(50) @(posedge mclk);
 
       stimulus_done = 1;

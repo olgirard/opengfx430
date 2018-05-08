@@ -118,7 +118,7 @@ output               screen_refresh_active_o       ;    // Display refresh on go
 
 // Configuration, control and status registers
 wire           [2:0] lt24_cfg_clk                  ;           
-wire          [11:0] lt24_cfg_refr                 ;          
+wire          [14:0] lt24_cfg_refr                 ;          
 wire                 lt24_cfg_refr_sync_en         ;  
 wire           [9:0] lt24_cfg_refr_sync_val        ; 
 wire                 lt24_cmd_refresh              ;          
@@ -488,8 +488,8 @@ assign     status_gts_match   = (status_gts == lt24_cfg_refr_sync_val);
 
 // Refresh Timer
 reg [23:0] refresh_timer;
-wire       refresh_timer_disable = (lt24_cfg_refr==12'h000) | ~lt24_cmd_refresh;
-wire       refresh_timer_done    = (refresh_timer[23:12]==lt24_cfg_refr);
+wire       refresh_timer_disable = (lt24_cfg_refr==15'h0000) | ~lt24_cmd_refresh;
+wire       refresh_timer_done    = (refresh_timer[23:9]==lt24_cfg_refr);
 
 always @(posedge mclk or posedge puc_rst)
   if (puc_rst)                    refresh_timer <= 24'h000000;

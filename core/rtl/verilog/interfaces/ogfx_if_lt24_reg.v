@@ -89,7 +89,7 @@ output               irq_lt24_o;               // LT24 interface interrupt
 output               lt24_reset_n_o;           // LT24 Reset (Active Low)
 output               lt24_on_o;                // LT24 on/off
 output         [2:0] lt24_cfg_clk_o;           // LT24 Interface clock configuration
-output        [11:0] lt24_cfg_refr_o;          // LT24 Interface refresh configuration
+output        [14:0] lt24_cfg_refr_o;          // LT24 Interface refresh configuration
 output               lt24_cfg_refr_sync_en_o;  // LT24 Interface refresh sync configuration
 output         [9:0] lt24_cfg_refr_sync_val_o; // LT24 Interface refresh sync value configuration
 output               lt24_cmd_refr_o;          // LT24 Interface refresh command
@@ -206,10 +206,10 @@ assign      lt24_on_o              =  lt24_cfg[0];
 // LT24_REFRESH Register
 //------------------------------------------------
 reg         lt24_cmd_refr_o;
-reg  [11:0] lt24_cfg_refr_o;
+reg  [14:0] lt24_cfg_refr_o;
 
 wire        lt24_refresh_wr   = reg_wr[LT24_REFRESH];
-wire        lt24_cmd_refr_clr = lt24_done_evt_i & lt24_status_i[2] & (lt24_cfg_refr_o==12'h000); // Auto-clear in manual refresh mode when done
+wire        lt24_cmd_refr_clr = lt24_done_evt_i & lt24_status_i[2] & (lt24_cfg_refr_o==15'h0000); // Auto-clear in manual refresh mode when done
 
 always @ (posedge mclk or posedge puc_rst)
   if (puc_rst)                lt24_cmd_refr_o  <=  1'h0;
@@ -217,10 +217,10 @@ always @ (posedge mclk or posedge puc_rst)
   else if (lt24_cmd_refr_clr) lt24_cmd_refr_o  <=  1'h0;
 
 always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                lt24_cfg_refr_o  <=  12'h000;
-  else if (lt24_refresh_wr)   lt24_cfg_refr_o  <=  per_din_i[15:4];
+  if (puc_rst)                lt24_cfg_refr_o  <=  15'h0000;
+  else if (lt24_refresh_wr)   lt24_cfg_refr_o  <=  per_din_i[15:1];
 
-wire [15:0] lt24_refresh = {lt24_cfg_refr_o, 3'h0, lt24_cmd_refr_o};
+wire [15:0] lt24_refresh = {lt24_cfg_refr_o, lt24_cmd_refr_o};
 
 
 //------------------------------------------------

@@ -47,7 +47,7 @@ module  tb_openGFX430;
 // Wire & Register definition
 //------------------------------
 
-`define  DCO_CLK_PERIOD  50   // 20 MHz
+`define  CLK_PERIOD  50   // 20 MHz
 
 
 // LT24 Interface
@@ -146,7 +146,7 @@ initial
      mclk          = 1'b0;
      forever
        begin
-          #(`DCO_CLK_PERIOD/2);
+          #(`CLK_PERIOD/2);
           mclk     = ~mclk;
        end
   end
