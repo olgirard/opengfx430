@@ -59,6 +59,7 @@
 `define  F_LT24_ON                     `R_LT24_CFG          ,  0 , 16'h0001
 `define  F_LT24_RESET                  `R_LT24_CFG          ,  1 , 16'h0002
 `define  F_LT24_CLK                    `R_LT24_CFG          ,  4 , 16'h0070
+`define  F_LT24_IRQ_EN_REFR_UFLOW      `R_LT24_CFG          , 13 , 16'h2000
 `define  F_LT24_IRQ_EN_REFR_START      `R_LT24_CFG          , 14 , 16'h4000
 `define  F_LT24_IRQ_EN_REFR_DONE       `R_LT24_CFG          , 15 , 16'h8000
 
@@ -82,8 +83,9 @@
 `define  F_LT24_STATUS_DFILL_BUSY      `R_LT24_STATUS       ,  4 , 16'h0010
 
 // GFX_IRQ Register
-`define  F_LT24_IRQ_REFRESH_DONE       `R_LT24_IRQ          , 15 , 16'h8000
+`define  F_LT24_IRQ_REFRESH_UFLOW      `R_LT24_IRQ          , 13 , 16'h2000
 `define  F_LT24_IRQ_REFRESH_START      `R_LT24_IRQ          , 14 , 16'h4000
+`define  F_LT24_IRQ_REFRESH_DONE       `R_LT24_IRQ          , 15 , 16'h8000
 
 
 //----------------------------------------------------------

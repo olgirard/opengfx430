@@ -68,6 +68,7 @@ module  ogfx_if_lt24_reg (
     lt24_status_i,                             // LT24 FSM Status
     lt24_start_evt_i,                          // LT24 FSM is starting
     lt24_done_evt_i,                           // LT24 FSM is done
+    lt24_uflow_evt_i,                          // LT24 refresh underfow
 
     per_addr_i,                                // Peripheral address
     per_din_i,                                 // Peripheral data input
@@ -110,6 +111,7 @@ input                puc_rst;                  // Main system reset
 input          [4:0] lt24_status_i;            // LT24 FSM Status
 input                lt24_start_evt_i;         // LT24 FSM is starting
 input                lt24_done_evt_i;          // LT24 FSM is done
+input                lt24_uflow_evt_i;         // LT24 refresh underfow
 
 input         [13:0] per_addr_i;               // Peripheral address
 input         [15:0] per_din_i;                // Peripheral data input
@@ -192,11 +194,12 @@ wire        lt24_cfg_wr = reg_wr[LT24_CFG];
 
 always @ (posedge mclk or posedge puc_rst)
   if (puc_rst)          lt24_cfg  <=  16'h0000;
-  else if (lt24_cfg_wr) lt24_cfg  <=  per_din_i & 16'hC07F;
+  else if (lt24_cfg_wr) lt24_cfg  <=  per_din_i & 16'hE07F;
 
 // Bitfield assignments
 wire        lt24_irq_refr_done_en  =  lt24_cfg[15];
 wire        lt24_irq_refr_start_en =  lt24_cfg[14];
+wire        lt24_irq_refr_uflow_en =  lt24_cfg[13];
 assign      lt24_cfg_clk_o         =  lt24_cfg[6:4];
 assign      lt24_reset_n_o         = ~lt24_cfg[1];
 assign      lt24_on_o              =  lt24_cfg[0];
@@ -311,24 +314,31 @@ wire         lt24_irq_refr_done_set  = lt24_done_evt_i;
 wire         lt24_irq_refr_start_clr = per_din_i[14] & reg_wr[LT24_IRQ];
 wire         lt24_irq_refr_start_set = lt24_start_evt_i;
 
+wire         lt24_irq_refr_uflow_clr = per_din_i[13] & reg_wr[LT24_IRQ];
+wire         lt24_irq_refr_uflow_set = lt24_uflow_evt_i;
+
 reg          lt24_irq_refr_done;
 reg          lt24_irq_refr_start;
+reg          lt24_irq_refr_uflow;
 always @ (posedge mclk or posedge puc_rst)
   if (puc_rst)
     begin
        lt24_irq_refr_done  <=  1'b0;
        lt24_irq_refr_start <=  1'b0;
+       lt24_irq_refr_uflow <=  1'b0;
     end
   else
     begin
        lt24_irq_refr_done  <=  ( lt24_irq_refr_done_set  | (~lt24_irq_refr_done_clr  & lt24_irq_refr_done ) ); // IRQ set has priority over clear
        lt24_irq_refr_start <=  ( lt24_irq_refr_start_set | (~lt24_irq_refr_start_clr & lt24_irq_refr_start) ); // IRQ set has priority over clear
+       lt24_irq_refr_uflow <=  ( lt24_irq_refr_uflow_set | (~lt24_irq_refr_uflow_clr & lt24_irq_refr_uflow) ); // IRQ set has priority over clear
     end
 
-assign  lt24_irq   = {lt24_irq_refr_done, lt24_irq_refr_start, 14'h0000};
+assign  lt24_irq   = {lt24_irq_refr_done, lt24_irq_refr_start, lt24_irq_refr_uflow, 13'h0000};
 
 assign  irq_lt24_o = (lt24_irq_refr_done     & lt24_irq_refr_done_en)     |
-                     (lt24_irq_refr_start    & lt24_irq_refr_start_en)    ;  // LT24 interrupt
+                     (lt24_irq_refr_start    & lt24_irq_refr_start_en)    |
+                     (lt24_irq_refr_uflow    & lt24_irq_refr_uflow_en)    ;  // LT24 interrupt
 
 
 //============================================================================
@@ -336,14 +346,14 @@ assign  irq_lt24_o = (lt24_irq_refr_done     & lt24_irq_refr_done_en)     |
 //============================================================================
 
 // Data output mux
-wire [15:0] lt24_cfg_read          = lt24_cfg               & {16{reg_rd[LT24_CFG          ]}};
-wire [15:0] lt24_refresh_read      = lt24_refresh           & {16{reg_rd[LT24_REFRESH      ]}};
-wire [15:0] lt24_refresh_sync_read = lt24_refresh_sync      & {16{reg_rd[LT24_REFRESH_SYNC ]}};
-wire [15:0] lt24_cmd_read          = lt24_cmd               & {16{reg_rd[LT24_CMD          ]}};
-wire [15:0] lt24_cmd_param_read    = lt24_cmd_param_o       & {16{reg_rd[LT24_CMD_PARAM    ]}};
-wire [15:0] lt24_cmd_dfill_read    = lt24_cmd_dfill_o       & {16{reg_rd[LT24_CMD_DFILL    ]}};
-wire [15:0] lt24_status_read       = lt24_status            & {16{reg_rd[LT24_STATUS       ]}};
-wire [15:0] lt24_irq_read          = lt24_irq               & {16{reg_rd[LT24_IRQ          ]}};
+wire [15:0] lt24_cfg_read          = lt24_cfg               & {16{reg_rd[LT24_CFG         ]}};
+wire [15:0] lt24_refresh_read      = lt24_refresh           & {16{reg_rd[LT24_REFRESH     ]}};
+wire [15:0] lt24_refresh_sync_read = lt24_refresh_sync      & {16{reg_rd[LT24_REFRESH_SYNC]}};
+wire [15:0] lt24_cmd_read          = lt24_cmd               & {16{reg_rd[LT24_CMD         ]}};
+wire [15:0] lt24_cmd_param_read    = lt24_cmd_param_o       & {16{reg_rd[LT24_CMD_PARAM   ]}};
+wire [15:0] lt24_cmd_dfill_read    = lt24_cmd_dfill_o       & {16{reg_rd[LT24_CMD_DFILL   ]}};
+wire [15:0] lt24_status_read       = lt24_status            & {16{reg_rd[LT24_STATUS      ]}};
+wire [15:0] lt24_irq_read          = lt24_irq               & {16{reg_rd[LT24_IRQ         ]}};
 
 wire [15:0] per_dout_o             = lt24_cfg_read          |
                                      lt24_refresh_read      |

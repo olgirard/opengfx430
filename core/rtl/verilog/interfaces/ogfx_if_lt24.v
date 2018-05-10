@@ -203,6 +203,7 @@ ogfx_if_lt24_reg #(.BASE_ADDR(BASE_ADDR)) ogfx_if_lt24_reg_inst (
     .lt24_status_i            ( lt24_status            ),  // LT24 FSM Status
     .lt24_start_evt_i         ( lt24_start_evt         ),  // LT24 FSM is starting
     .lt24_done_evt_i          ( lt24_done_evt          ),  // LT24 FSM is done
+    .lt24_uflow_evt_i         ( 1'b0                   ),  // LT24 refresh underfow
 
     .per_addr_i               ( per_addr_i             ),  // Peripheral address
     .per_din_i                ( per_din_i              ),  // Peripheral data input
