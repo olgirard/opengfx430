@@ -51,15 +51,21 @@ module  tb_openGFX430;
 
 
 // LT24 Interface
-wire        [15:0] lt24_din;
-wire               lt24_cs_n;
-wire               lt24_rd_n;
-wire               lt24_wr_n;
-wire               lt24_rs;
-wire        [15:0] lt24_dout;
-wire               lt24_d_en;
-wire               lt24_reset_n;
-wire               lt24_on;
+wire        [15:0] lt24_lcd_din;
+wire               lt24_lcd_cs_n;
+wire               lt24_lcd_rd_n;
+wire               lt24_lcd_wr_n;
+wire               lt24_lcd_rs;
+wire        [15:0] lt24_lcd_dout;
+wire               lt24_lcd_d_en;
+wire               lt24_lcd_reset_n;
+wire               lt24_lcd_on;
+wire               lt24_adc_cs_n;
+wire               lt24_adc_dclk;
+wire               lt24_adc_busy;
+wire               lt24_adc_din;
+wire               lt24_adc_dout;
+wire               lt24_adc_penirq_n;
 
 // Generic screen interface
 wire               screen_refresh_active;
@@ -102,6 +108,8 @@ reg                puc_rst;
 // Others
 wire               dbg_freeze;
 wire               irq_gfx;
+wire               irq_lt24_lcd;
+wire               irq_lt24_adc;
 
 // Testbench variables
 integer            tb_idx;
@@ -219,17 +227,23 @@ ram #(`LRAM_MSB, (1<<(`LRAM_AWIDTH+1))) lut_ram_0 (
 lt24Model lt24Model_inst (
 
 // OUTPUTs
-    .lt24_d_o                      ( lt24_din                    ),  // LT24 Data input
+    .lt24_lcd_d_o                  ( lt24_lcd_din                ),  // LT24 LCD Data input
+    .lt24_adc_busy_o               ( lt24_adc_busy               ),  // LT24 ADC Busy
+    .lt24_adc_dout_o               ( lt24_adc_dout               ),  // LT24 ADC Data Out
+    .lt24_adc_penirq_n_o           ( lt24_adc_penirq_n           ),  // LT24 ADC Pen Interrupt
 
 // INPUTs
-    .lt24_cs_n_i                   ( lt24_cs_n                   ),  // LT24 Chip select (Active low)
-    .lt24_rd_n_i                   ( lt24_rd_n                   ),  // LT24 Read strobe (Active low)
-    .lt24_wr_n_i                   ( lt24_wr_n                   ),  // LT24 Write strobe (Active low)
-    .lt24_rs_i                     ( lt24_rs                     ),  // LT24 Command/Param selection (Cmd=0/Param=1)
-    .lt24_d_i                      ( lt24_dout                   ),  // LT24 Data output
-    .lt24_d_en_i                   ( lt24_d_en                   ),  // LT24 Data output enable
-    .lt24_reset_n_i                ( lt24_reset_n                ),  // LT24 Reset (Active Low)
-    .lt24_on_i                     ( lt24_on                     )   // LT24 on/off
+    .lt24_lcd_cs_n_i               ( lt24_lcd_cs_n               ),  // LT24 LDC Chip select (Active low)
+    .lt24_lcd_rd_n_i               ( lt24_lcd_rd_n               ),  // LT24 LDC Read strobe (Active low)
+    .lt24_lcd_wr_n_i               ( lt24_lcd_wr_n               ),  // LT24 LDC Write strobe (Active low)
+    .lt24_lcd_rs_i                 ( lt24_lcd_rs                 ),  // LT24 LDC Command/Param selection (Cmd=0/Param=1)
+    .lt24_lcd_d_i                  ( lt24_lcd_dout               ),  // LT24 LDC Data output
+    .lt24_lcd_d_en_i               ( lt24_lcd_d_en               ),  // LT24 LDC Data output enable
+    .lt24_lcd_reset_n_i            ( lt24_lcd_reset_n            ),  // LT24 LDC Reset (Active Low)
+    .lt24_lcd_on_i                 ( lt24_lcd_on                 ),  // LT24 LDC on/off
+    .lt24_adc_cs_n_i               ( lt24_adc_cs_n               ),  // LT24 ADC Chip Select
+    .lt24_adc_dclk_i               ( lt24_adc_dclk               ),  // LT24 ADC Clock
+    .lt24_adc_din_i                ( lt24_adc_din                )   // LT24 ADC Data In
 );
 
 
@@ -250,18 +264,27 @@ ogfx_if_lt24 dut_if_lt24 (
     .per_din_i                     ( per_din                     ),  // Peripheral data input
     .per_dout_o                    ( per_dout_lt24               ),  // Peripheral data output
 
-    .irq_lt24_o                    ( irq_lt24                    ),  // LT24 interface interrupt
+    .irq_lt24_lcd_o                ( irq_lt24_lcd                ),  // LT24 LCD interface interrupt
+    .irq_lt24_adc_o                ( irq_lt24_adc                ),  // LT24 ADC interface interrupt
 
-// LT24 Interface
-    .lt24_d_i                      ( lt24_din                    ),  // LT24 Data input
-    .lt24_cs_n_o                   ( lt24_cs_n                   ),  // LT24 Chip select (Active low)
-    .lt24_rd_n_o                   ( lt24_rd_n                   ),  // LT24 Read strobe (Active low)
-    .lt24_wr_n_o                   ( lt24_wr_n                   ),  // LT24 Write strobe (Active low)
-    .lt24_rs_o                     ( lt24_rs                     ),  // LT24 Command/Param selection (Cmd=0/Param=1)
-    .lt24_d_o                      ( lt24_dout                   ),  // LT24 Data output
-    .lt24_d_en_o                   ( lt24_d_en                   ),  // LT24 Data output enable
-    .lt24_reset_n_o                ( lt24_reset_n                ),  // LT24 Reset (Active Low)
-    .lt24_on_o                     ( lt24_on                     ),  // LT24 on/off
+// LT24 LCD Interface
+    .lt24_lcd_d_i                  ( lt24_lcd_din                ),  // LT24 Data input
+    .lt24_lcd_cs_n_o               ( lt24_lcd_cs_n               ),  // LT24 Chip select (Active low)
+    .lt24_lcd_rd_n_o               ( lt24_lcd_rd_n               ),  // LT24 Read strobe (Active low)
+    .lt24_lcd_wr_n_o               ( lt24_lcd_wr_n               ),  // LT24 Write strobe (Active low)
+    .lt24_lcd_rs_o                 ( lt24_lcd_rs                 ),  // LT24 Command/Param selection (Cmd=0/Param=1)
+    .lt24_lcd_d_o                  ( lt24_lcd_dout               ),  // LT24 Data output
+    .lt24_lcd_d_en_o               ( lt24_lcd_d_en               ),  // LT24 Data output enable
+    .lt24_lcd_reset_n_o            ( lt24_lcd_reset_n            ),  // LT24 Reset (Active Low)
+    .lt24_lcd_on_o                 ( lt24_lcd_on                 ),  // LT24 on/off
+
+// LT24 ADC Interface
+    .lt24_adc_busy_i               ( lt24_adc_busy               ),  // LT24 ADC Busy
+    .lt24_adc_dout_i               ( lt24_adc_dout               ),  // LT24 ADC Data Out
+    .lt24_adc_penirq_n_i           ( lt24_adc_penirq_n           ),  // LT24 ADC Pen Interrupt
+    .lt24_adc_cs_n_o               ( lt24_adc_cs_n               ),  // LT24 ADC Chip Select
+    .lt24_adc_dclk_o               ( lt24_adc_dclk               ),  // LT24 ADC Clock
+    .lt24_adc_din_o                ( lt24_adc_din                ),  // LT24 ADC Data In
 
 // openGFX430 Interface
     .screen_display_size_i         ( screen_display_size         ),  // Display size configuration (number of pixels)

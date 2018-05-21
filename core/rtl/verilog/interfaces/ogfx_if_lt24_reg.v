@@ -43,21 +43,28 @@
 module  ogfx_if_lt24_reg (
 
 // OUTPUTs
-    irq_lt24_o,                                // LT24 interface interrupt
+    irq_adc_o,                                 // LT24 ADC interface interrupt
+    irq_lcd_o,                                 // LT24 LCD interface interrupt
 
-    lt24_reset_n_o,                            // LT24 Reset (Active Low)
-    lt24_on_o,                                 // LT24 on/off
-    lt24_cfg_clk_o,                            // LT24 Interface clock configuration
-    lt24_cfg_refr_o,                           // LT24 Interface refresh configuration
-    lt24_cfg_refr_sync_en_o,                   // LT24 Interface refresh sync enable configuration
-    lt24_cfg_refr_sync_val_o,                  // LT24 Interface refresh sync value configuration
-    lt24_cmd_refr_o,                           // LT24 Interface refresh command
-    lt24_cmd_val_o,                            // LT24 Generic command value
-    lt24_cmd_has_param_o,                      // LT24 Generic command has parameters
-    lt24_cmd_param_o,                          // LT24 Generic command parameter value
-    lt24_cmd_param_rdy_o,                      // LT24 Generic command trigger
-    lt24_cmd_dfill_o,                          // LT24 Data fill value
-    lt24_cmd_dfill_wr_o,                       // LT24 Data fill trigger
+    lcd_reset_n_o,                             // LT24 LCD Reset (Active Low)
+    lcd_on_o,                                  // LT24 LCD on/off
+    lcd_cfg_clk_o,                             // LT24 LCD Interface clock configuration
+    lcd_cfg_refr_o,                            // LT24 LCD Interface refresh configuration
+    lcd_cfg_refr_sync_en_o,                    // LT24 LCD Interface refresh sync enable configuration
+    lcd_cfg_refr_sync_val_o,                   // LT24 LCD Interface refresh sync value configuration
+    lcd_cmd_refr_o,                            // LT24 LCD Interface refresh command
+    lcd_cmd_val_o,                             // LT24 LCD Generic command value
+    lcd_cmd_has_param_o,                       // LT24 LCD Generic command has parameters
+    lcd_cmd_param_o,                           // LT24 LCD Generic command parameter value
+    lcd_cmd_param_rdy_o,                       // LT24 LCD Generic command trigger
+    lcd_cmd_dfill_o,                           // LT24 LCD Data fill value
+    lcd_cmd_dfill_wr_o,                        // LT24 LCD Data fill trigger
+
+    adc_enabled_o,                             // LT24 ADC Enabled
+    adc_cfg_clk_o,                             // LT24 ADC Clock configuration
+    adc_coord_y_swap_o,                        // LT24 Coordinates: swap Y axis (horizontal symmetry)
+    adc_coord_x_swap_o,                        // LT24 Coordinates: swap X axis (vertical symmetry)
+    adc_coord_cl_swap_o,                       // LT24 Coordinates: swap column/lines
 
     per_dout_o,                                // Peripheral data output
 
@@ -65,10 +72,16 @@ module  ogfx_if_lt24_reg (
     mclk,                                      // Main system clock
     puc_rst,                                   // Main system reset
 
-    lt24_status_i,                             // LT24 FSM Status
-    lt24_start_evt_i,                          // LT24 FSM is starting
-    lt24_done_evt_i,                           // LT24 FSM is done
-    lt24_uflow_evt_i,                          // LT24 refresh underfow
+    lcd_status_i,                              // LT24 LCD FSM Status
+    lcd_start_evt_i,                           // LT24 LCD FSM is starting
+    lcd_done_evt_i,                            // LT24 LCD FSM is done
+    lcd_uflow_evt_i,                           // LT24 LCD refresh underfow
+
+    adc_done_evt_i,                            // LT24 ADC FSM is done
+    adc_x_data_i,                              // LT24 ADC X sampled data
+    adc_y_data_i,                              // LT24 ADC Y sampled data
+    adc_x_coord_i,                             // LT24 ADC X coordinate
+    adc_y_coord_i,                             // LT24 ADC Y coordinate
 
     per_addr_i,                                // Peripheral address
     per_din_i,                                 // Peripheral data input
@@ -85,21 +98,28 @@ parameter     [14:0] BASE_ADDR = 15'h0280;     // Register base address
                                                //                              0x00A0, ...
 // OUTPUTs
 //============
-output               irq_lt24_o;               // LT24 interface interrupt
+output               irq_adc_o;                // LT24 ADC interface interrupt
+output               irq_lcd_o;                // LT24 LCD interface interrupt
 
-output               lt24_reset_n_o;           // LT24 Reset (Active Low)
-output               lt24_on_o;                // LT24 on/off
-output         [2:0] lt24_cfg_clk_o;           // LT24 Interface clock configuration
-output        [14:0] lt24_cfg_refr_o;          // LT24 Interface refresh configuration
-output               lt24_cfg_refr_sync_en_o;  // LT24 Interface refresh sync configuration
-output         [9:0] lt24_cfg_refr_sync_val_o; // LT24 Interface refresh sync value configuration
-output               lt24_cmd_refr_o;          // LT24 Interface refresh command
-output         [7:0] lt24_cmd_val_o;           // LT24 Generic command value
-output               lt24_cmd_has_param_o;     // LT24 Generic command has parameters
-output        [15:0] lt24_cmd_param_o;         // LT24 Generic command parameter value
-output               lt24_cmd_param_rdy_o;     // LT24 Generic command trigger
-output        [15:0] lt24_cmd_dfill_o;         // LT24 Data fill value
-output               lt24_cmd_dfill_wr_o;      // LT24 Data fill trigger
+output               lcd_reset_n_o;            // LT24 LCD Reset (Active Low)
+output               lcd_on_o;                 // LT24 LCD on/off
+output         [2:0] lcd_cfg_clk_o;            // LT24 LCD Interface clock configuration
+output        [14:0] lcd_cfg_refr_o;           // LT24 LCD Interface refresh configuration
+output               lcd_cfg_refr_sync_en_o;   // LT24 LCD Interface refresh sync configuration
+output         [9:0] lcd_cfg_refr_sync_val_o;  // LT24 LCD Interface refresh sync value configuration
+output               lcd_cmd_refr_o;           // LT24 LCD Interface refresh command
+output         [7:0] lcd_cmd_val_o;            // LT24 LCD Generic command value
+output               lcd_cmd_has_param_o;      // LT24 LCD Generic command has parameters
+output        [15:0] lcd_cmd_param_o;          // LT24 LCD Generic command parameter value
+output               lcd_cmd_param_rdy_o;      // LT24 LCD Generic command trigger
+output        [15:0] lcd_cmd_dfill_o;          // LT24 LCD Data fill value
+output               lcd_cmd_dfill_wr_o;       // LT24 LCD Data fill trigger
+
+output               adc_enabled_o;            // LT24 ADC Enabled
+output         [7:0] adc_cfg_clk_o;            // LT24 ADC Clock configuration
+output               adc_coord_y_swap_o;       // LT24 Coordinates: swap Y axis (horizontal symmetry)
+output               adc_coord_x_swap_o;       // LT24 Coordinates: swap X axis (vertical symmetry)
+output               adc_coord_cl_swap_o;      // LT24 Coordinates: swap column/lines
 
 output        [15:0] per_dout_o;               // Peripheral data output
 
@@ -108,10 +128,16 @@ output        [15:0] per_dout_o;               // Peripheral data output
 input                mclk;                     // Main system clock
 input                puc_rst;                  // Main system reset
 
-input          [4:0] lt24_status_i;            // LT24 FSM Status
-input                lt24_start_evt_i;         // LT24 FSM is starting
-input                lt24_done_evt_i;          // LT24 FSM is done
-input                lt24_uflow_evt_i;         // LT24 refresh underfow
+input          [4:0] lcd_status_i;             // LT24 LCD FSM Status
+input                lcd_start_evt_i;          // LT24 LCD FSM is starting
+input                lcd_done_evt_i;           // LT24 LCD FSM is done
+input                lcd_uflow_evt_i;          // LT24 LCD refresh underfow
+
+input                adc_done_evt_i;           // LT24 ADC FSM is done
+input         [11:0] adc_x_data_i;             // LT24 ADC X sampled data
+input         [11:0] adc_y_data_i;             // LT24 ADC Y sampled data
+input          [8:0] adc_x_coord_i;            // LT24 ADC X coordinate
+input          [8:0] adc_y_coord_i;            // LT24 ADC Y coordinate
 
 input         [13:0] per_addr_i;               // Peripheral address
 input         [15:0] per_din_i;                // Peripheral data input
@@ -124,32 +150,46 @@ input          [1:0] per_we_i;                 // Peripheral write enable (high 
 //=============================================================================
 
 // Decoder bit width (defines how many bits are considered for address decoding)
-parameter              DEC_WD              =  5;
+parameter              DEC_WD                  =  5;
 
 // Register addresses offset
-parameter [DEC_WD-1:0] LT24_CFG            = 'h00,  // LT24 configuration and Generic command sending
-                       LT24_REFRESH        = 'h02,
-                       LT24_REFRESH_SYNC   = 'h04,
-                       LT24_CMD            = 'h06,
-                       LT24_CMD_PARAM      = 'h08,
-                       LT24_CMD_DFILL      = 'h0A,
-                       LT24_STATUS         = 'h0C,
-                       LT24_IRQ            = 'h0E;
+parameter [DEC_WD-1:0] LT24_LCD_CFG            = 'h00,  // LT24 configuration and Generic command sending
+                       LT24_LCD_REFRESH        = 'h02,
+                       LT24_LCD_REFRESH_SYNC   = 'h04,
+                       LT24_LCD_CMD            = 'h06,
+                       LT24_LCD_CMD_PARAM      = 'h08,
+                       LT24_LCD_CMD_DFILL      = 'h0A,
+                       LT24_LCD_STATUS         = 'h0C,
+                       LT24_LCD_IRQ            = 'h0E,
+
+                       LT24_ADC_CFG            = 'h10,
+                       LT24_ADC_IRQ            = 'h12,
+                       LT24_ADC_DATA_X         = 'h14,
+                       LT24_ADC_DATA_Y         = 'h16,
+                       LT24_ADC_COORD_X        = 'h18,
+                       LT24_ADC_COORD_Y        = 'h1A;
 
 
 // Register one-hot decoder utilities
-parameter              DEC_SZ              =  (1 << DEC_WD);
-parameter [DEC_SZ-1:0] BASE_REG            =  {{DEC_SZ-1{1'b0}}, 1'b1};
+parameter              DEC_SZ                  =  (1 << DEC_WD);
+parameter [DEC_SZ-1:0] BASE_REG                =  {{DEC_SZ-1{1'b0}}, 1'b1};
 
 // Register one-hot decoder
-parameter [DEC_SZ-1:0] LT24_CFG_D          = (BASE_REG << LT24_CFG          ),
-                       LT24_REFRESH_D      = (BASE_REG << LT24_REFRESH      ),
-                       LT24_REFRESH_SYNC_D = (BASE_REG << LT24_REFRESH_SYNC ),
-                       LT24_CMD_D          = (BASE_REG << LT24_CMD          ),
-                       LT24_CMD_PARAM_D    = (BASE_REG << LT24_CMD_PARAM    ),
-                       LT24_CMD_DFILL_D    = (BASE_REG << LT24_CMD_DFILL    ),
-                       LT24_STATUS_D       = (BASE_REG << LT24_STATUS       ),
-                       LT24_IRQ_D          = (BASE_REG << LT24_IRQ          );
+parameter [DEC_SZ-1:0] LT24_LCD_CFG_D          = (BASE_REG << LT24_LCD_CFG          ),
+                       LT24_LCD_REFRESH_D      = (BASE_REG << LT24_LCD_REFRESH      ),
+                       LT24_LCD_REFRESH_SYNC_D = (BASE_REG << LT24_LCD_REFRESH_SYNC ),
+                       LT24_LCD_CMD_D          = (BASE_REG << LT24_LCD_CMD          ),
+                       LT24_LCD_CMD_PARAM_D    = (BASE_REG << LT24_LCD_CMD_PARAM    ),
+                       LT24_LCD_CMD_DFILL_D    = (BASE_REG << LT24_LCD_CMD_DFILL    ),
+                       LT24_LCD_STATUS_D       = (BASE_REG << LT24_LCD_STATUS       ),
+                       LT24_LCD_IRQ_D          = (BASE_REG << LT24_LCD_IRQ          ),
+
+                       LT24_ADC_CFG_D          = (BASE_REG << LT24_ADC_CFG          ),
+                       LT24_ADC_IRQ_D          = (BASE_REG << LT24_ADC_IRQ          ),
+                       LT24_ADC_DATA_X_D       = (BASE_REG << LT24_ADC_DATA_X       ),
+                       LT24_ADC_DATA_Y_D       = (BASE_REG << LT24_ADC_DATA_Y       ),
+                       LT24_ADC_COORD_X_D      = (BASE_REG << LT24_ADC_COORD_X      ),
+                       LT24_ADC_COORD_Y_D      = (BASE_REG << LT24_ADC_COORD_Y      );
 
 
 //============================================================================
@@ -163,14 +203,21 @@ wire               reg_sel   =  per_en_i & (per_addr_i[13:DEC_WD-1]==BASE_ADDR[1
 wire  [DEC_WD-1:0] reg_addr  =  {per_addr_i[DEC_WD-2:0], 1'b0};
 
 // Register address decode
-wire  [DEC_SZ-1:0] reg_dec   =  (LT24_CFG_D          &  {DEC_SZ{(reg_addr == LT24_CFG          )}})  |
-                                (LT24_REFRESH_D      &  {DEC_SZ{(reg_addr == LT24_REFRESH      )}})  |
-                                (LT24_REFRESH_SYNC_D &  {DEC_SZ{(reg_addr == LT24_REFRESH_SYNC )}})  |
-                                (LT24_CMD_D          &  {DEC_SZ{(reg_addr == LT24_CMD          )}})  |
-                                (LT24_CMD_PARAM_D    &  {DEC_SZ{(reg_addr == LT24_CMD_PARAM    )}})  |
-                                (LT24_CMD_DFILL_D    &  {DEC_SZ{(reg_addr == LT24_CMD_DFILL    )}})  |
-                                (LT24_STATUS_D       &  {DEC_SZ{(reg_addr == LT24_STATUS       )}})  |
-                                (LT24_IRQ_D          &  {DEC_SZ{(reg_addr == LT24_IRQ          )}})  ;
+wire  [DEC_SZ-1:0] reg_dec   =  (LT24_LCD_CFG_D          &  {DEC_SZ{(reg_addr == LT24_LCD_CFG          )}})  |
+                                (LT24_LCD_REFRESH_D      &  {DEC_SZ{(reg_addr == LT24_LCD_REFRESH      )}})  |
+                                (LT24_LCD_REFRESH_SYNC_D &  {DEC_SZ{(reg_addr == LT24_LCD_REFRESH_SYNC )}})  |
+                                (LT24_LCD_CMD_D          &  {DEC_SZ{(reg_addr == LT24_LCD_CMD          )}})  |
+                                (LT24_LCD_CMD_PARAM_D    &  {DEC_SZ{(reg_addr == LT24_LCD_CMD_PARAM    )}})  |
+                                (LT24_LCD_CMD_DFILL_D    &  {DEC_SZ{(reg_addr == LT24_LCD_CMD_DFILL    )}})  |
+                                (LT24_LCD_STATUS_D       &  {DEC_SZ{(reg_addr == LT24_LCD_STATUS       )}})  |
+                                (LT24_LCD_IRQ_D          &  {DEC_SZ{(reg_addr == LT24_LCD_IRQ          )}})  |
+
+                                (LT24_ADC_CFG_D          &  {DEC_SZ{(reg_addr == LT24_ADC_CFG          )}})  |
+                                (LT24_ADC_IRQ_D          &  {DEC_SZ{(reg_addr == LT24_ADC_IRQ          )}})  |
+                                (LT24_ADC_DATA_X_D       &  {DEC_SZ{(reg_addr == LT24_ADC_DATA_X       )}})  |
+                                (LT24_ADC_DATA_Y_D       &  {DEC_SZ{(reg_addr == LT24_ADC_DATA_Y       )}})  |
+                                (LT24_ADC_COORD_X_D      &  {DEC_SZ{(reg_addr == LT24_ADC_COORD_X      )}})  |
+                                (LT24_ADC_COORD_Y_D      &  {DEC_SZ{(reg_addr == LT24_ADC_COORD_Y      )}})  ;
 
 // Read/Write probes
 wire               reg_write =  |per_we_i & reg_sel;
@@ -186,159 +233,284 @@ wire  [DEC_SZ-1:0] reg_rd    = reg_dec & {DEC_SZ{reg_read}};
 //============================================================================
 
 //------------------------------------------------
-// LT24_CFG Register
+// LT24_LCD_CFG Register
 //------------------------------------------------
-reg  [15:0] lt24_cfg;
+reg  [15:0] lt24_lcd_cfg;
 
-wire        lt24_cfg_wr = reg_wr[LT24_CFG];
+wire        lt24_lcd_cfg_wr = reg_wr[LT24_LCD_CFG];
 
 always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)          lt24_cfg  <=  16'h0000;
-  else if (lt24_cfg_wr) lt24_cfg  <=  per_din_i & 16'hE07F;
+  if (puc_rst)              lt24_lcd_cfg  <=  16'h0000;
+  else if (lt24_lcd_cfg_wr) lt24_lcd_cfg  <=  per_din_i & 16'hE07F;
 
 // Bitfield assignments
-wire        lt24_irq_refr_done_en  =  lt24_cfg[15];
-wire        lt24_irq_refr_start_en =  lt24_cfg[14];
-wire        lt24_irq_refr_uflow_en =  lt24_cfg[13];
-assign      lt24_cfg_clk_o         =  lt24_cfg[6:4];
-assign      lt24_reset_n_o         = ~lt24_cfg[1];
-assign      lt24_on_o              =  lt24_cfg[0];
+wire        lcd_irq_refr_done_en  =  lt24_lcd_cfg[15];
+wire        lcd_irq_refr_start_en =  lt24_lcd_cfg[14];
+wire        lcd_irq_refr_uflow_en =  lt24_lcd_cfg[13];
+assign      lcd_cfg_clk_o         =  lt24_lcd_cfg[6:4];
+assign      lcd_lcd_reset_n_o     = ~lt24_lcd_cfg[1];
+assign      lcd_lcd_on_o          =  lt24_lcd_cfg[0];
 
 
 //------------------------------------------------
-// LT24_REFRESH Register
+// LT24_LCD_REFRESH Register
 //------------------------------------------------
-reg         lt24_cmd_refr_o;
-reg  [14:0] lt24_cfg_refr_o;
+reg         lcd_cmd_refr_o;
+reg  [14:0] lcd_cfg_refr_o;
 
-wire        lt24_refresh_wr   = reg_wr[LT24_REFRESH];
-wire        lt24_cmd_refr_clr = lt24_done_evt_i & lt24_status_i[2] & (lt24_cfg_refr_o==15'h0000); // Auto-clear in manual refresh mode when done
+wire        lt24_lcd_refresh_wr = reg_wr[LT24_LCD_REFRESH];
+wire        lcd_cmd_refr_clr    = lcd_done_evt_i & lcd_status_i[2] & (lcd_cfg_refr_o==15'h0000); // Auto-clear in manual refresh mode when done
 
 always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                lt24_cmd_refr_o  <=  1'h0;
-  else if (lt24_refresh_wr)   lt24_cmd_refr_o  <=  per_din_i[0];
-  else if (lt24_cmd_refr_clr) lt24_cmd_refr_o  <=  1'h0;
+  if (puc_rst)                  lcd_cmd_refr_o  <=  1'h0;
+  else if (lt24_lcd_refresh_wr) lcd_cmd_refr_o  <=  per_din_i[0];
+  else if (lcd_cmd_refr_clr)    lcd_cmd_refr_o  <=  1'h0;
 
 always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                lt24_cfg_refr_o  <=  15'h0000;
-  else if (lt24_refresh_wr)   lt24_cfg_refr_o  <=  per_din_i[15:1];
+  if (puc_rst)                  lcd_cfg_refr_o  <=  15'h0000;
+  else if (lt24_lcd_refresh_wr) lcd_cfg_refr_o  <=  per_din_i[15:1];
 
-wire [15:0] lt24_refresh = {lt24_cfg_refr_o, lt24_cmd_refr_o};
+wire [15:0] lt24_lcd_refresh = {lcd_cfg_refr_o, lcd_cmd_refr_o};
 
 
 //------------------------------------------------
-// LT24_REFRESH_SYNC Register
+// LT24_LCD_REFRESH_SYNC Register
 //------------------------------------------------
-reg         lt24_cfg_refr_sync_en_o;
-reg   [9:0] lt24_cfg_refr_sync_val_o;
+reg         lcd_cfg_refr_sync_en_o;
+reg   [9:0] lcd_cfg_refr_sync_val_o;
 
-wire        lt24_refresh_sync_wr   = reg_wr[LT24_REFRESH_SYNC];
+wire        lt24_lcd_refresh_sync_wr = reg_wr[LT24_LCD_REFRESH_SYNC];
 
 always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                   lt24_cfg_refr_sync_en_o  <=  1'h0;
-  else if (lt24_refresh_sync_wr) lt24_cfg_refr_sync_en_o  <=  per_din_i[15];
+  if (puc_rst)                       lcd_cfg_refr_sync_en_o  <=  1'h0;
+  else if (lt24_lcd_refresh_sync_wr) lcd_cfg_refr_sync_en_o  <=  per_din_i[15];
 
 always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                   lt24_cfg_refr_sync_val_o <=  10'h000;
-  else if (lt24_refresh_sync_wr) lt24_cfg_refr_sync_val_o <=  per_din_i[9:0];
+  if (puc_rst)                       lcd_cfg_refr_sync_val_o <=  10'h000;
+  else if (lt24_lcd_refresh_sync_wr) lcd_cfg_refr_sync_val_o <=  per_din_i[9:0];
 
-wire [15:0] lt24_refresh_sync = {lt24_cfg_refr_sync_en_o, 5'h00, lt24_cfg_refr_sync_val_o};
+wire [15:0] lt24_lcd_refresh_sync = {lcd_cfg_refr_sync_en_o, 5'h00, lcd_cfg_refr_sync_val_o};
 
 
 //------------------------------------------------
-// LT24_CMD Register
+// LT24_LCD_CMD Register
 //------------------------------------------------
-reg  [15:0] lt24_cmd;
+reg  [15:0] lt24_lcd_cmd;
 
-wire        lt24_cmd_wr = reg_wr[LT24_CMD];
+wire        lt24_lcd_cmd_wr = reg_wr[LT24_LCD_CMD];
 
 always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)          lt24_cmd <=  16'h0000;
-  else if (lt24_cmd_wr) lt24_cmd <=  per_din_i & 16'h01FF;
+  if (puc_rst)              lt24_lcd_cmd <=  16'h0000;
+  else if (lt24_lcd_cmd_wr) lt24_lcd_cmd <=  per_din_i & 16'h01FF;
 
-assign      lt24_cmd_val_o        = lt24_cmd[7:0];
-assign      lt24_cmd_has_param_o  = lt24_cmd[8];
+assign      lcd_cmd_val_o        = lt24_lcd_cmd[7:0];
+assign      lcd_cmd_has_param_o  = lt24_lcd_cmd[8];
 
 
 //------------------------------------------------
-// LT24_CMD_PARAM Register
+// LT24_LCD_CMD_PARAM Register
 //------------------------------------------------
-reg  [15:0] lt24_cmd_param_o;
+reg  [15:0] lcd_cmd_param_o;
 
-wire        lt24_cmd_param_wr = reg_wr[LT24_CMD_PARAM];
+wire        lt24_lcd_cmd_param_wr = reg_wr[LT24_LCD_CMD_PARAM];
 
 always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                lt24_cmd_param_o <=  16'h0000;
-  else if (lt24_cmd_param_wr) lt24_cmd_param_o <=  per_din_i;
+  if (puc_rst)                    lcd_cmd_param_o <=  16'h0000;
+  else if (lt24_lcd_cmd_param_wr) lcd_cmd_param_o <=  per_din_i;
 
-reg lt24_cmd_param_rdy_o;
+reg lcd_cmd_param_rdy_o;
 always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst) lt24_cmd_param_rdy_o <=  1'b0;
-  else         lt24_cmd_param_rdy_o <=  lt24_cmd_param_wr;
+  if (puc_rst) lcd_cmd_param_rdy_o <=  1'b0;
+  else         lcd_cmd_param_rdy_o <=  lt24_lcd_cmd_param_wr;
 
 
 //------------------------------------------------
-// LT24_CMD_DFILL Register
+// LT24_LCD_CMD_DFILL Register
 //------------------------------------------------
-reg  [15:0] lt24_cmd_dfill_o;
+reg  [15:0] lcd_cmd_dfill_o;
 
-assign      lt24_cmd_dfill_wr_o = reg_wr[LT24_CMD_DFILL];
+assign      lcd_cmd_dfill_wr_o = reg_wr[LT24_LCD_CMD_DFILL];
 
 always @ (posedge mclk or posedge puc_rst)
-  if (puc_rst)                  lt24_cmd_dfill_o <=  16'h0000;
-  else if (lt24_cmd_dfill_wr_o) lt24_cmd_dfill_o <=  per_din_i;
+  if (puc_rst)                 lcd_cmd_dfill_o <=  16'h0000;
+  else if (lcd_cmd_dfill_wr_o) lcd_cmd_dfill_o <=  per_din_i;
 
 
 //------------------------------------------------
-// LT24_STATUS Register
+// LT24_LCD_STATUS Register
 //------------------------------------------------
-wire [15:0] lt24_status;
+wire [15:0] lt24_lcd_status;
 
-assign      lt24_status[0]    = lt24_status_i[0]; // FSM_BUSY
-assign      lt24_status[1]    = lt24_status_i[1]; // WAIT_PARAM
-assign      lt24_status[2]    = lt24_status_i[2]; // REFRESH_BUSY
-assign      lt24_status[3]    = lt24_status_i[3]; // WAIT_FOR_SCANLINE
-assign      lt24_status[4]    = lt24_status_i[4]; // DATA_FILL_BUSY
-assign      lt24_status[15:5] = 11'h000;
+assign      lt24_lcd_status[0]    = lcd_status_i[0]; // FSM_BUSY
+assign      lt24_lcd_status[1]    = lcd_status_i[1]; // WAIT_PARAM
+assign      lt24_lcd_status[2]    = lcd_status_i[2]; // REFRESH_BUSY
+assign      lt24_lcd_status[3]    = lcd_status_i[3]; // WAIT_FOR_SCANLINE
+assign      lt24_lcd_status[4]    = lcd_status_i[4]; // DATA_FILL_BUSY
+assign      lt24_lcd_status[15:5] = 11'h000;
 
 
 //------------------------------------------------
-// GFX_IRQ Register
+// LT24_LCD_IRQ Register
 //------------------------------------------------
-wire [15:0] lt24_irq;
+wire [15:0] lt24_lcd_irq;
 
 // Clear IRQ when 1 is written. Set IRQ when FSM is done
-wire         lt24_irq_refr_done_clr  = per_din_i[15] & reg_wr[LT24_IRQ];
-wire         lt24_irq_refr_done_set  = lt24_done_evt_i;
+wire        lcd_irq_refr_done_clr  = per_din_i[15] & reg_wr[LT24_LCD_IRQ];
+wire        lcd_irq_refr_done_set  = lcd_done_evt_i;
 
-wire         lt24_irq_refr_start_clr = per_din_i[14] & reg_wr[LT24_IRQ];
-wire         lt24_irq_refr_start_set = lt24_start_evt_i;
+wire        lcd_irq_refr_start_clr = per_din_i[14] & reg_wr[LT24_LCD_IRQ];
+wire        lcd_irq_refr_start_set = lcd_start_evt_i;
 
-wire         lt24_irq_refr_uflow_clr = per_din_i[13] & reg_wr[LT24_IRQ];
-wire         lt24_irq_refr_uflow_set = lt24_uflow_evt_i;
+wire        lcd_irq_refr_uflow_clr = per_din_i[13] & reg_wr[LT24_LCD_IRQ];
+wire        lcd_irq_refr_uflow_set = lcd_uflow_evt_i;
 
-reg          lt24_irq_refr_done;
-reg          lt24_irq_refr_start;
-reg          lt24_irq_refr_uflow;
+reg         lcd_irq_refr_done;
+reg         lcd_irq_refr_start;
+reg         lcd_irq_refr_uflow;
 always @ (posedge mclk or posedge puc_rst)
   if (puc_rst)
     begin
-       lt24_irq_refr_done  <=  1'b0;
-       lt24_irq_refr_start <=  1'b0;
-       lt24_irq_refr_uflow <=  1'b0;
+       lcd_irq_refr_done  <=  1'b0;
+       lcd_irq_refr_start <=  1'b0;
+       lcd_irq_refr_uflow <=  1'b0;
     end
   else
     begin
-       lt24_irq_refr_done  <=  ( lt24_irq_refr_done_set  | (~lt24_irq_refr_done_clr  & lt24_irq_refr_done ) ); // IRQ set has priority over clear
-       lt24_irq_refr_start <=  ( lt24_irq_refr_start_set | (~lt24_irq_refr_start_clr & lt24_irq_refr_start) ); // IRQ set has priority over clear
-       lt24_irq_refr_uflow <=  ( lt24_irq_refr_uflow_set | (~lt24_irq_refr_uflow_clr & lt24_irq_refr_uflow) ); // IRQ set has priority over clear
+       lcd_irq_refr_done  <=  ( lcd_irq_refr_done_set  | (~lcd_irq_refr_done_clr  & lcd_irq_refr_done ) ); // IRQ set has priority over clear
+       lcd_irq_refr_start <=  ( lcd_irq_refr_start_set | (~lcd_irq_refr_start_clr & lcd_irq_refr_start) ); // IRQ set has priority over clear
+       lcd_irq_refr_uflow <=  ( lcd_irq_refr_uflow_set | (~lcd_irq_refr_uflow_clr & lcd_irq_refr_uflow) ); // IRQ set has priority over clear
     end
 
-assign  lt24_irq   = {lt24_irq_refr_done, lt24_irq_refr_start, lt24_irq_refr_uflow, 13'h0000};
+assign  lt24_lcd_irq  =  {lcd_irq_refr_done, lcd_irq_refr_start, lcd_irq_refr_uflow, 13'h0000};
 
-assign  irq_lt24_o = (lt24_irq_refr_done     & lt24_irq_refr_done_en)     |
-                     (lt24_irq_refr_start    & lt24_irq_refr_start_en)    |
-                     (lt24_irq_refr_uflow    & lt24_irq_refr_uflow_en)    ;  // LT24 interrupt
+assign  irq_lcd_o     =  (lcd_irq_refr_done     & lcd_irq_refr_done_en)     |
+                         (lcd_irq_refr_start    & lcd_irq_refr_start_en)    |
+                         (lcd_irq_refr_uflow    & lcd_irq_refr_uflow_en)    ;  // LT24 LCD interrupt
+
+//------------------------------------------------
+// LT24_ADC_CFG Register
+//------------------------------------------------
+reg  [15:0] lt24_adc_cfg;
+
+wire        lt24_adc_cfg_wr = reg_wr[LT24_ADC_CFG];
+
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)              lt24_adc_cfg  <=  16'h0000;
+  else if (lt24_adc_cfg_wr) lt24_adc_cfg  <=  per_din_i & 16'h9EFF;
+
+// Bitfield assignments
+wire        adc_irq_done_en     =  lt24_adc_cfg[15];
+assign      adc_enabled_o       =  lt24_adc_cfg[12];
+assign      adc_coord_x_swap_o  =  lt24_adc_cfg[11];
+assign      adc_coord_y_swap_o  =  lt24_adc_cfg[10];
+assign      adc_coord_cl_swap_o =  lt24_adc_cfg[ 9];
+assign      adc_cfg_clk_o       =  lt24_adc_cfg[7:0];
+
+//------------------------------------------------
+// LT24_ADC_IRQ Register
+//------------------------------------------------
+wire [15:0] lt24_adc_irq;
+
+// Clear IRQ when 1 is written. Set IRQ when FSM is done
+wire        adc_irq_done_clr  = per_din_i[15] & reg_wr[LT24_ADC_IRQ];
+wire        adc_irq_done_set  = adc_done_evt_i;
+
+reg         adc_irq_done;
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)
+    begin
+       adc_irq_done  <=  1'b0;
+    end
+  else
+    begin
+       adc_irq_done  <=  ( adc_irq_done_set  | (~adc_irq_done_clr  & adc_irq_done ) ); // IRQ set has priority over clear
+    end
+
+assign  lt24_adc_irq  =  {adc_irq_done, 15'h0000};
+
+assign  irq_adc_o     =  (adc_irq_done & adc_irq_done_en);  // LT24 ADC interrupt
+
+//------------------------------------------------
+// LT24_ADC_DATA_X/Y Register
+//------------------------------------------------
+
+// Mark that new data has been received
+reg         lt24_adc_new_data_rdy;
+wire        copy_adc_data;
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)                      lt24_adc_new_data_rdy <=  1'b0;
+  else if (adc_done_evt_i)          lt24_adc_new_data_rdy <=  1'b1;
+  else if (copy_adc_data)           lt24_adc_new_data_rdy <=  1'b0;
+
+// Latch new data
+reg  [23:0] lt24_adc_new_data;
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)                      lt24_adc_new_data     <=  24'h000000;
+  else if (adc_done_evt_i)          lt24_adc_new_data     <=  {adc_y_data_i, adc_x_data_i};
+
+
+// Detect when both X and Y data have be read so that we can push the new data in
+reg  [1:0] lt24_adc_data_empty;
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)                      lt24_adc_data_empty   <=  2'h3;
+  else if (copy_adc_data)           lt24_adc_data_empty   <=  2'h0;
+  else if (reg_rd[LT24_ADC_DATA_X]) lt24_adc_data_empty   <=  lt24_adc_data_empty | 2'h1;
+  else if (reg_rd[LT24_ADC_DATA_Y]) lt24_adc_data_empty   <=  lt24_adc_data_empty | 2'h2;
+
+assign      copy_adc_data = (lt24_adc_data_empty==2'h3) & lt24_adc_new_data_rdy;
+
+// Push new data into read buffers when these have been read
+reg  [15:0] lt24_adc_data_x;
+reg  [15:0] lt24_adc_data_y;
+
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)            lt24_adc_data_x  <=  16'h0000;
+  else if (copy_adc_data) lt24_adc_data_x  <=  {4'h0, lt24_adc_new_data[11:0]};
+
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)            lt24_adc_data_y  <=  16'h0000;
+  else if (copy_adc_data) lt24_adc_data_y  <=  {4'h0, lt24_adc_new_data[23:12]};
+
+//------------------------------------------------
+// LT24_ADC_COORD_X/Y Register
+//------------------------------------------------
+
+// Mark that new coordinates has been received
+reg         lt24_adc_new_coord_rdy;
+wire        copy_adc_coord;
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)                       lt24_adc_new_coord_rdy <=  1'b0;
+  else if (adc_done_evt_i)           lt24_adc_new_coord_rdy <=  1'b1;
+  else if (copy_adc_coord)           lt24_adc_new_coord_rdy <=  1'b0;
+
+// Latch new data
+reg  [17:0] lt24_adc_new_coord;
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)                       lt24_adc_new_coord     <=  18'h00000;
+  else if (adc_done_evt_i)           lt24_adc_new_coord     <=  {adc_y_coord_i, adc_x_coord_i};
+
+
+// Detect when both X and Y data have be read so that we can push the new data in
+reg  [1:0] lt24_adc_coord_empty;
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)                       lt24_adc_coord_empty   <=  2'h3;
+  else if (copy_adc_coord)           lt24_adc_coord_empty   <=  2'h0;
+  else if (reg_rd[LT24_ADC_COORD_X]) lt24_adc_coord_empty   <=  lt24_adc_coord_empty | 2'h1;
+  else if (reg_rd[LT24_ADC_COORD_Y]) lt24_adc_coord_empty   <=  lt24_adc_coord_empty | 2'h2;
+
+assign      copy_adc_coord = (lt24_adc_coord_empty==2'h3) & lt24_adc_new_coord_rdy;
+
+// Push new data into read buffers when these have been read
+reg  [15:0] lt24_adc_coord_x;
+reg  [15:0] lt24_adc_coord_y;
+
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)             lt24_adc_coord_x <=  16'h0000;
+  else if (copy_adc_coord) lt24_adc_coord_x <=  {7'h00, lt24_adc_new_coord[8:0]};
+
+always @ (posedge mclk or posedge puc_rst)
+  if (puc_rst)             lt24_adc_coord_y <=  16'h0000;
+  else if (copy_adc_coord) lt24_adc_coord_y <=  {7'h00, lt24_adc_new_coord[17:9]};
 
 
 //============================================================================
@@ -346,23 +518,35 @@ assign  irq_lt24_o = (lt24_irq_refr_done     & lt24_irq_refr_done_en)     |
 //============================================================================
 
 // Data output mux
-wire [15:0] lt24_cfg_read          = lt24_cfg               & {16{reg_rd[LT24_CFG         ]}};
-wire [15:0] lt24_refresh_read      = lt24_refresh           & {16{reg_rd[LT24_REFRESH     ]}};
-wire [15:0] lt24_refresh_sync_read = lt24_refresh_sync      & {16{reg_rd[LT24_REFRESH_SYNC]}};
-wire [15:0] lt24_cmd_read          = lt24_cmd               & {16{reg_rd[LT24_CMD         ]}};
-wire [15:0] lt24_cmd_param_read    = lt24_cmd_param_o       & {16{reg_rd[LT24_CMD_PARAM   ]}};
-wire [15:0] lt24_cmd_dfill_read    = lt24_cmd_dfill_o       & {16{reg_rd[LT24_CMD_DFILL   ]}};
-wire [15:0] lt24_status_read       = lt24_status            & {16{reg_rd[LT24_STATUS      ]}};
-wire [15:0] lt24_irq_read          = lt24_irq               & {16{reg_rd[LT24_IRQ         ]}};
+wire [15:0] lt24_lcd_cfg_read          = lt24_lcd_cfg               & {16{reg_rd[LT24_LCD_CFG         ]}};
+wire [15:0] lt24_lcd_refresh_read      = lt24_lcd_refresh           & {16{reg_rd[LT24_LCD_REFRESH     ]}};
+wire [15:0] lt24_lcd_refresh_sync_read = lt24_lcd_refresh_sync      & {16{reg_rd[LT24_LCD_REFRESH_SYNC]}};
+wire [15:0] lt24_lcd_cmd_read          = lt24_lcd_cmd               & {16{reg_rd[LT24_LCD_CMD         ]}};
+wire [15:0] lt24_lcd_cmd_param_read    = lcd_cmd_param_o            & {16{reg_rd[LT24_LCD_CMD_PARAM   ]}};
+wire [15:0] lt24_lcd_cmd_dfill_read    = lcd_cmd_dfill_o            & {16{reg_rd[LT24_LCD_CMD_DFILL   ]}};
+wire [15:0] lt24_lcd_status_read       = lt24_lcd_status            & {16{reg_rd[LT24_LCD_STATUS      ]}};
+wire [15:0] lt24_lcd_irq_read          = lt24_lcd_irq               & {16{reg_rd[LT24_LCD_IRQ         ]}};
+wire [15:0] lt24_adc_cfg_read          = lt24_adc_cfg               & {16{reg_rd[LT24_ADC_CFG         ]}};
+wire [15:0] lt24_adc_irq_read          = lt24_adc_irq               & {16{reg_rd[LT24_ADC_IRQ         ]}};
+wire [15:0] lt24_adc_data_x_read       = lt24_adc_data_x            & {16{reg_rd[LT24_ADC_DATA_X      ]}};
+wire [15:0] lt24_adc_data_y_read       = lt24_adc_data_y            & {16{reg_rd[LT24_ADC_DATA_Y      ]}};
+wire [15:0] lt24_adc_coord_x_read      = lt24_adc_coord_x           & {16{reg_rd[LT24_ADC_COORD_X     ]}};
+wire [15:0] lt24_adc_coord_y_read      = lt24_adc_coord_y           & {16{reg_rd[LT24_ADC_COORD_Y     ]}};
 
-wire [15:0] per_dout_o             = lt24_cfg_read          |
-                                     lt24_refresh_read      |
-                                     lt24_refresh_sync_read |
-                                     lt24_cmd_read          |
-                                     lt24_cmd_param_read    |
-                                     lt24_cmd_dfill_read    |
-                                     lt24_status_read       |
-                                     lt24_irq_read          ;
+wire [15:0] per_dout_o                 = lt24_lcd_cfg_read          |
+                                         lt24_lcd_refresh_read      |
+                                         lt24_lcd_refresh_sync_read |
+                                         lt24_lcd_cmd_read          |
+                                         lt24_lcd_cmd_param_read    |
+                                         lt24_lcd_cmd_dfill_read    |
+                                         lt24_lcd_status_read       |
+                                         lt24_lcd_irq_read          |
+                                         lt24_adc_cfg_read          |
+                                         lt24_adc_irq_read          |
+                                         lt24_adc_data_x_read       |
+                                         lt24_adc_data_y_read       |
+                                         lt24_adc_coord_x_read      |
+                                         lt24_adc_coord_y_read      ;
 
 endmodule // ogfx_if_lt24_reg
 

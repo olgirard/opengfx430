@@ -50,6 +50,7 @@
 ../../../rtl/verilog/ogfx_gpu_dma.v
 ../../../rtl/verilog/ogfx_gpu_dma_addr.v
 ../../../rtl/verilog/ogfx_ram_arbiter.v
+../../../rtl/verilog/ogfx_sync_cell.v
 
 //=============================================================================
 // Interfaces

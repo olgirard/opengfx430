@@ -48,6 +48,8 @@ initial
       $display(" ===============================================");
 
       repeat(5) @(posedge mclk);
+      @(negedge puc_rst);
+      repeat(5) @(posedge mclk);
 
       stimulus_done =  0;
 
@@ -59,10 +61,8 @@ initial
       for (tb_idx=0; tb_idx < (1<<`VRAM_AWIDTH); tb_idx=tb_idx+1)
         vid_ram_0.mem[tb_idx] = tb_idx;
 
-      field_write  (`F_LT24_RESET      , 'h1                );
-      field_write  (`F_LT24_ON         , 'h1                );
-      field_write  (`F_LT24_CLK        , `V_LT24_CLK_DIV2   );
-      field_write  (`F_LT24_RESET      , 'h0                );
+
+      field_write  (`F_GFX_MODE        , `V_GFX_16_BPP      );
 
       reg_write_16b(`R_DISPLAY_WIDTH   , width              );
       reg_write_16b(`R_DISPLAY_HEIGHT  , height             );
@@ -73,14 +73,59 @@ initial
       field_write  (`F_DISPLAY_Y_SWAP  , 'h0                );
       field_write  (`F_DISPLAY_X_SWAP  , 'h0                );
 
-      field_write  (`F_GFX_MODE        , `V_GFX_16_BPP      );
-
+      field_write  (`F_LT24_RESET      , 'h1                );
+      field_write  (`F_LT24_ON         , 'h1                );
+      field_write  (`F_LT24_CLK        , `V_LT24_CLK_DIV2   );
       field_write  (`F_LT24_REFR       , `V_LT24_REFR_500US );
+
+      field_write  (`F_LT24_RESET      , 'h0                );
       field_write  (`F_LT24_REFR_START , 'h1                );
 
-      //field_write  (`F_GFX_GPU_EN      , 'h1              );
+      field_write  (`F_LT24_ADC_CLK_CFG, 'h01               );
+      field_write  (`F_LT24_ADC_EN     , 'h1                );
 
+      field_write  (`F_LT24_ADC_COORD_X_SWAP, 'h0          );
+
+      lt24Model_inst.coord_x = 124;
+      lt24Model_inst.coord_y =  56;
       repeat(5)  @(posedge mclk);
+      lt24Model_inst.lt24_adc_penirq_n_o = 1'b0;
+      repeat(2)  @(posedge mclk);
+      lt24Model_inst.lt24_adc_penirq_n_o = 1'b1;
+      repeat(500) @(posedge mclk);
+
+      lt24Model_inst.coord_x = 302;
+      lt24Model_inst.coord_y = 156;
+      repeat(5) @(posedge mclk);
+      lt24Model_inst.lt24_adc_penirq_n_o = 1'b0;
+      repeat(2)  @(posedge mclk);
+      lt24Model_inst.lt24_adc_penirq_n_o = 1'b1;
+      repeat(500)  @(posedge mclk);
+
+      @(posedge mclk);
+      reg_read_16b(`R_LT24_ADC_COORD_X, 124);
+      reg_read_16b(`R_LT24_ADC_COORD_Y,  56);
+      @(posedge mclk);
+      reg_read_16b(`R_LT24_ADC_COORD_X, 302);
+      reg_read_16b(`R_LT24_ADC_COORD_Y, 156);
+
+      field_write  (`F_LT24_ADC_COORD_X_SWAP,  'h0          );
+      field_write  (`F_LT24_ADC_COORD_Y_SWAP,  'h1          );
+      field_write  (`F_LT24_ADC_COORD_CL_SWAP, 'h1          );
+
+      lt24Model_inst.coord_x = 319;
+      lt24Model_inst.coord_y = 239;
+      repeat(5) @(posedge mclk);
+      lt24Model_inst.lt24_adc_penirq_n_o = 1'b0;
+      repeat(2)  @(posedge mclk);
+      lt24Model_inst.lt24_adc_penirq_n_o = 1'b1;
+      repeat(500)  @(posedge mclk);
+
+      @(posedge mclk);
+      reg_read_16b(`R_LT24_ADC_COORD_X, 0);
+      reg_read_16b(`R_LT24_ADC_COORD_Y, 319);
+
+
       #(2ms);
       repeat(50) @(posedge mclk);
 
