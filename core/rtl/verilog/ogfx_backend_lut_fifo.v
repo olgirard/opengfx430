@@ -123,10 +123,10 @@ reg    [1:0] lut_state;
 reg    [1:0] lut_state_nxt;
 
 // State definition
-parameter    STATE_IDLE        =   0,
-             STATE_FRAME_DATA  =   1,
-             STATE_LUT_DATA    =   2,
-             STATE_HOLD        =   3;
+parameter    STATE_IDLE        =  2'd0,
+             STATE_FRAME_DATA  =  2'd1,
+             STATE_LUT_DATA    =  2'd2,
+             STATE_HOLD        =  2'd3;
 
 // Some parameter(s)
 parameter    FIFO_EMPTY        =  3'h0,

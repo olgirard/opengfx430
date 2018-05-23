@@ -248,8 +248,8 @@ wire        lcd_irq_refr_done_en  =  lt24_lcd_cfg[15];
 wire        lcd_irq_refr_start_en =  lt24_lcd_cfg[14];
 wire        lcd_irq_refr_uflow_en =  lt24_lcd_cfg[13];
 assign      lcd_cfg_clk_o         =  lt24_lcd_cfg[6:4];
-assign      lcd_lcd_reset_n_o     = ~lt24_lcd_cfg[1];
-assign      lcd_lcd_on_o          =  lt24_lcd_cfg[0];
+assign      lcd_reset_n_o         = ~lt24_lcd_cfg[1];
+assign      lcd_on_o              =  lt24_lcd_cfg[0];
 
 
 //------------------------------------------------

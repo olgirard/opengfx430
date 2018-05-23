@@ -135,109 +135,110 @@ output               screen_refresh_active_o       ;    // Display refresh on go
 //=============================================================================
 
 // Configuration, control and status registers
-wire           [2:0] lcd_cfg_clk                   ;           
-wire          [14:0] lcd_cfg_refr                  ;          
-wire                 lcd_cfg_refr_sync_en          ;  
-wire           [9:0] lcd_cfg_refr_sync_val         ; 
-wire                 lcd_cmd_refresh               ;          
-wire           [7:0] lcd_cmd_val                   ;           
-wire                 lcd_cmd_has_param             ;     
-wire          [15:0] lcd_cmd_param_val             ;         
-wire                 lcd_cmd_param_trig            ;     
-wire          [15:0] lcd_cmd_dfill                 ;         
-wire                 lcd_cmd_dfill_trig            ;      
-wire           [4:0] lcd_status                    ;            
-wire                 lcd_start_evt                 ;         
-wire                 lcd_done_evt                  ;          
+wire           [2:0] lcd_cfg_clk                      ;
+wire          [14:0] lcd_cfg_refr                     ;
+wire                 lcd_cfg_refr_sync_en             ;
+wire           [9:0] lcd_cfg_refr_sync_val            ;
+wire                 lcd_cmd_refresh                  ;
+wire           [7:0] lcd_cmd_val                      ;
+wire                 lcd_cmd_has_param                ;
+wire          [15:0] lcd_cmd_param_val                ;
+wire                 lcd_cmd_param_trig               ;
+wire          [15:0] lcd_cmd_dfill                    ;
+wire                 lcd_cmd_dfill_trig               ;
+wire           [4:0] lcd_status                       ;
+wire                 lcd_start_evt                    ;
+wire                 lcd_done_evt                     ;
+wire                 lcd_uflow_evt                    ;
 
 // State machine registers
-reg            [4:0] lcd_state                     ;
-reg            [4:0] lcd_state_nxt                 ;
-reg            [2:0] adc_state_nxt                 ;
-reg            [2:0] adc_state                     ;
+reg            [4:0] lcd_state                        ;
+reg            [4:0] lcd_state_nxt                    ;
+reg            [2:0] adc_state_nxt                    ;
+reg            [2:0] adc_state                        ;
 
 // Others
-reg                  refresh_trigger               ;
-wire                 status_gts_match              ;
-wire                 unused_lt24_adc_busy          ;
-wire                 adc_penirq_detect             ;
-wire                 trigger_adc_get_coordinate_set;
-wire                 trigger_adc_get_coordinate_clr;
-wire                 adc_penirq_sync               ;
-reg                  adc_penirq_sync_dly           ;
-reg                  trigger_adc_get_coordinate    ;
-wire                 adc_enabled                   ;
-wire           [7:0] adc_cfg_clk                   ;
-wire                 adc_coord_y_swap              ;
-wire                 adc_coord_x_swap              ;
-wire                 adc_coord_cl_swap             ;
-wire                 adc_cmd_done                  ;
-wire                 adc_data_done                 ;
-reg                  adc_done_evt                  ;
-reg           [11:0] adc_x_data                    ;
-reg           [11:0] adc_y_data                    ;
-reg            [8:0] adc_clk_cnt                   ;
-reg           [15:0] adc_bit_cnt                   ;
-wire                 init_adc_bit_cnt_8bit         ;
-wire                 init_adc_bit_cnt_16bit        ;
-wire                 adc_x_data_ready              ;
-wire                 adc_y_data_ready              ;
-wire           [8:0] adc_clk_cnt_dec               ;
-wire          [11:0] adc_data_nxt                  ;
-reg                  lt24_adc_cs_n_o               ;
-reg                  lt24_adc_dclk_o               ;
-reg           [15:0] lt24_adc_data_shifter         ;
-wire          [20:0] adc_x_coord_full_res          ;
-wire           [8:0] adc_x_coord_round             ;
-wire           [8:0] adc_x_coord_swapped           ;
-wire           [8:0] adc_x_coord_pre               ;
-wire           [8:0] adc_x_coord                   ;
-wire          [20:0] adc_y_coord_full_res          ;
-wire           [8:0] adc_y_coord_round             ;
-wire           [8:0] adc_y_coord_swapped           ;
-wire           [8:0] adc_y_coord_pre               ;
-wire           [8:0] adc_y_coord                   ;
+reg                  refresh_trigger                  ;
+wire                 status_gts_match                 ;
+wire                 unused_lt24_adc_busy             ;
+wire                 adc_penirq_detect                ;
+wire                 trigger_adc_get_coordinate_set   ;
+wire                 trigger_adc_get_coordinate_clr   ;
+wire                 adc_penirq_sync                  ;
+reg                  adc_penirq_sync_dly              ;
+reg                  trigger_adc_get_coordinate       ;
+wire                 adc_enabled                      ;
+wire           [7:0] adc_cfg_clk                      ;
+wire                 adc_coord_y_swap                 ;
+wire                 adc_coord_x_swap                 ;
+wire                 adc_coord_cl_swap                ;
+wire                 adc_cmd_done                     ;
+wire                 adc_data_done                    ;
+reg                  adc_done_evt                     ;
+reg           [11:0] adc_x_data                       ;
+reg           [11:0] adc_y_data                       ;
+reg            [8:0] adc_clk_cnt                      ;
+reg           [15:0] adc_bit_cnt                      ;
+wire                 init_adc_bit_cnt_8bit            ;
+wire                 init_adc_bit_cnt_16bit           ;
+wire                 adc_x_data_ready                 ;
+wire                 adc_y_data_ready                 ;
+wire           [8:0] adc_clk_cnt_dec                  ;
+wire          [11:0] adc_data_nxt                     ;
+reg                  lt24_adc_cs_n_o                  ;
+reg                  lt24_adc_dclk_o                  ;
+reg           [15:0] lt24_adc_data_shifter            ;
+wire          [20:0] adc_x_coord_full_res             ;
+wire           [8:0] adc_x_coord_round                ;
+wire           [8:0] adc_x_coord_swapped              ;
+wire           [8:0] adc_x_coord_pre                  ;
+wire           [8:0] adc_x_coord                      ;
+wire          [20:0] adc_y_coord_full_res             ;
+wire           [8:0] adc_y_coord_round                ;
+wire           [8:0] adc_y_coord_swapped              ;
+wire           [8:0] adc_y_coord_pre                  ;
+wire           [8:0] adc_y_coord                      ;
 
 
 // LCD State definition
-parameter            LCD_IDLE                =   0 ,    // IDLE state
+parameter            LCD_IDLE                =  5'd0  ,    // IDLE state
 
-                     LCD_CMD_LO              =   1 ,    // Generic command to LT24
-                     LCD_CMD_HI              =   2 ,
-                     LCD_CMD_PARAM_LO        =   3 ,
-                     LCD_CMD_PARAM_HI        =   4 ,
-                     LCD_CMD_PARAM_WAIT      =   5 ,
+                     LCD_CMD_LO              =  5'd1  ,    // Generic command to LT24
+                     LCD_CMD_HI              =  5'd2  ,
+                     LCD_CMD_PARAM_LO        =  5'd3  ,
+                     LCD_CMD_PARAM_HI        =  5'd4  ,
+                     LCD_CMD_PARAM_WAIT      =  5'd5  ,
 
-                     LCD_RAMWR_INIT_CMD_LO   =   6 ,    // Initialize display buffer with data
-                     LCD_RAMWR_INIT_CMD_HI   =   7 ,
-                     LCD_RAMWR_INIT_DATA_LO  =   8 ,
-                     LCD_RAMWR_INIT_DATA_HI  =   9 ,
+                     LCD_RAMWR_INIT_CMD_LO   =  5'd6  ,    // Initialize display buffer with data
+                     LCD_RAMWR_INIT_CMD_HI   =  5'd7  ,
+                     LCD_RAMWR_INIT_DATA_LO  =  5'd8  ,
+                     LCD_RAMWR_INIT_DATA_HI  =  5'd9  ,
 
-                     LCD_SCANLINE_CMD_LO     =  10 ,    // Wait for right scanline
-                     LCD_SCANLINE_CMD_HI     =  11 ,
-                     LCD_SCANLINE_DUMMY_LO   =  12 ,
-                     LCD_SCANLINE_DUMMY_HI   =  13 ,
-                     LCD_SCANLINE_GTS1_LO    =  14 ,
-                     LCD_SCANLINE_GTS1_HI    =  15 ,
-                     LCD_SCANLINE_GTS2_LO    =  16 ,
-                     LCD_SCANLINE_GTS2_HI    =  17 ,
+                     LCD_SCANLINE_CMD_LO     =  5'd10 ,    // Wait for right scanline
+                     LCD_SCANLINE_CMD_HI     =  5'd11 ,
+                     LCD_SCANLINE_DUMMY_LO   =  5'd12 ,
+                     LCD_SCANLINE_DUMMY_HI   =  5'd13 ,
+                     LCD_SCANLINE_GTS1_LO    =  5'd14 ,
+                     LCD_SCANLINE_GTS1_HI    =  5'd15 ,
+                     LCD_SCANLINE_GTS2_LO    =  5'd16 ,
+                     LCD_SCANLINE_GTS2_HI    =  5'd17 ,
 
-                     LCD_RAMWR_REFR_CMD_LO   =  18 ,    // Refresh display buffer
-                     LCD_RAMWR_REFR_CMD_HI   =  19 ,
-                     LCD_RAMWR_REFR_WAIT     =  20 ,
-                     LCD_RAMWR_REFR_DATA_LO  =  21 ,
-                     LCD_RAMWR_REFR_DATA_HI  =  22 ;
+                     LCD_RAMWR_REFR_CMD_LO   =  5'd18 ,    // Refresh display buffer
+                     LCD_RAMWR_REFR_CMD_HI   =  5'd19 ,
+                     LCD_RAMWR_REFR_WAIT     =  5'd20 ,
+                     LCD_RAMWR_REFR_DATA_LO  =  5'd21 ,
+                     LCD_RAMWR_REFR_DATA_HI  =  5'd22 ;
 
 // ADC State definition
-parameter            ADC_IDLE                =   0 ,    // IDLE state
+parameter            ADC_IDLE                =  3'd0  ,    // IDLE state
 
-                     ADC_WAIT_PENIRQ         =   1 ,    // Pen IRQ detection
+                     ADC_WAIT_PENIRQ         =  3'd1  ,    // Pen IRQ detection
 
-                     ADC_X_COORD_CMD         =   2 ,    // X-coordinate
-                     ADC_X_COORD_DATA        =   3 ,
+                     ADC_X_COORD_CMD         =  3'd2  ,    // X-coordinate
+                     ADC_X_COORD_DATA        =  3'd3  ,
 
-                     ADC_Y_COORD_CMD         =   4 ,    // Y-coordinate
-                     ADC_Y_COORD_DATA        =   5 ;
+                     ADC_Y_COORD_CMD         =  3'd4  ,    // Y-coordinate
+                     ADC_Y_COORD_DATA        =  3'd5  ;
 
 
 //============================================================================
@@ -247,50 +248,50 @@ parameter            ADC_IDLE                =   0 ,    // IDLE state
 ogfx_if_lt24_reg #(.BASE_ADDR(BASE_ADDR)) ogfx_if_lt24_reg_inst (
 
 // OUTPUTs
-    .irq_adc_o                ( irq_lt24_adc_o         ),  // LT24 ADC interface interrupt
-    .irq_lcd_o                ( irq_lt24_lcd_o         ),  // LT24 LCD interface interrupt
+    .irq_adc_o                ( irq_lt24_adc_o        ),  // LT24 ADC interface interrupt
+    .irq_lcd_o                ( irq_lt24_lcd_o        ),  // LT24 LCD interface interrupt
 
-    .lcd_reset_n_o            ( lt24_lcd_reset_n_o     ),  // LT24 LCD Reset (Active Low)
-    .lcd_on_o                 ( lt24_lcd_on_o          ),  // LT24 LCD on/off
-    .lcd_cfg_clk_o            ( lcd_cfg_clk            ),  // LT24 LCD Interface clock configuration
-    .lcd_cfg_refr_o           ( lcd_cfg_refr           ),  // LT24 LCD Interface refresh configuration
-    .lcd_cfg_refr_sync_en_o   ( lcd_cfg_refr_sync_en   ),  // LT24 LCD Interface refresh sync enable configuration
-    .lcd_cfg_refr_sync_val_o  ( lcd_cfg_refr_sync_val  ),  // LT24 LCD Interface refresh sync value configuration
-    .lcd_cmd_refr_o           ( lcd_cmd_refresh        ),  // LT24 LCD Interface refresh command
-    .lcd_cmd_val_o            ( lcd_cmd_val            ),  // LT24 LCD Generic command value
-    .lcd_cmd_has_param_o      ( lcd_cmd_has_param      ),  // LT24 LCD Generic command has parameters
-    .lcd_cmd_param_o          ( lcd_cmd_param_val      ),  // LT24 LCD Generic command parameter value
-    .lcd_cmd_param_rdy_o      ( lcd_cmd_param_trig     ),  // LT24 LCD Generic command trigger
-    .lcd_cmd_dfill_o          ( lcd_cmd_dfill          ),  // LT24 LCD Data fill value
-    .lcd_cmd_dfill_wr_o       ( lcd_cmd_dfill_trig     ),  // LT24 LCD Data fill trigger
+    .lcd_reset_n_o            ( lt24_lcd_reset_n_o    ),  // LT24 LCD Reset (Active Low)
+    .lcd_on_o                 ( lt24_lcd_on_o         ),  // LT24 LCD on/off
+    .lcd_cfg_clk_o            ( lcd_cfg_clk           ),  // LT24 LCD Interface clock configuration
+    .lcd_cfg_refr_o           ( lcd_cfg_refr          ),  // LT24 LCD Interface refresh configuration
+    .lcd_cfg_refr_sync_en_o   ( lcd_cfg_refr_sync_en  ),  // LT24 LCD Interface refresh sync enable configuration
+    .lcd_cfg_refr_sync_val_o  ( lcd_cfg_refr_sync_val ),  // LT24 LCD Interface refresh sync value configuration
+    .lcd_cmd_refr_o           ( lcd_cmd_refresh       ),  // LT24 LCD Interface refresh command
+    .lcd_cmd_val_o            ( lcd_cmd_val           ),  // LT24 LCD Generic command value
+    .lcd_cmd_has_param_o      ( lcd_cmd_has_param     ),  // LT24 LCD Generic command has parameters
+    .lcd_cmd_param_o          ( lcd_cmd_param_val     ),  // LT24 LCD Generic command parameter value
+    .lcd_cmd_param_rdy_o      ( lcd_cmd_param_trig    ),  // LT24 LCD Generic command trigger
+    .lcd_cmd_dfill_o          ( lcd_cmd_dfill         ),  // LT24 LCD Data fill value
+    .lcd_cmd_dfill_wr_o       ( lcd_cmd_dfill_trig    ),  // LT24 LCD Data fill trigger
 
-    .adc_enabled_o            ( adc_enabled            ),  // LT24 ADC Enabled
-    .adc_cfg_clk_o            ( adc_cfg_clk            ),  // LT24 ADC Clock configuration
-    .adc_coord_y_swap_o       ( adc_coord_y_swap       ),  // LT24 Coordinates: swap Y axis (horizontal symmetry)
-    .adc_coord_x_swap_o       ( adc_coord_x_swap       ),  // LT24 Coordinates: swap X axis (vertical symmetry)
-    .adc_coord_cl_swap_o      ( adc_coord_cl_swap      ),  // LT24 Coordinates: swap column/lines
+    .adc_enabled_o            ( adc_enabled           ),  // LT24 ADC Enabled
+    .adc_cfg_clk_o            ( adc_cfg_clk           ),  // LT24 ADC Clock configuration
+    .adc_coord_y_swap_o       ( adc_coord_y_swap      ),  // LT24 Coordinates: swap Y axis (horizontal symmetry)
+    .adc_coord_x_swap_o       ( adc_coord_x_swap      ),  // LT24 Coordinates: swap X axis (vertical symmetry)
+    .adc_coord_cl_swap_o      ( adc_coord_cl_swap     ),  // LT24 Coordinates: swap column/lines
 
-    .per_dout_o               ( per_dout_o             ),  // Peripheral data output
+    .per_dout_o               ( per_dout_o            ),  // Peripheral data output
 
 // INPUTs
-    .mclk                     ( mclk                   ),  // Main system clock
-    .puc_rst                  ( puc_rst                ),  // Main system reset
+    .mclk                     ( mclk                  ),  // Main system clock
+    .puc_rst                  ( puc_rst               ),  // Main system reset
 
-    .lcd_status_i             ( lcd_status             ),  // LT24 LCD FSM Status
-    .lcd_start_evt_i          ( lcd_start_evt          ),  // LT24 LCD FSM is starting
-    .lcd_done_evt_i           ( lcd_done_evt           ),  // LT24 LCD FSM is done
-    .lcd_uflow_evt_i          ( 1'b0                   ),  // LT24 LCD refresh underfow
+    .lcd_status_i             ( lcd_status            ),  // LT24 LCD FSM Status
+    .lcd_start_evt_i          ( lcd_start_evt         ),  // LT24 LCD FSM is starting
+    .lcd_done_evt_i           ( lcd_done_evt          ),  // LT24 LCD FSM is done
+    .lcd_uflow_evt_i          ( lcd_uflow_evt         ),  // LT24 LCD refresh underfow
 
-    .adc_done_evt_i           ( adc_done_evt           ),  // LT24 ADC FSM is done
-    .adc_x_data_i             ( adc_x_data             ),  // LT24 ADC X sampled data
-    .adc_y_data_i             ( adc_y_data             ),  // LT24 ADC Y sampled data
-    .adc_x_coord_i            ( adc_x_coord            ),  // LT24 ADC X coordinate
-    .adc_y_coord_i            ( adc_y_coord            ),  // LT24 ADC Y coordinate
+    .adc_done_evt_i           ( adc_done_evt          ),  // LT24 ADC FSM is done
+    .adc_x_data_i             ( adc_x_data            ),  // LT24 ADC X sampled data
+    .adc_y_data_i             ( adc_y_data            ),  // LT24 ADC Y sampled data
+    .adc_x_coord_i            ( adc_x_coord           ),  // LT24 ADC X coordinate
+    .adc_y_coord_i            ( adc_y_coord           ),  // LT24 ADC Y coordinate
 
-    .per_addr_i               ( per_addr_i             ),  // Peripheral address
-    .per_din_i                ( per_din_i              ),  // Peripheral data input
-    .per_en_i                 ( per_en_i               ),  // Peripheral enable (high active)
-    .per_we_i                 ( per_we_i               )   // Peripheral write enable (high active)
+    .per_addr_i               ( per_addr_i            ),  // Peripheral address
+    .per_din_i                ( per_din_i             ),  // Peripheral data input
+    .per_en_i                 ( per_en_i              ),  // Peripheral enable (high active)
+    .per_we_i                 ( per_we_i              )   // Peripheral write enable (high active)
 );
 
 
@@ -306,9 +307,9 @@ reg [3:0] lcd_timer;
 wire      lcd_timer_done = lt24_lcd_d_en_o ? (lcd_timer == {1'b0, lcd_cfg_clk}) :
                                              (lcd_timer == {lcd_cfg_clk, 1'b0}) ; // Use slower timing for read accesses
 
-wire      lcd_timer_run  = (lcd_state     != LCD_IDLE)            &
-                           (lcd_state     != LCD_CMD_PARAM_WAIT)  &
-                           (lcd_state     != LCD_RAMWR_REFR_WAIT) &
+wire      lcd_timer_run  = (lcd_state      != LCD_IDLE)            &
+                           (lcd_state      != LCD_CMD_PARAM_WAIT)  &
+                           (lcd_state      != LCD_RAMWR_REFR_WAIT) &
                            ~lcd_timer_done;
 
 wire      lcd_timer_init =   (lcd_timer_done                       &                                             // Init if counter reaches limit:
@@ -573,10 +574,12 @@ assign     status_gts_match   = (status_gts == lcd_cfg_refr_sync_val);
 reg [23:0] refresh_timer;
 wire       refresh_timer_disable = (lcd_cfg_refr==15'h0000) | ~lcd_cmd_refresh;
 wire       refresh_timer_done    = (refresh_timer[23:9]==lcd_cfg_refr);
+assign     lcd_uflow_evt         = refresh_timer_done & screen_refresh_active_o;
 
 always @(posedge mclk or posedge puc_rst)
   if (puc_rst)                    refresh_timer <= 24'h000000;
   else if (refresh_timer_disable) refresh_timer <= 24'h000000;
+  else if (lcd_uflow_evt)         refresh_timer <= refresh_timer;
   else if (refresh_timer_done)    refresh_timer <= 24'h000000;
   else                            refresh_timer <= refresh_timer + 24'h1;
 
@@ -735,7 +738,7 @@ always @(posedge mclk or posedge puc_rst)
 
 // Coordinates
 assign adc_x_coord_full_res = {         adc_x_data, 8'b00000000} +  //   256
-                              {2'b00,   adc_x_data, 6'b000000  } ;  // +  64 
+                              {2'b00,   adc_x_data, 6'b000000  } ;  // +  64
                                                                     // = 320
 assign adc_x_coord_round    = adc_x_coord_full_res[20:12]+{8'h00, adc_x_coord_full_res[11]};
 assign adc_x_coord_swapped  = 9'd319 - adc_x_coord_round;
@@ -743,9 +746,9 @@ assign adc_x_coord_pre      = adc_coord_x_swap  ? adc_x_coord_swapped : adc_x_co
 assign adc_x_coord          = adc_coord_cl_swap ? adc_y_coord_pre     : adc_x_coord_pre;
 
 assign adc_y_coord_full_res = {1'b0,    adc_y_data, 7'b0000000 } +  //   128
-                              {2'b00,   adc_y_data, 6'b000000  } +  // +  64 
-                              {3'b000,  adc_y_data, 5'b00000   } +  // +  32 
-                              {4'b0000, adc_y_data, 4'b0000    } ;  // +  16 
+                              {2'b00,   adc_y_data, 6'b000000  } +  // +  64
+                              {3'b000,  adc_y_data, 5'b00000   } +  // +  32
+                              {4'b0000, adc_y_data, 4'b0000    } ;  // +  16
                                                                     // = 240
 assign adc_y_coord_round    = adc_y_coord_full_res[20:12]+{8'h00, adc_y_coord_full_res[11]};
 assign adc_y_coord_swapped  = 9'd239 - adc_y_coord_round;
